@@ -35,7 +35,7 @@ const Row = ({
 }
 
 Row.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.element, PropTypes.string, PropTypes.array]).isRequired,
+  children: PropTypes.oneOfType([PropTypes.element, PropTypes.string, PropTypes.array]),
   className: PropTypes.string,
   noGutters: PropTypes.bool,
   verticalPadding: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

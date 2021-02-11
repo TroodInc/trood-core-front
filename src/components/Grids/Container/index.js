@@ -24,7 +24,7 @@ const Container = ({
 )
 
 Container.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.element, PropTypes.string, PropTypes.array]).isRequired,
+  children: PropTypes.oneOfType([PropTypes.element, PropTypes.string, PropTypes.array]),
   className: PropTypes.string,
   fluid: PropTypes.bool,
 }

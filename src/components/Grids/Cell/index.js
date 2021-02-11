@@ -4,7 +4,8 @@ import classNames from 'classnames'
 import styles from './index.module.css'
 
 
-const SIZES = ['xs', 'sm', 'md', 'lg', 'xl']
+export const SIZES = ['xs', 'sm', 'md', 'lg', 'xl']
+export const SIZES_VALUES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 
 const Cell = (props) => {
   const {
@@ -69,21 +70,21 @@ const Cell = (props) => {
 Cell.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
-  xs: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
-  sm: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
-  md: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
-  lg: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
-  xl: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
+  xs: PropTypes.oneOf(SIZES_VALUES),
+  sm: PropTypes.oneOf(SIZES_VALUES),
+  md: PropTypes.oneOf(SIZES_VALUES),
+  lg: PropTypes.oneOf(SIZES_VALUES),
+  xl: PropTypes.oneOf(SIZES_VALUES),
   xsHidden: PropTypes.bool,
   smHidden: PropTypes.bool,
   mdHidden: PropTypes.bool,
   lgHidden: PropTypes.bool,
   xlHidden: PropTypes.bool,
-  xsOffset: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
-  smOffset: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
-  mdOffset: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
-  lgOffset: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
-  xlOffset: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
+  xsOffset: PropTypes.oneOf(SIZES_VALUES),
+  smOffset: PropTypes.oneOf(SIZES_VALUES),
+  mdOffset: PropTypes.oneOf(SIZES_VALUES),
+  lgOffset: PropTypes.oneOf(SIZES_VALUES),
+  xlOffset: PropTypes.oneOf(SIZES_VALUES),
   xsAuto: PropTypes.bool,
   smAuto: PropTypes.bool,
   mdAuto: PropTypes.bool,
