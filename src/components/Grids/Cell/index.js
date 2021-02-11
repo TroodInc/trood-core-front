@@ -35,7 +35,6 @@ const Cell = (props) => {
     if (sizeHiddenProp) hiddenClasses = [...hiddenClasses, styles[`aa-Cell-${size}-hidden`]]
     if (sizeAutoProp) autoClasses = [...autoClasses, styles[`aa-Cell${sizePrefix}-auto`]]
     if (sizeOffsetProp) offsetClasses = [...offsetClasses, styles[`aa-Cell-offset${sizePrefix}-${sizeProp}`]]
-    console.log({ sizeClasses, hiddenClasses, autoClasses, offsetClasses })
 
     return { sizeClasses, hiddenClasses, autoClasses, offsetClasses }
   }, {
