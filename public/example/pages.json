@@ -1,0 +1,158 @@
+{
+    "nodes": [
+        {
+            "type": "Route",
+            "props": {
+                "path": "/",
+                "title": "Root",
+                "exact": true
+            },
+            "nodes": [
+                {
+                    "type": "div",
+                    "props": {
+                        "children": "Main"
+                    }
+                }
+            ]
+        },
+        {
+            "type": "Route",
+            "props": {
+                "path": "/clients",
+                "title": "Clients"
+            },
+            "nodes": [
+                {
+                    "type": "Block",
+                    "props": {
+                        "transparent": true
+                    },
+                    "nodes": [
+                        {
+                            "type": "Menu",
+                            "props": {
+                                "style": {
+                                    "color": "#0180e2"
+                                },
+                                "itemActiveStyle": {
+                                    "color": "#000"
+                                },
+                                "type": "horizontal",
+                                "basePath": "/clients",
+                                "items": [
+                                    {
+                                        "path": "/list",
+                                        "title": "List"
+                                    },
+                                    {
+                                        "path": "/table",
+                                        "title": "Table"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "Route",
+            "props": {
+                "path": "/clients/list",
+                "title": "Clients List"
+            },
+            "nodes": [
+                {
+                    "type": "LoadingIndicator"
+                }
+            ],
+            "chunk": "example/clients.json"
+        },
+        {
+            "type": "Route",
+            "props": {
+                "path": "/clients/table",
+                "title": "Clients Table"
+            },
+            "nodes": [
+                {
+                    "type": "LoadingIndicator"
+                }
+            ],
+            "chunk": "example/clientsTable.json"
+        },
+        {
+            "type": "Route",
+            "props": {
+                "path": "/client/:id",
+                "title": "Client"
+            },
+            "nodes": [
+                {
+                    "type": "LoadingIndicator"
+                }
+            ],
+            "chunk": "example/client.json"
+        },
+        {
+            "type": "Route",
+            "props": {
+                "path": "/matters/list",
+                "title": "Matters List",
+                "exact": true
+            },
+            "nodes": [
+                "Matters List"
+            ]
+        },
+        {
+            "type": "Route",
+            "props": {
+                "path": "/matters/table",
+                "title": "Matters Table",
+                "exact": true
+            },
+            "nodes": [
+                "Matters Table"
+            ]
+        },
+        {
+            "type": "Route",
+            "props": {
+                "path": "/remote"
+            },
+            "nodes": [
+                {
+                    "type": "LoadingIndicator"
+                }
+            ],
+            "chunk": "example/remote.json"
+        },
+        {
+            "type": "Route",
+            "props": {
+                "path": "/components"
+            },
+            "nodes": [
+                {
+                    "type": "LoadingIndicator"
+                }
+            ],
+            "chunk": "example/components.json"
+        },
+        {
+            "type": "Route",
+            "props": {
+                "path": "/activity/:id",
+                "title": "Activity"
+            },
+            "nodes": [
+                {
+                    "type": "LoadingIndicator"
+                }
+            ],
+            "chunk": "example/activity.json"
+        }
+    ]
+}

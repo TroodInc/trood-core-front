@@ -1,0 +1,335 @@
+{
+    "nodes": [
+        {
+            "type": "Container",
+            "props": {
+                "fluid": true
+            },
+            "nodes": [
+                {
+                    "type": "Row",
+                    "props": {
+                        "style": {
+                            "height": "100vh",
+                            "backgroundColor": "#f0f0f5"
+                        },
+                        "noGutters": true
+                    },
+                    "nodes": [
+                        {
+                            "type": "Cell",
+                            "props": {
+                                "xsAuto": true,
+                                "style": {
+                                    "zIndex": 1
+                                }
+                            },
+                            "nodes": [
+                                {
+                                    "type": "div",
+                                    "props": {
+                                        "style": {
+                                            "display": "flex",
+                                            "flexFlow": "column nowrap",
+                                            "height": "100%",
+                                            "boxShadow": "0 0 15px #c0c0c040",
+                                            "backgroundColor": "#fff"
+                                        }
+                                    },
+                                    "nodes": [
+                                        {
+                                            "type": "Menu",
+                                            "props": {
+                                                "itemActiveStyle": {
+                                                    "color": "#00b807"
+                                                },
+                                                "items": [
+                                                    {
+                                                        "path": "/",
+                                                        "title": {
+                                                            "type": "img",
+                                                            "props": {
+                                                                "src": "/images/logo.svg"
+                                                            }
+                                                        },
+                                                        "redirectTo": "/components"
+                                                    },
+                                                    {
+                                                        "path": "/clients",
+                                                        "title": "Clients",
+                                                        "redirectTo": "/clients/list"
+                                                    },
+                                                    {
+                                                        "path": "/matters",
+                                                        "title": "Matters",
+                                                        "redirectTo": "/matters/list",
+                                                        "items": [
+                                                            {
+                                                                "path": "/list",
+                                                                "title": "List"
+                                                            },
+                                                            {
+                                                                "path": "/table",
+                                                                "title": "Table"
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "path": "/remote",
+                                                        "title": "Remote"
+                                                    },
+                                                    {
+                                                        "path": "/components",
+                                                        "children": {
+                                                            "$type": "$expression",
+                                                            "expression": "data(\"$route.location.pathname\") == \"/components\" ? \"Components*\" : \"Components\""
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "type": "Button",
+                                            "props": {
+                                                "style": {
+                                                    "margin": "auto 0 16px 0"
+                                                },
+                                                "type": "text",
+                                                "label": "Login",
+                                                "onClick": {
+                                                    "$type": "$action",
+                                                    "path": "$page.openModal",
+                                                    "args": [
+                                                        "LoginModal",
+                                                        {
+                                                            "form": {
+                                                                "$type": "$data",
+                                                                "path": "$auth.getLoginForm[]"
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "type": "Modal",
+                                            "props": {
+                                                "type": "center",
+                                                "isOpen": {
+                                                    "$type": "$data",
+                                                    "path": "$page.isModalOpen[\"LoginModal\"]"
+                                                },
+                                                "close": {
+                                                    "$type": "$action",
+                                                    "path": "$page.closeModal",
+                                                    "args": [
+                                                        "LoginModal"
+                                                    ]
+                                                }
+                                            },
+                                            "nodes": [
+                                                {
+                                                    "type": "Typography",
+                                                    "props": {
+                                                        "type": "h1",
+                                                        "value": "Login"
+                                                    }
+                                                },
+                                                {
+                                                    "type": "Spacer",
+                                                    "size": 16
+                                                },
+                                                {
+                                                    "type": "Context",
+                                                    "props": {
+                                                        "context": {
+                                                            "$type": "$data",
+                                                            "path": "$page.getContext[\"LoginModal\"]"
+                                                        }
+                                                    },
+                                                    "nodes": [
+                                                        {
+                                                            "type": "Input",
+                                                            "props": {
+                                                                "label": "Login",
+                                                                "value": {
+                                                                    "$type": "$data",
+                                                                    "path": "$context.form.data.login"
+                                                                },
+                                                                "onChange": {
+                                                                    "$type": "$action",
+                                                                    "path": "$context.form.changeFields",
+                                                                    "args": [
+                                                                        {
+                                                                            "$type": "$data",
+                                                                            "path": {
+                                                                                "login": {
+                                                                                    "$type": "$data",
+                                                                                    "path": "$event"
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "Spacer",
+                                                            "size": 16
+                                                        },
+                                                        {
+                                                            "type": "Input",
+                                                            "props": {
+                                                                "label": "Password",
+                                                                "value": {
+                                                                    "$type": "$data",
+                                                                    "path": "$context.form.data.password"
+                                                                },
+                                                                "onChange": {
+                                                                    "$type": "$action",
+                                                                    "path": "$context.form.changeFields",
+                                                                    "args": [
+                                                                        {
+                                                                            "$type": "$data",
+                                                                            "path": {
+                                                                                "password": {
+                                                                                    "$type": "$data",
+                                                                                    "path": "$event"
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "Spacer",
+                                                            "size": 16
+                                                        },
+                                                        {
+                                                            "type": "Row",
+                                                            "nodes": [
+                                                                {
+                                                                    "type": "Cell",
+                                                                    "nodes": [
+                                                                        {
+                                                                            "type": "Button",
+                                                                            "props": {
+                                                                                "label": "Close",
+                                                                                "type": "text",
+                                                                                "onClick": {
+                                                                                    "$type": "$action",
+                                                                                    "path": "$page.closeModal",
+                                                                                    "args": [
+                                                                                        "LoginModal"
+                                                                                    ]
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "type": "Cell",
+                                                                    "props": {
+                                                                        "xsAuto": true
+                                                                    },
+                                                                    "nodes": [
+                                                                        {
+                                                                            "type": "Button",
+                                                                            "props": {
+                                                                                "label": "Save",
+                                                                                "onClick": {
+                                                                                    "$type": "$action",
+                                                                                    "path": "$auth.login",
+                                                                                    "args": [
+                                                                                        "http://legal.stage.trood.ru/authorization/api/v1.0/login/"
+                                                                                    ],
+                                                                                    "then": {
+                                                                                        "path": "$page.closeModal",
+                                                                                        "args": [
+                                                                                            "LoginModal"
+                                                                                        ]
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Cell",
+                            "props": {
+                                "style": {
+                                    "overflowX": "hidden",
+                                    "overflowY": "auto",
+                                    "height": "100%"
+                                },
+                                "id": "MAIN_SCROLL_CONTAINER"
+                            },
+                            "nodes": [
+                                {
+                                    "type": "Row",
+                                    "props": {
+                                        "style": {
+                                            "backgroundColor": "#fff"
+                                        }
+                                    },
+                                    "nodes": [
+                                        {
+                                            "type": "Cell",
+                                            "props": {
+                                                "xsAuto": true,
+                                                "children": "back"
+                                            }
+                                        },
+                                        {
+                                            "type": "Cell",
+                                            "props": {
+                                                "children": "tabs"
+                                            }
+                                        },
+                                        {
+                                            "type": "Cell",
+                                            "props": {
+                                                "xsAuto": true,
+                                                "children": "avatar"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "Row",
+                                    "nodes": [
+                                        {
+                                            "type": "Cell",
+                                            "nodes": [
+                                                {
+                                                    "type": "Switch",
+                                                    "nodes": [
+                                                        {
+                                                            "type": "LoadingIndicator"
+                                                        }
+                                                    ],
+                                                    "chunk": "example/pages.json"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

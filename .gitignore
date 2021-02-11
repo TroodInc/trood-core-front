@@ -1,0 +1,42 @@
+# See https://help.github.com/ignore-files/ for more about ignoring files.
+
+# IDE
+.idea
+.vscode
+
+# dependencies
+/node_modules
+
+/translate/messages
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# generated files
+src/componentLibraries/manifest.js
+src/businessObjects/manifest.js
+src/layouts/manifest.js
+gulpfile.js
+*.js.map
+*.log
+.eslintcache
+
+# documentation
+/docs/components
+/build-docs
+/docs/_build

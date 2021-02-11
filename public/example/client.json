@@ -1,0 +1,39 @@
+{
+    "nodes": [
+        {
+            "type": "Context",
+            "props": {
+                "context": {
+                    "$type": "$data",
+                    "path": "$store.apis.custodian.client.getByPk[{\"$type\":\"$data\", \"path\":\"$route.params.id\"}]"
+                }
+            },
+            "nodes": [
+                {
+                    "type": "Cell",
+                    "nodes": [
+                        {
+                            "type": "Cell",
+                            "props": {
+                                "children": {
+                                    "$type": "$data",
+                                    "path": "$route.params.id",
+                                    "tamplate": "Client ${value}"
+                                }
+                            }
+                        },
+                        {
+                            "type": "Cell",
+                            "props": {
+                                "children": {
+                                    "$type": "$data",
+                                    "path": "$context.name"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
