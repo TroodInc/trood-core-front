@@ -51,8 +51,9 @@ const Settings = () => {
           label: 'Special Type',
           key: 'specialType',
           items: Object.values(BUTTON_SPECIAL_TYPES).map(value => ({ value })),
-          clearable: true,
         }),
+        clearable: true,
+        placeHolder: 'Not Set',
       }} />
       <TSelect.default {...{
         ...selectProps({
