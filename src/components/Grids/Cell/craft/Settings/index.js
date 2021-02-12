@@ -17,6 +17,8 @@ const Settings = () => {
     items,
     values: props[key] ? [props[key]] : [],
     onChange: vals => setProp((props) => props[key] = vals[0]),
+    clearable: true,
+    placeHolder: 'Not Set',
   })
 
   const inputProps = ({ label, key }) => ({
@@ -36,37 +38,6 @@ const Settings = () => {
 
   return (
     <div>
-      <TSelect.default {...{
-        ...selectProps({
-          label: 'Size type',
-          key: 'sizeType',
-          items: SIZES.map(value => ({ value })),
-        }),
-      }} />
-      {props.sizeType && (
-        <>
-          <TSelect.default {...{
-            ...selectProps({
-              label: 'Size value',
-              key: props.sizeType,
-              items: SIZES_VALUES.map(value => ({ value })),
-            }),
-          }} />
-          <TSelect.default {...{
-            ...selectProps({
-              label: 'Size offset',
-              key: `${props.sizeType}Offset`,
-              items: SIZES_VALUES.map(value => ({ value })),
-            }),
-          }} />
-          <TCheckbox.default {...{
-            ...checkboxProps({ label: 'Hidden', key: `${props.sizeType}Hidden` }),
-          }} />
-          <TCheckbox.default {...{
-            ...checkboxProps({ label: 'Auto', key: `${props.sizeType}Auto` }),
-          }} />
-        </>
-      )}
       <TInput.default {...{
         ...inputProps({
           label: 'Vertical Padding',
@@ -86,6 +57,37 @@ const Settings = () => {
           key: 'bottomPadding',
         }),
       }} />
+      <TSelect.default {...{
+        ...selectProps({
+          label: 'Display size',
+          key: 'sizeType',
+          items: SIZES.map(value => ({ value })),
+        }),
+      }} />
+      {props.sizeType && (
+        <>
+          <TSelect.default {...{
+            ...selectProps({
+              label: 'Size',
+              key: props.sizeType,
+              items: SIZES_VALUES.map(value => ({ value })),
+            }),
+          }} />
+          <TSelect.default {...{
+            ...selectProps({
+              label: 'Offset',
+              key: `${props.sizeType}Offset`,
+              items: SIZES_VALUES.map(value => ({ value })),
+            }),
+          }} />
+          <TCheckbox.default {...{
+            ...checkboxProps({ label: 'Hidden', key: `${props.sizeType}Hidden` }),
+          }} />
+          <TCheckbox.default {...{
+            ...checkboxProps({ label: 'Auto', key: `${props.sizeType}Auto` }),
+          }} />
+        </>
+      )}
     </div>
   )
 }
