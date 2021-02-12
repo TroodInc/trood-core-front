@@ -352,7 +352,7 @@ module.exports = function ({
         filename: `static/${appPackageJson.version}/css/[name].css`,
       }),
       new ManifestPlugin({
-        fileName: 'asset-manifest.json',
+        fileName: `static/${appPackageJson.version}/manifest/asset-manifest.json`,
         publicPath: paths.publicUrlOrPath,
         generate: (seed, files, entrypoints) => {
           const manifestFiles = files.reduce((manifest, file) => {
@@ -362,9 +362,18 @@ module.exports = function ({
           const entrypointFiles = entrypoints.main.filter(
             fileName => !fileName.endsWith('.map'),
           )
+          const cssEntrypointFiles = entrypointFiles.filter(
+            fileName => fileName.endsWith('.css'),
+          )
+          const jsEntrypointFiles = entrypointFiles.filter(
+            fileName => fileName.endsWith('.js'),
+          )
           return {
             files: manifestFiles,
-            entrypoints: entrypointFiles,
+            entrypoints: {
+              css: cssEntrypointFiles,
+              js: jsEntrypointFiles,
+            },
           }
         },
       }),
