@@ -1,5 +1,3 @@
-'use strict'
-
 const fs = require('fs')
 const path = require('path')
 const webpack = require('webpack')
@@ -14,7 +12,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const safePostCssParser = require('postcss-safe-parser')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
-const WorkboxWebpackPlugin = require('workbox-webpack-plugin')
+const { GenerateSW } = require('workbox-webpack-plugin')
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin')
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin')
 const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent')
@@ -379,12 +377,34 @@ module.exports = function ({
       }),
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       isProduction &&
-      fs.existsSync(paths.swSrc) &&
-      new WorkboxWebpackPlugin.InjectManifest({
-        swSrc: paths.swSrc,
-        dontCacheBustURLsMatching: /\.[0-9a-f]{8}\./,
-        exclude: [/\.map$/, /asset-manifest\.json$/, /LICENSE/],
-        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+      // Generate a service worker script that will precache, and keep up to date,
+      // the HTML & assets that are part of the Webpack build.
+      new GenerateSW({
+        swDest: 'service-worker.js',
+        navigateFallbackDenylist: [/.*/],
+        exclude: ['index.html'],
+        runtimeCaching: [
+          {
+            urlPattern: /\/static\/fonts\/.+$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'fonts',
+              expiration: {
+                maxAgeSeconds: 7 * 24 * 60 * 60,
+              },
+            },
+          },
+          {
+            urlPattern: /\/static\/.+$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'images',
+              expiration: {
+                maxAgeSeconds: 24 * 60 * 60,
+              },
+            },
+          },
+        ],
       }),
       useTypeScript &&
       new ForkTsCheckerWebpackPlugin({

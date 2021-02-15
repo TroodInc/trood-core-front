@@ -79,6 +79,7 @@ export const getAuthStore = apiStore => {
           self.account = account
           self.abac = abac
           self.error = {}
+          document.location.reload() // TODO refresh contects after set token
         }
       },
     }))

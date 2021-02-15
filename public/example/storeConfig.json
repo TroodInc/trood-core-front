@@ -1,0 +1,66 @@
+{
+    "custodian": {
+        "apiHost": "https://legal.dev.trood.ru/",
+        "entityDataAddress": "data",
+        "arrayDataAddress": "data",
+        "arrayCountAddress": "total_count",
+        "genericTypeAddress": "_object",
+        "paginationTemplate": "q=limit({offset},{pageSize})",
+        "objects": {
+            "client": {
+                "pk": "id",
+                "endpoint": "/custodian/data/client",
+                "fields": {
+                    "id": "number",
+                    "name": "string",
+                    "client_type": "fk(client_type)",
+                    "client_active_status": "fk(client_active_status)",
+                    "responsible": "fk(employee)"
+                }
+            },
+            "employee": {
+                "pk": "id",
+                "endpoint": "/custodian/data/employee",
+                "fields": {
+                    "id": "number",
+                    "name": "string",
+                    "email": "string"
+                }
+            },
+            "task": {
+                "pk": "id",
+                "endpoint": "/custodian/data/task",
+                "fields": {
+                    "id": "number",
+                    "name": "string"
+                }
+            },
+            "activity": {
+                "pk": "id",
+                "endpoint": "/custodian/data/activity",
+                "fields": {
+                    "id": "number",
+                    "name": "string"
+                }
+            },
+            "client_type": {
+                "pk": "id",
+                "endpoint": "/custodian/data/client_type",
+                "fields": {
+                    "id": "number",
+                    "name": "string",
+                    "code": "string"
+                }
+            },
+            "client_active_status": {
+                "pk": "id",
+                "endpoint": "/custodian/data/client_active_status",
+                "fields": {
+                    "id": "number",
+                    "name": "string",
+                    "code": "string"
+                }
+            }
+        }
+    }
+}

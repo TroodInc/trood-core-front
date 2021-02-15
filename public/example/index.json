@@ -242,7 +242,7 @@
                                                                                     "$type": "$action",
                                                                                     "path": "$auth.login",
                                                                                     "args": [
-                                                                                        "http://legal.stage.trood.ru/authorization/api/v1.0/login/"
+                                                                                        "https://legal.dev.trood.ru/authorization/api/v1.0/login/"
                                                                                     ],
                                                                                     "then": {
                                                                                         "path": "$page.closeModal",
