@@ -1,38 +1,40 @@
 {
-    "nodes": [
-        {
-            "type": "Context",
-            "props": {
-                "context": {
-                    "$type": "$data",
-                    "path": "$store.apis.custodian.activity.getByPk[{\"$type\":\"$expression\",\"expression\":\"+data('$route.params.id')\"}]"
-                }
-            },
-            "nodes": [
-                {
-                    "type": "Cell",
-                    "nodes": [
-                        {
-                            "type": "Cell",
-                            "props": {
-                                "children": {
-                                    "$type": "$data",
-                                    "path": "$route.params.id"
+    "ROOT": {
+        "nodes": [
+            {
+                "type": "Context",
+                "props": {
+                    "context": {
+                        "$type": "$data",
+                        "path": "$store.apis.custodian.activity.getByPk[{\"$type\":\"$expression\",\"expression\":\"+data('$route.params.id')\"}]"
+                    }
+                },
+                "nodes": [
+                    {
+                        "type": "Cell",
+                        "nodes": [
+                            {
+                                "type": "Cell",
+                                "props": {
+                                    "children": {
+                                        "$type": "$data",
+                                        "path": "$route.params.id"
+                                    }
+                                }
+                            },
+                            {
+                                "type": "Cell",
+                                "props": {
+                                    "children": {
+                                        "$type": "$data",
+                                        "path": "$context.name"
+                                    }
                                 }
                             }
-                        },
-                        {
-                            "type": "Cell",
-                            "props": {
-                                "children": {
-                                    "$type": "$data",
-                                    "path": "$context.name"
-                                }
-                            }
-                        }
-                    ]
-                }
-            ]
-        }
-    ]
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
 }

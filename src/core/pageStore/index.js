@@ -1,8 +1,38 @@
 import { types, flow } from 'mobx-state-tree'
 import { nanoid } from 'nanoid'
+
+
 const normalizeApiPath = (path) => {
   const host = process.env.REACT_APP_COMPONENTS_API_HOST || '/'
   return `${host}${host.endsWith('/') ? '' : '/'}${path.startsWith('/') ? path.slice(1) : path}`
+}
+
+const convertObject = (cur, data) => {
+  const component = {
+    type: typeof cur.type === 'string' ? cur.type : (cur.type || {}).resolvedName,
+    props: cur.props,
+    nodes: cur.nodes || [],
+    ...cur.custom,
+  }
+  if (component.chunk && !component.nodes.length) {
+    component.nodes = [
+      {
+        type: 'LoadingIndicator',
+        props: {
+          tmp: {
+            '$type': '$data',
+            'path': '$store',
+          },
+        },
+      },
+    ] // add standard loader component for async component
+  }
+  component.nodes = component.nodes.map(node => {
+    if (node && node.type) return node
+    return convertObject(data[node], data)
+  })
+
+  return component
 }
 
 export const Component = types
@@ -29,12 +59,14 @@ export const Component = types
       if (!model.chunk) return
       try {
         model.isLoading = true
-        const { nodes } = yield fetch(normalizeApiPath(model.chunk)).then((res) => res.json())
-        model.nodes = nodes
+        const nodes = yield fetch(normalizeApiPath(model.chunk)).then((res) => res.json())
+        const converted = convertObject(nodes.ROOT, nodes)
+        model.nodes = converted.nodes
       } catch (err) {
         console.error(err)
+      } finally {
+        model.isLoading = false
       }
-      model.isLoading = false
     }),
   }))
 
@@ -70,14 +102,14 @@ const Context = types
     context: types.optional(types.frozen({}), {}),
   })
   .actions(model => ({
-    setContext(context){
+    setContext(context) {
       model.context = context
     },
-    modifyProp(prop, value){
-      model.context = { ...model.context, [prop]:value }
+    modifyProp(prop, value) {
+      model.context = { ...model.context, [prop]: value }
     },
   }))
-  
+
 
 export const Page = types
   .model('Page', {
@@ -98,24 +130,24 @@ export const Page = types
   }))
   .actions((model) => ({
     setContext(name, context) {
-      model.contexts.set(name, {  })
+      model.contexts.set(name, {})
       model.contexts.get(name).setContext(context)
     },
     openModal(name, context) {
-      model.modals.set(name, { isOpen: true  })
+      model.modals.set(name, { isOpen: true })
       model.setContext(name, context)
     },
     closeModal(name) {
       model.modals.set(name, { isOpen: false })
     },
     openPopup(name, timeout = 3000) {
-      model.popups.set(name, { isOpen: true  })
+      model.popups.set(name, { isOpen: true })
       setTimeout(() => model.closePopup(name), timeout)
     },
     closePopup(name) {
       model.popups.set(name, { isOpen: false })
     },
-    modifyContext(name, prop, value){
+    modifyContext(name, prop, value) {
       model.contexts.get(name).modifyProp(prop, value)
     },
   }))
