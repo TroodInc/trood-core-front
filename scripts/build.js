@@ -70,12 +70,19 @@ checkBrowsers(paths.appPath, isInteractive)
   })
   .then(
     ({ stats, previousFileSizes, warnings }) => {
+      // create single entry point
       const manifest = require(paths.appBuildManifest)
       const jsEntries = JSON.stringify(manifest.entrypoints.js || [])
       const cssEntries = JSON.stringify(manifest.entrypoints.css || [])
       const indexJsTemplate = fs.readFileSync(paths.indexJsTemplate, 'utf8')
       const indexJs = indexJsTemplate.replace('$JS_ENTRIES', jsEntries).replace('$CSS_ENTRIES', cssEntries)
       fs.writeFileSync(paths.appBuildIndexJs, indexJs)
+
+      // copy SW to root path
+      fs.copySync(paths.swPath, paths.appBuild, {
+        dereference: true,
+      })
+
       if (warnings.length) {
         console.log(chalk.yellow('Compiled with warnings.\n'))
         console.log(warnings.join('\n\n'))

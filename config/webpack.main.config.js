@@ -380,7 +380,7 @@ module.exports = function ({
       // Generate a service worker script that will precache, and keep up to date,
       // the HTML & assets that are part of the Webpack build.
       new GenerateSW({
-        swDest: 'service-worker.js',
+        swDest: `static/${appPackageJson.version}/sw/service-worker.js`,
         navigateFallbackDenylist: [/.*/],
         exclude: ['index.html'],
         runtimeCaching: [
