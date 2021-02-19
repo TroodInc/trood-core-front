@@ -16,6 +16,7 @@ const getPathname = (path, basePath, location) => {
 }
 
 const Menu = ({
+  innerRef,
   className,
   basePath = '',
   type = 'vertical',
@@ -82,7 +83,7 @@ const Menu = ({
   const menuItemsStore = Component.create({ nodes: menuItems })
 
   return (
-    <div className={classNames(className, styles.root, styles[type])}>
+    <div ref={innerRef} className={classNames(className, styles.root, styles[type])}>
       <BaseComponent component={menuItemsStore} />
       {redirectTo && (
         <Redirect to={redirectTo} />

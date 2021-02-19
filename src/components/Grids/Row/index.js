@@ -7,11 +7,12 @@ import styles from './index.module.css'
 
 const Row = ({
   children,
-  className = '',
-  noGutters = false,
+  className,
+  noGutters,
   verticalPadding,
   topPadding,
   bottomPadding,
+  innerRef,
   ...other
 }) => {
   const style = {
@@ -22,6 +23,7 @@ const Row = ({
   return (
     <div
       {...other}
+      ref={innerRef}
       style={style}
       className={classNames(
         className,
@@ -32,6 +34,10 @@ const Row = ({
       {children}
     </div>
   )
+}
+
+Row.defaultProps = {
+  noGutters: false,
 }
 
 Row.propTypes = {

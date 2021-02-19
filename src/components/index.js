@@ -8,6 +8,9 @@ import Cell from './Grids/Cell'
 import Conditional from './Conditional'
 import Container from './Grids/Container'
 
+import HtmlTags from './Tags/HtmlTags'
+import SvgTags from './Tags/SvgTags'
+
 import { Link, NavLink, Switch } from 'react-router-dom'
 
 import Block from './Block'
@@ -38,6 +41,8 @@ const components = {
   Cell,
   Conditional,
   Container,
+  HtmlTags,
+  SvgTags,
   Link,
   NavLink,
   Switch,

@@ -1,4 +1,5 @@
 import React from 'react'
+import classNames from 'classnames'
 import { useNode } from '@craftjs/core'
 
 import Settings from './Settings'
@@ -12,26 +13,26 @@ const CraftRow = props => {
     connectors: { connect, drag },
   } = useNode((node) => ({ props: node.data.props }))
   const {
+    className,
     visualHelp,
     ...rest
   } = props
 
   return (
-    <div ref={ref => connect(drag(ref))}>
-      <Row {...{
-        ...rest,
-        className: visualHelp ? styles.visualHelp : '',
-      }}>
-        {props.children}
-      </Row>
-    </div>
+    <Row {...{
+      ...rest,
+      innerRef: ref => connect(drag(ref)),
+      className: classNames(className, visualHelp && styles.visualHelp),
+    }}>
+      {props.children}
+    </Row>
   )
 }
 
 CraftRow.craft = {
   displayName: 'Row',
   props: {
-    visualHelp: true,
+    ...Row.defaultProps,
   },
   related: {
     settings: Settings,

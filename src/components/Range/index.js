@@ -37,6 +37,7 @@ class Range extends PureComponent {
 
   render() {
     const {
+      innerRef,
       dataAttributes,
       onChange,
       min,
@@ -49,6 +50,7 @@ class Range extends PureComponent {
     return (
       <input {...{
         ...dataAttributes,
+        ref: innerRef,
         className: `${style.root} ${className}`,
         type: 'range',
         'data-cy': 'input_range',

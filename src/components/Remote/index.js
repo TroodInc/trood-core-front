@@ -8,7 +8,10 @@ import LoadingIndicator from '../LoadingIndicator'
 const requires = createRequires(resolve)
 const useRemoteComponent = createUseRemoteComponent({ requires })
 
-const Remote = (props) => {
+const Remote = ({
+  innerRef,
+  ...props
+}) => {
   const [loading, err, Component] = useRemoteComponent(props.url)
 
   if (loading) {
@@ -19,7 +22,7 @@ const Remote = (props) => {
     return <div>Unknown Error: {err.toString()}</div>
   }
 
-  return <Component {...props} />
+  return <Component ref={innerRef} {...props} />
 }
 
 export default Remote

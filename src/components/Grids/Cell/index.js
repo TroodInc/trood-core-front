@@ -14,6 +14,7 @@ const Cell = (props) => {
     verticalPadding,
     topPadding,
     bottomPadding,
+    innerRef,
     ...other
   } = props
 
@@ -34,7 +35,7 @@ const Cell = (props) => {
     if (sizeProp) sizeClasses = [...sizeClasses, styles[`aa-Cell${sizePrefix}-${sizeProp}`]]
     if (sizeHiddenProp) hiddenClasses = [...hiddenClasses, styles[`aa-Cell-${size}-hidden`]]
     if (sizeAutoProp) autoClasses = [...autoClasses, styles[`aa-Cell${sizePrefix}-auto`]]
-    if (sizeOffsetProp) offsetClasses = [...offsetClasses, styles[`aa-Cell-offset${sizePrefix}-${sizeProp}`]]
+    if (sizeOffsetProp) offsetClasses = [...offsetClasses, styles[`aa-Cell-offset${sizePrefix}-${sizeOffsetProp}`]]
 
     return { sizeClasses, hiddenClasses, autoClasses, offsetClasses }
   }, {
@@ -52,6 +53,7 @@ const Cell = (props) => {
   return (
     <div
       {...other}
+      ref={innerRef}
       style={style}
       className={classNames(
         className,
@@ -66,6 +68,8 @@ const Cell = (props) => {
     </div>
   )
 }
+
+Cell.defaultProps = {}
 
 Cell.propTypes = {
   children: PropTypes.node,

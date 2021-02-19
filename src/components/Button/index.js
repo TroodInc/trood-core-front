@@ -144,6 +144,7 @@ class Button extends PureComponent {
       className,
       link,
       dataAttributes,
+      innerRef,
     } = this.props
 
     const specialLabel = BUTTON_SPECIAL_ICONS[specialType]
@@ -159,7 +160,7 @@ class Button extends PureComponent {
     )
 
     return (
-      <div {...dataAttributes} className={classNames(
+      <div {...dataAttributes} ref={innerRef} className={classNames(
         style.root,
         className,
         style[type],

@@ -12,9 +12,7 @@ const CraftButton = props => {
 
   return (
     <Button {...{
-      dataAttributes: {
-        ref: ref => connect(drag(ref)),
-      },
+      innerRef: ref => connect(drag(ref)),
       ...props,
     }} />
   )

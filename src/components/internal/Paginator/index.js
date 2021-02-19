@@ -238,6 +238,7 @@ class Paginator extends PureComponent {
 
   render() {
     const {
+      innerRef,
       className,
       type,
       entity,
@@ -262,7 +263,7 @@ class Paginator extends PureComponent {
           }
 
           return (
-            <div className={classNames(styles.root, className)}>
+            <div ref={innerRef} className={classNames(styles.root, className)}>
               {this.renderClassicControls()}
               {children({ items })}
               {loading && (

@@ -6,6 +6,7 @@ import styles from './index.module.css'
 
 
 const Popup = ({
+  innerRef,
   className,
   width = 320,
   top,
@@ -28,7 +29,7 @@ const Popup = ({
 
   return (
     <div className={styles.wrapper}>
-      <div style={style} className={classNames(styles.popup, styles[type], className)}>
+      <div ref={innerRef} style={style} className={classNames(styles.popup, styles[type], className)}>
         {children}
       </div>
     </div>

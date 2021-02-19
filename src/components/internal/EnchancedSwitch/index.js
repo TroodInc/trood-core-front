@@ -129,6 +129,7 @@ class EnchancedSwitch extends PureComponent {
 
   render() {
     const {
+      innerRef,
       className,
       labelClassName,
       disabledLabelClassName,
@@ -154,6 +155,7 @@ class EnchancedSwitch extends PureComponent {
     return (
       <div {...{
         ...dataAttributes,
+        ref: innerRef,
         tabIndex: 0,
         className: classNames(style.root, className, disabled && style.disabled),
         'data-cy': label,

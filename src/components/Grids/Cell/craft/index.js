@@ -1,4 +1,5 @@
 import React from 'react'
+import classNames from 'classnames'
 import { useNode } from '@craftjs/core'
 
 import Settings from './Settings'
@@ -12,27 +13,27 @@ const CraftCell = props => {
     connectors: { connect, drag },
   } = useNode((node) => ({ props: node.data.props }))
   const {
+    className,
     sizeType, // service props for settings
     visualHelp,
     ...rest
   } = props
 
   return (
-    <div ref={ref => connect(drag(ref))}>
-      <Cell {...{
-        ...rest,
-        className: visualHelp ? styles.visualHelp : '',
-      }}>
-        {props.children}
-      </Cell>
-    </div>
+    <Cell {...{
+      ...rest,
+      innerRef: ref => connect(drag(ref)),
+      className: classNames(className, visualHelp && styles.visualHelp),
+    }}>
+      {props.children}
+    </Cell>
   )
 }
 
 CraftCell.craft = {
   displayName: 'Cell',
   props: {
-    visualHelp: true,
+    ...Cell.defaultProps,
   },
   related: {
     settings: Settings,

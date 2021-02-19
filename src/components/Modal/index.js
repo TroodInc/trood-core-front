@@ -8,6 +8,7 @@ import styles from './index.module.css'
 
 
 const Modal = ({
+  innerRef,
   className,
   width = 320,
   type = 'center',
@@ -29,7 +30,7 @@ const Modal = ({
 
   return (
     <div className={classNames(styles.overlay, styles[type])} onClick={onOverlayClick} ref={overlayRef}>
-      <Block style={style} className={classNames(styles.modal, className, styles[type])}>
+      <Block innerRef={innerRef} style={style} className={classNames(styles.modal, className, styles[type])}>
         {children}
       </Block>
     </div>
