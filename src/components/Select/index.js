@@ -314,6 +314,7 @@ class Select extends PureComponent {
 
   render() {
     const {
+      innerRef,
       className,
       labelClassName,
       label,
@@ -327,7 +328,7 @@ class Select extends PureComponent {
     const hasErrors = !!currentErrors.length
 
     return (
-      <div className={classNames(className, style.root)}>
+      <div ref={innerRef} className={classNames(className, style.root)}>
         {
           !!label &&
           <Label {...{

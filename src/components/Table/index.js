@@ -22,6 +22,7 @@ const getComponents = (columnComponents, componentKey = 'bodyCell', wrapper = 't
   })
 
 const Table = ({
+  innerRef,
   className,
   entity,
   queryOptions,
@@ -34,7 +35,7 @@ const Table = ({
   const bodyComponentsStore = Component.create({ nodes: bodyComponents })
 
   return (
-    <Paginator {...pagination} className={className} entity={entity} queryOptions={queryOptions}>
+    <Paginator innerRef={innerRef} {...pagination} className={className} entity={entity} queryOptions={queryOptions}>
       {({ items }) => (
         <table className={styles.table}>
           <thead>

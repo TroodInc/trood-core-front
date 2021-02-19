@@ -2,13 +2,13 @@ import React from 'react'
 import classNames from 'classnames'
 import { useNode } from '@craftjs/core'
 
+import HtmlTags from '../index'
 import Settings from './Settings'
-import Container from '../index'
 
 import styles from './index.module.css'
 
 
-const CraftContainer = props => {
+const CraftHtmlTags = props => {
   const {
     connectors: { connect, drag },
   } = useNode((node) => ({ props: node.data.props }))
@@ -19,20 +19,20 @@ const CraftContainer = props => {
   } = props
 
   return (
-    <Container {...{
+    <HtmlTags {...{
       ...rest,
       innerRef: ref => connect(drag(ref)),
       className: classNames(className, visualHelp && styles.visualHelp),
     }}>
       {props.children}
-    </Container>
+    </HtmlTags>
   )
 }
 
-CraftContainer.craft = {
-  displayName: 'Container',
+CraftHtmlTags.craft = {
+  displayName: 'HtmlTags',
   props: {
-    ...Container.defaultProps,
+    ...HtmlTags.defaultProps,
   },
   related: {
     settings: Settings,
@@ -43,4 +43,4 @@ CraftContainer.craft = {
   },
 }
 
-export default CraftContainer
+export default CraftHtmlTags

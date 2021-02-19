@@ -25,13 +25,14 @@ class Label extends PureComponent {
 
   render() {
     const {
+      innerRef,
       className,
       required,
       label,
     } = this.props
 
     return (
-      <span className={classNames(style.root, className)}>
+      <span ref={innerRef} className={classNames(style.root, className)}>
         {label}{required && ' *'}
       </span>
     )

@@ -442,6 +442,7 @@ class Input extends PureComponent {
 
   render() {
     const {
+      innerRef,
       dataAttributes,
       className,
       labelClassName,
@@ -534,7 +535,7 @@ class Input extends PureComponent {
     }
 
     return (
-      <div className={classNames(
+      <div ref={innerRef} className={classNames(
         style.rootWrapper,
         className,
       )}>

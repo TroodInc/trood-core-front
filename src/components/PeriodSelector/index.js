@@ -62,6 +62,7 @@ class PeriodSelector extends PureComponent {
 
   render() {
     const {
+      innerRef,
       className,
       periods,
       label,
@@ -79,7 +80,7 @@ class PeriodSelector extends PureComponent {
     } = this.state
 
     return (
-      <div className={classNames(style.root, className)}>
+      <div ref={innerRef} className={classNames(style.root, className)}>
         <Label label={label} />
         <div className={style.components}>
           <Select {...{

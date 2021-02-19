@@ -2,13 +2,13 @@ import React from 'react'
 import classNames from 'classnames'
 import { useNode } from '@craftjs/core'
 
+import SvgTags from '../index'
 import Settings from './Settings'
-import Container from '../index'
 
 import styles from './index.module.css'
 
 
-const CraftContainer = props => {
+const CraftSvgTags = props => {
   const {
     connectors: { connect, drag },
   } = useNode((node) => ({ props: node.data.props }))
@@ -19,20 +19,20 @@ const CraftContainer = props => {
   } = props
 
   return (
-    <Container {...{
+    <SvgTags {...{
       ...rest,
       innerRef: ref => connect(drag(ref)),
       className: classNames(className, visualHelp && styles.visualHelp),
     }}>
       {props.children}
-    </Container>
+    </SvgTags>
   )
 }
 
-CraftContainer.craft = {
-  displayName: 'Container',
+CraftSvgTags.craft = {
+  displayName: 'SvgTags',
   props: {
-    ...Container.defaultProps,
+    ...SvgTags.defaultProps,
   },
   related: {
     settings: Settings,
@@ -43,4 +43,4 @@ CraftContainer.craft = {
   },
 }
 
-export default CraftContainer
+export default CraftSvgTags

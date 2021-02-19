@@ -22,6 +22,7 @@ import style from './index.module.css'
  */
 
 const Icon = ({
+  innerRef,
   size,
   color,
   type,
@@ -45,6 +46,7 @@ const Icon = ({
   return (
     <div {...{
       ...dataAttributes,
+      ref: innerRef,
       className: classNames(
         style.root,
         className,

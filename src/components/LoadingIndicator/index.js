@@ -35,6 +35,7 @@ class LoadingIndicator extends PureComponent {
 
   render() {
     const {
+      innerRef,
       className,
       style,
       type,
@@ -45,6 +46,7 @@ class LoadingIndicator extends PureComponent {
 
     return (
       <div {...{
+        ref: innerRef,
         style,
         className: classNames(styles.root, className, styles[type]),
       }} >

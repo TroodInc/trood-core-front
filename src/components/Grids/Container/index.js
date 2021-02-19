@@ -7,12 +7,14 @@ import styles from './index.module.css'
 
 const Container = ({
   children,
-  className = '',
-  fluid = false,
+  className,
+  fluid,
+  innerRef,
   ...other
 }) => (
   <div
     {...other}
+    ref={innerRef}
     className={classNames(
       className,
       styles['aa-Container'],
@@ -22,6 +24,10 @@ const Container = ({
     {children}
   </div>
 )
+
+Container.defaultProps = {
+  fluid: false,
+}
 
 Container.propTypes = {
   children: PropTypes.oneOfType([PropTypes.element, PropTypes.string, PropTypes.array]),

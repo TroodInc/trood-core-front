@@ -11,11 +11,9 @@ const CraftBlock = props => {
   } = useNode((node) => ({ props: node.data.props }))
 
   return (
-    <div ref={ref => connect(drag(ref))}>
-      <Block {...props}>
-        {props.children}
-      </Block>
-    </div>
+    <Block {...props} innerRef={ref => connect(drag(ref))}>
+      {props.children}
+    </Block>
   )
 }
 

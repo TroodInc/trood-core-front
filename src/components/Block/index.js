@@ -34,8 +34,8 @@ Block.propTypes = {
 }
 
 Block.defaultProps = {
-  rounded: false,
-  transparent: true,
+  rounded: true,
+  transparent: false,
 }
 
 export default Block

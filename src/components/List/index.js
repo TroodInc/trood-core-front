@@ -7,6 +7,7 @@ import Context from '../Context'
 import Paginator from '../internal/Paginator'
 
 const List = ({
+  innerRef,
   className,
   entity,
   queryOptions,
@@ -16,7 +17,7 @@ const List = ({
   const componentsStore = Component.create({ nodes })
 
   return (
-    <Paginator {...pagination} className={className} entity={entity} queryOptions={queryOptions}>
+    <Paginator innerRef={innerRef} {...pagination} className={className} entity={entity} queryOptions={queryOptions}>
       {({ items }) => items.map((item, i) => (
         <Context key={i} context={item}>
           <BaseComponent component={componentsStore} />

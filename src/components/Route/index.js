@@ -8,8 +8,8 @@ const Page = ({ children, title }) => {
   return children
 }
 
-const Route = ({ title, children, ...rest }) => {
-  return <RouterRoute {...rest}>
+const Route = ({ innerRef, title, children, ...rest }) => {
+  return <RouterRoute ref={innerRef} {...rest}>
     <Page title={title}>{children}</Page>
   </RouterRoute>
 }
