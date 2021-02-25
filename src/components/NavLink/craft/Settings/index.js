@@ -33,15 +33,6 @@ const Settings = () => {
           key: 'activeClassName',
         }),
       }} />
-      <TSelect.default {...{
-        className: styles.select,
-        label: 'Aria-current',
-        values: props['aria-current'] ? [props['aria-current']] : [],
-        items: ariaCurrentItems.map(value => ({ value })),
-        onChange: vals => setProp((props) => props['aria-current'] = vals[0]),
-        clearable: true,
-        placeHolder: 'Not Set',
-      }} />
       <TCheckbox.default {...{
         ...checkboxProps({
           label: 'Exact',
@@ -53,6 +44,15 @@ const Settings = () => {
           label: 'Strict',
           key: 'strict',
         }),
+      }} />
+      <TSelect.default {...{
+        className: styles.select,
+        label: 'Aria-current',
+        values: props['aria-current'] ? [props['aria-current']] : [],
+        items: ariaCurrentItems.map(value => ({ value })),
+        onChange: vals => setProp((props) => props['aria-current'] = vals[0]),
+        clearable: true,
+        placeHolder: 'Not Set',
       }} />
     </div>
   )
