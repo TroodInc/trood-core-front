@@ -8,13 +8,9 @@ const Page = ({ children, title }) => {
   return children
 }
 
-const Route = ({ innerRef, title, children, className, ...rest }) => {
-  return (
-    <div ref={innerRef} className={className}>
-      <RouterRoute {...rest}>
-        <Page title={title}>{children}</Page>
-      </RouterRoute>
-    </div>
-  )
+const Route = ({ title, children, ...rest }) => {
+  return <RouterRoute {...rest}>
+    <Page title={title}>{children}</Page>
+  </RouterRoute>
 }
 export default Route

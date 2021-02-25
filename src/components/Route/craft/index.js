@@ -1,7 +1,6 @@
 import React from 'react'
 import { useNode } from '@craftjs/core'
 
-import Route from '../index'
 import Settings from './Settings'
 
 import styles from './index.module.css'
@@ -15,15 +14,16 @@ const CraftRoute = props => {
     props: node.data.props,
     custom: node.data.custom,
   }))
+  const { visualHelp, ...rest } = props
 
   return (
-    <Route {...props} innerRef={ref => connect(drag(ref))} className={props.visualHelp && styles.visualHelp}>
+    <div {...rest} ref={ref => connect(drag(ref))} className={visualHelp && styles.visualHelp}>
       Title: {props.title}<br/>
       Path: {props.path}<br/>
       Exact: {props.exact ? 'yes' : 'no'}<br/>
       Chunk: {custom.chunk}
       {props.children}
-    </Route>
+    </div>
   )
 }
 

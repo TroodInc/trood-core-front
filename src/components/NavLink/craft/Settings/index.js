@@ -1,10 +1,12 @@
 /* eslint-disable jsx-a11y/no-onchange */
 import React from 'react'
 import { useNode } from '@craftjs/core'
-import { TCheckbox, TInput } from '$trood/components'
+import { TCheckbox, TInput, TSelect } from '$trood/components'
 
 import styles from './index.module.css'
 
+
+const ariaCurrentItems = ['page', 'step', 'location', 'date', 'time', 'true', 'false']
 
 const Settings = () => {
   const { actions: { setProp }, props } = useNode((node) => ({ props: node.data.props }))
@@ -31,11 +33,14 @@ const Settings = () => {
           key: 'activeClassName',
         }),
       }} />
-      <TInput.default {...{
-        ...inputProps({
-          label: 'Aria-current',
-          key: 'aria-current',
-        }),
+      <TSelect.default {...{
+        className: styles.select,
+        label: 'Aria-current',
+        values: props['aria-current'] ? [props['aria-current']] : [],
+        items: ariaCurrentItems.map(value => ({ value })),
+        onChange: vals => setProp((props) => props['aria-current'] = vals[0]),
+        clearable: true,
+        placeHolder: 'Not Set',
       }} />
       <TCheckbox.default {...{
         ...checkboxProps({

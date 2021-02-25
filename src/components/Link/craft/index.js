@@ -1,23 +1,23 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { useNode } from '@craftjs/core'
 
 import Settings from './Settings'
-import LinkWrapper from '../index'
 
 
-const CraftBlock = props => {
+const CraftLink = props => {
   const {
     connectors: { connect, drag },
   } = useNode((node) => ({ props: node.data.props }))
 
   return (
-    <LinkWrapper {...props} innerRef={ref => connect(drag(ref))}>
+    <Link {...props} innerRef={ref => connect(drag(ref))}>
       {props.children}
-    </LinkWrapper>
+    </Link>
   )
 }
 
-CraftBlock.craft = {
+CraftLink.craft = {
   displayName: 'Link',
   related: {
     settings: Settings,
@@ -31,4 +31,4 @@ CraftBlock.craft = {
   },
 }
 
-export default CraftBlock
+export default CraftLink
