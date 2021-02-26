@@ -11,4 +11,4 @@ RUN chmod +x /home/rollup.sh \
     && curl https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py \
     && python3 /tmp/get-pip.py \
     && pip install requests click\
-    && mkdir /usr/share/nginx/html/fragments
+    && mkdir -p /usr/share/nginx/html/fragments
