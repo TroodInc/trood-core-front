@@ -2,6 +2,11 @@ import styled from 'styled-components'
 
 import 'styles/variables.css'
 
+import Switch from './Switch/craft'
+import Route from './Route/craft'
+import Link from './Link/craft'
+import NavLink from './NavLink/craft'
+
 import Block from './Block/craft'
 
 import GridContainer from './Grids/Container/craft'
@@ -15,6 +20,10 @@ import Button from './Button/craft'
 import Typography from './Typography/craft'
 
 const components = {
+  Switch,
+  Route,
+  Link,
+  NavLink,
   Block,
   GridContainer,
   GridRow,
