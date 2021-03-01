@@ -5,23 +5,27 @@ const useStoreConfig = (url, getToken = () => {}) => {
 
   useEffect(() => {
     let update = setState
-    update({ loading: true, storeConfig: {} })
-    const token = getToken()
-    const fetchOptions = {}
-    if (token) {
-      fetchOptions.headers = {
-        'Authorization': getToken(),
+    if (url) {
+      update({ loading: true, storeConfig: {} })
+      const token = getToken()
+      const fetchOptions = {}
+      if (token) {
+        fetchOptions.headers = {
+          'Authorization': getToken(),
+        }
       }
+      fetch(url, fetchOptions)
+        .then(res => {
+          res.json()
+            .then(storeConfig => {
+              update({ loading: false, storeConfig, err: undefined })
+            })
+            .catch(err => update({ loading: false, storeConfig: {}, err }))
+        })
+        .catch(err => update({ loading: false, storeConfig: {}, err }))
+    } else {
+      update({ loading: false, storeConfig: {}, err })
     }
-    fetch(url, fetchOptions)
-      .then(res => {
-        res.json()
-          .then(storeConfig => {
-            update({ loading: false, storeConfig, err: undefined })
-          })
-          .catch(err => update({ loading: false, storeConfig: {}, err }))
-      })
-      .catch(err => update({ loading: false, storeConfig: {}, err }))
     return () => {
       update = () => {}
     }
