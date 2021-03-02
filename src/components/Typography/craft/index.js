@@ -9,22 +9,23 @@ import EditWrapper from '../../internal/EditWrapper'
 
 import styles from '../index.module.css'
 
-
-const CraftTypography = props => {
+const CraftTypography = (props) => {
   const {
     connectors: { connect, drag },
     actions: { setProp },
   } = useNode((node) => ({ props: node.data.props }))
 
   return (
-    <EditWrapper {...{
-      innerRef: ref => connect(drag(ref)),
-      onChange: e => setProp(props => props.value = e.target.value.replace(/<\/?[^>]+(>|$)/g, '')),
-      text: props.value,
-      tagName: Typography.knownTypes[props.type],
-      className: classNames(styles[props.type], props.bold && styles.bold),
-    }}>
-      <Typography {...props} />
+    <EditWrapper
+      {...{
+        innerRef: (ref) => connect(drag(ref)),
+        onChange: (e) => setProp((props) => (props.value = e.target.value.replace(/<\/?[^>]+(>|$)/g, ''))),
+        text: typeof props.value === 'object' ? props.value.path : props.value,
+        tagName: Typography.knownTypes[props.type],
+        className: classNames(styles[props.type], props.bold && styles.bold),
+      }}
+    >
+      <Typography {...{ ...props, value: typeof props.value === 'object' ? props.value.path : props.value }} />
     </EditWrapper>
   )
 }
