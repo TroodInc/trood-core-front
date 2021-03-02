@@ -39,6 +39,9 @@ CraftTypography.craft = {
     ...Typography.defaultProps,
     value: 'Typography',
   },
+  rules: {
+    canMoveIn: () => false,
+  },
 }
 
 export default CraftTypography

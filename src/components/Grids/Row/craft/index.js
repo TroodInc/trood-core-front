@@ -37,10 +37,6 @@ CraftRow.craft = {
   related: {
     settings: Settings,
   },
-  rules: {
-    canDrag: () => true,
-    canMoveIn: () => true,
-  },
 }
 
 export default CraftRow

@@ -4,7 +4,10 @@ import { Component } from 'core/pageStore/index.js'
 import { useObserver } from 'mobx-react-lite'
 import 'styles/variables.css'
 
-const componentsStore = Component.create({ chunk: window.coreConfig.pageEntryUrl })
+import { pageEntryFullUrl } from './constants'
+
+
+const componentsStore = Component.create({ chunk: pageEntryFullUrl })
 
 
 function App() {

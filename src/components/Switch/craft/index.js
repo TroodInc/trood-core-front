@@ -1,5 +1,6 @@
 import React from 'react'
 import { useNode } from '@craftjs/core'
+import classNames from 'classnames'
 
 import styles from './index.module.css'
 
@@ -11,7 +12,7 @@ const CraftSwitch = props => {
   const { visualHelp, ...rest } = props
 
   return (
-    <div {...rest} ref={ref => connect(drag(ref))} className={visualHelp && styles.visualHelp}>
+    <div {...rest} ref={ref => connect(drag(ref))} className={classNames({ [styles.visualHelp]: visualHelp })}>
       {props.children}
     </div>
   )
@@ -19,10 +20,6 @@ const CraftSwitch = props => {
 
 CraftSwitch.craft = {
   displayName: 'Switch',
-  rules: {
-    canDrag: () => true,
-    canMoveIn: () => true,
-  },
 }
 
 export default CraftSwitch

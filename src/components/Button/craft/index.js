@@ -27,6 +27,9 @@ CraftButton.craft = {
     ...Button.defaultProps,
     label: 'Button',
   },
+  rules: {
+    canMoveIn: () => false,
+  },
 }
 
 export default CraftButton

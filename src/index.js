@@ -15,10 +15,12 @@ import { getAuthStore, getToken } from 'core/authStore'
 
 import useStoreConfig from './useStoreConfig'
 
+import { storeConfigFullUrl } from './constants'
+
 
 const Main = () => {
   const [loading, err, storeConfig] = useStoreConfig(
-    window.coreConfig.storeConfigUrl,
+    storeConfigFullUrl,
     getToken,
   )
 
