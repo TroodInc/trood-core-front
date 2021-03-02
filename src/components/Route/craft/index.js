@@ -43,10 +43,6 @@ CraftRoute.craft = {
   related: {
     settings: Settings,
   },
-  rules: {
-    canDrag: () => true,
-    canMoveIn: () => true,
-  },
 }
 
 export default CraftRoute

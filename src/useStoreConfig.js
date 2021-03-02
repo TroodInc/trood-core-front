@@ -29,6 +29,7 @@ const useStoreConfig = (url, getToken = () => {}) => {
     return () => {
       update = () => {}
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url, getToken])
 
   return [loading, err, storeConfig]

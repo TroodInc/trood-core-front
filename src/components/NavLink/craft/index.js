@@ -30,10 +30,6 @@ CraftNavLink.craft = {
     to: '/',
     children: 'NavLink',
   },
-  rules: {
-    canDrag: () => true,
-    canMoveIn: () => true,
-  },
 }
 
 export default CraftNavLink

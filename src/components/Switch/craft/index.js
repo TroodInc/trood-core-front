@@ -20,10 +20,6 @@ const CraftSwitch = props => {
 
 CraftSwitch.craft = {
   displayName: 'Switch',
-  rules: {
-    canDrag: () => true,
-    canMoveIn: () => true,
-  },
 }
 
 export default CraftSwitch

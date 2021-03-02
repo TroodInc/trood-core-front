@@ -30,10 +30,6 @@ CraftLink.craft = {
     to: '/',
     children: 'Link',
   },
-  rules: {
-    canDrag: () => true,
-    canMoveIn: () => true,
-  },
 }
 
 export default CraftLink
