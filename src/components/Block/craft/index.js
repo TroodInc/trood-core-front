@@ -9,9 +9,10 @@ const CraftBlock = props => {
   const {
     connectors: { connect, drag },
   } = useNode((node) => ({ props: node.data.props }))
+  const { visualHelp, ...rest } = props
 
   return (
-    <Block {...props} innerRef={ref => connect(drag(ref))}>
+    <Block {...rest} innerRef={ref => connect(drag(ref))}>
       {props.children}
     </Block>
   )

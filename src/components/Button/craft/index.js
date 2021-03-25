@@ -9,11 +9,12 @@ const CraftButton = props => {
   const {
     connectors: { connect, drag },
   } = useNode((node) => ({ props: node.data.props }))
+  const { visualHelp, ...rest } = props
 
   return (
     <Button {...{
       innerRef: ref => connect(drag(ref)),
-      ...props,
+      ...rest,
     }} />
   )
 }

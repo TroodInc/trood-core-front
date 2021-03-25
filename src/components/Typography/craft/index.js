@@ -15,6 +15,7 @@ const CraftTypography = props => {
     connectors: { connect, drag },
     actions: { setProp },
   } = useNode((node) => ({ props: node.data.props }))
+  const { visualHelp, ...rest } = props
 
   return (
     <EditWrapper {...{
@@ -24,7 +25,7 @@ const CraftTypography = props => {
       tagName: Typography.knownTypes[props.type],
       className: classNames(styles[props.type], props.bold && styles.bold),
     }}>
-      <Typography {...props} />
+      <Typography {...rest} />
     </EditWrapper>
   )
 }
