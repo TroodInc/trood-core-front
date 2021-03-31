@@ -34,6 +34,7 @@ import Spacer from './Spacer'
 import Select from './Select'
 import Table from './Table'
 import Typography from './Typography'
+import Image from './Image'
 
 const components = {
   Context,
@@ -67,6 +68,7 @@ const components = {
   Spacer,
   Table,
   Typography,
+  Image,
 }
 
 export default Object.keys(components).reduce((memo, key) => {

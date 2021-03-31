@@ -18,6 +18,7 @@ import SvgTags from './Tags/SvgTags/craft'
 
 import Button from './Button/craft'
 import Typography from './Typography/craft'
+import Image from './Image/craft'
 
 const components = {
   Switch,
@@ -32,6 +33,7 @@ const components = {
   SvgTags,
   Button,
   Typography,
+  Image,
 }
 
 export default Object.keys(components).reduce((memo, key) => {
