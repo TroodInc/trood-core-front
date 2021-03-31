@@ -5,13 +5,14 @@ import { TSelect, TInput } from '$trood/components'
 
 import styles from './index.module.css'
 
-import { IMAGE_FIT } from '../../constants'
+import { IMAGE_FIT, cssMeasurementUnits } from '../../constants'
 
 
 const Settings = () => {
   const { actions: { setProp }, props } = useNode((node) => ({ props: node.data.props }))
 
   const selectProps = ({ label, key, items }) => ({
+    className: styles.field,
     label,
     items,
     values: props[key] ? [props[key]] : [],
@@ -19,7 +20,7 @@ const Settings = () => {
   })
 
   const inputProps = ({ label, key, type }) => ({
-    className: styles.input,
+    className: styles.field,
     label,
     type,
     value: props[key],
@@ -35,11 +36,25 @@ const Settings = () => {
           type: 'int',
         }),
       }} />
+      <TSelect.default {...{
+        ...selectProps({
+          label: 'Width units',
+          key: 'widthUnits',
+          items: cssMeasurementUnits.map(value => ({ value })),
+        }),
+      }} />
       <TInput.default {...{
         ...inputProps({
           label: 'Height',
           key: 'height',
           type: 'int',
+        }),
+      }} />
+      <TSelect.default {...{
+        ...selectProps({
+          label: 'Height units',
+          key: 'heightUnits',
+          items: cssMeasurementUnits.map(value => ({ value })),
         }),
       }} />
       <TInput.default {...{
