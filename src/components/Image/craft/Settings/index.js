@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-onchange */
 import React from 'react'
 import { useNode } from '@craftjs/core'
+import classNames from 'classnames'
 import { TSelect, TInput } from '$trood/components'
 
 import styles from './index.module.css'
@@ -29,34 +30,36 @@ const Settings = () => {
 
   return (
     <div>
-      <TInput.default {...{
-        ...inputProps({
-          label: 'Width',
-          key: 'width',
-          type: 'int',
-        }),
-      }} />
-      <TSelect.default {...{
-        ...selectProps({
-          label: 'Width units',
-          key: 'widthUnits',
-          items: cssMeasurementUnits.map(value => ({ value })),
-        }),
-      }} />
-      <TInput.default {...{
-        ...inputProps({
-          label: 'Height',
-          key: 'height',
-          type: 'int',
-        }),
-      }} />
-      <TSelect.default {...{
-        ...selectProps({
-          label: 'Height units',
-          key: 'heightUnits',
-          items: cssMeasurementUnits.map(value => ({ value })),
-        }),
-      }} />
+      <div className={classNames(styles.field, styles.fieldContainer)}>
+        <TInput.default {...{
+          ...inputProps({
+            label: 'Width',
+            key: 'width',
+            type: 'int',
+          }),
+        }} />
+        <TSelect.default {...{
+          ...selectProps({
+            key: 'widthUnits',
+            items: cssMeasurementUnits.map(value => ({ value })),
+          }),
+        }} />
+      </div>
+      <div className={classNames(styles.field, styles.fieldContainer)}>
+        <TInput.default {...{
+          ...inputProps({
+            label: 'Height',
+            key: 'height',
+            type: 'int',
+          }),
+        }} />
+        <TSelect.default {...{
+          ...selectProps({
+            key: 'heightUnits',
+            items: cssMeasurementUnits.map(value => ({ value })),
+          }),
+        }} />
+      </div>
       <TInput.default {...{
         ...inputProps({
           label: 'Image Url',
