@@ -79,7 +79,7 @@ CraftTable.craft = {
     settings: Settings,
   },
   rules: {
-    canDrag: () => true,
+    canMoveIn: () => false,
   },
 }
 
