@@ -1,0 +1,19 @@
+.field:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.fieldContainer {
+  display: flex;
+  align-items: flex-end;
+}
+
+.fieldContainer > div:first-child {
+  flex: 8;
+}
+
+.fieldContainer > div:last-child {
+  flex: 2;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  min-height: 40px;
+}
