@@ -4,7 +4,7 @@ import BaseComponent from 'core/BaseComponent'
 import { Component } from 'core/pageStore'
 import Context from '../Context'
 
-import Paginator from '../internal/Paginator'
+import Paginator, { PAGINATION_TYPES } from '../internal/Paginator'
 
 const List = ({
   innerRef,
@@ -46,7 +46,7 @@ List.propTypes = {
   }),
   nodes: PropTypes.arrayOf(PropTypes.object),
   pagination: PropTypes.shape({
-    type: PropTypes.oneOf(['classic', 'infinity', 'disabled']),
+    paginationType: PropTypes.oneOf(Object.values(PAGINATION_TYPES)),
     defaultPageSize: PropTypes.number,
     pagesControlsCount: PropTypes.number,
     pageSizes: PropTypes.arrayOf(PropTypes.number),

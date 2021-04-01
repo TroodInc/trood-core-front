@@ -172,6 +172,7 @@ class Select extends PureComponent {
     }],
     type: SELECT_TYPES.dropdown,
     values: [],
+    items: [],
 
     errors: [],
     validate: {},
@@ -230,7 +231,7 @@ class Select extends PureComponent {
       items: items.map((item, i) => ({
         label: (
           <Context key={i} context={item}>
-            <BaseComponent  $context={item} component={labelStore} />
+            <BaseComponent $context={item} component={labelStore} />
           </Context>
         ),
         value: getData(

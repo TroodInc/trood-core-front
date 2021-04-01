@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import loadable from '@loadable/component'
 import classNames from 'classnames'
 import throttle from 'lodash/throttle'
 import debounce from 'lodash/debounce'
@@ -19,16 +18,9 @@ import {
 
 import Icon, { ICONS_TYPES } from '../Icon'
 import Label from '../Label'
-import LoadingIndicator from '../LoadingIndicator'
+import WysiwygEditor from './Wysiwyg'
 
 import style from './index.module.css'
-
-const WysiwygEditor = loadable(
-  () => import('./Wysiwyg'),
-  {
-    fallback: (<LoadingIndicator />),
-  },
-)
 
 const noopFunc = () => {}
 

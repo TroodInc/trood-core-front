@@ -20,6 +20,8 @@ import Button from './Button/craft'
 import Typography from './Typography/craft'
 import Image from './Image/craft'
 
+import Table from './Table/craft'
+
 const components = {
   Switch,
   Route,
@@ -34,6 +36,7 @@ const components = {
   Button,
   Typography,
   Image,
+  Table,
 }
 
 export default Object.keys(components).reduce((memo, key) => {

@@ -14,11 +14,17 @@ import LoadingIndicator from '../../LoadingIndicator'
 import styles from './index.module.css'
 
 
+const PAGINATION_TYPES = {
+  classic: 'classic',
+  infinity: 'infinity',
+  disabled: 'disabled',
+}
+
 class Paginator extends PureComponent {
   static defaultProps = {
     defaultPageSize: 10,
     pagesControlsCount: 5,
-    type: 'classic',
+    paginationType: PAGINATION_TYPES.classic,
     pageSizes: [10, 25, 50, 100],
   }
 
@@ -47,8 +53,8 @@ class Paginator extends PureComponent {
   }
 
   setScrollEvent() {
-    const { type, scrollContainerSelector } = this.props
-    if (type !=='infinity') return
+    const { paginationType, scrollContainerSelector } = this.props
+    if (paginationType !== PAGINATION_TYPES.infinity) return
 
     this.scrollContainerNode = document.querySelector(scrollContainerSelector)
     if (!this.scrollContainerNode) return
@@ -72,12 +78,12 @@ class Paginator extends PureComponent {
 
   get paginator() {
     const {
-      type,
+      paginationType,
       history,
       defaultPageSize,
     } = this.props
 
-    if (type === 'disabled') {
+    if (paginationType === PAGINATION_TYPES.disabled) {
       return { page: 0, pageSize: 0 }
     }
 
@@ -93,7 +99,7 @@ class Paginator extends PureComponent {
 
   renderClassicControls(bottom) {
     const {
-      type,
+      paginationType,
       entity,
       queryOptions,
       pagesControlsCount,
@@ -103,7 +109,7 @@ class Paginator extends PureComponent {
     } = this.props
 
     if (
-      type !== 'classic' ||
+      paginationType !== PAGINATION_TYPES.classic ||
       (topControls === false && !bottom) ||
       (bottomControls === false && bottom)
     ) return null
@@ -190,13 +196,14 @@ class Paginator extends PureComponent {
     const {
       entity,
       queryOptions,
-      type,
+      paginationType,
       infinityControls,
     } = this.props
 
     const { pageSize } = this.paginator
 
-    if (type !== 'infinity' || infinityControls === false || !this.mount || this.scrollContainerNode) return null
+    if (paginationType !== PAGINATION_TYPES.infinity ||
+      infinityControls === false || !this.mount || this.scrollContainerNode) return null
 
     const nextPage = entity.getInfinityNextPageNumber(pageSize, queryOptions)
 
@@ -240,7 +247,7 @@ class Paginator extends PureComponent {
     const {
       innerRef,
       className,
-      type,
+      paginationType,
       entity,
       queryOptions,
       children,
@@ -251,9 +258,9 @@ class Paginator extends PureComponent {
     return (
       <Observer>
         {() => {
-          let items = []
-          let loading = false
-          if (type === 'infinity') {
+          let items
+          let loading
+          if (paginationType === PAGINATION_TYPES.infinity) {
             items = entity.getInfinityPages(pageSize, queryOptions)
             loading = entity.getInfinityPagesLoading(pageSize, queryOptions)
             this.handleScroll()
@@ -279,4 +286,9 @@ class Paginator extends PureComponent {
   }
 }
 
-export default withRouter(Paginator)
+export { PAGINATION_TYPES }
+
+const wrappedPaginator = withRouter(Paginator)
+wrappedPaginator.defaultProps = Paginator.defaultProps
+
+export default wrappedPaginator
