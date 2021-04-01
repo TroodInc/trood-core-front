@@ -2,28 +2,29 @@ import React from 'react'
 import { useNode } from '@craftjs/core'
 
 import Settings from './Settings'
-import Block from '../index'
+import Image from '../index'
 
 
-const CraftBlock = props => {
+const CraftImage = props => {
   const {
     connectors: { connect, drag },
   } = useNode((node) => ({ props: node.data.props }))
   const { visualHelp, ...rest } = props
 
   return (
-    <Block {...rest} innerRef={ref => connect(drag(ref))}>
-      {props.children}
-    </Block>
+    <Image {...rest} innerRef={ref => connect(drag(ref))} />
   )
 }
 
-CraftBlock.craft = {
-  displayName: 'Block',
-  props: Block.defaultProps,
+CraftImage.craft = {
+  displayName: 'Image',
+  props: Image.defaultProps,
   related: {
     settings: Settings,
   },
+  rules: {
+    canMoveIn: () => false,
+  },
 }
 
-export default CraftBlock
+export default CraftImage

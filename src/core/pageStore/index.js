@@ -1,5 +1,6 @@
 import { types, flow } from 'mobx-state-tree'
 import { nanoid } from 'nanoid'
+import components from 'components'
 
 
 const normalizeApiPath = (path) => {
@@ -8,8 +9,14 @@ const normalizeApiPath = (path) => {
 }
 
 const convertObject = (cur, data) => {
+  const type = typeof cur.type === 'string' ? cur.type : (cur.type || {}).resolvedName
+
+  if (components[type]?.transformFunctions?.loadTransform) {
+    return components[type].transformFunctions.loadTransform(cur, data, node => convertObject(node, data))
+  }
+
   const component = {
-    type: typeof cur.type === 'string' ? cur.type : (cur.type || {}).resolvedName,
+    type,
     props: cur.props,
     nodes: cur.nodes || [],
     ...cur.custom,

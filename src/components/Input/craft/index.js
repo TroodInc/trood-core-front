@@ -1,36 +1,31 @@
 import React from 'react'
 import { useNode } from '@craftjs/core'
 
-import Settings from './Settings'
-import Button from '../index'
+import Input from '../index'
 
 
-const CraftButton = props => {
+const CraftInput = props => {
   const {
     connectors: { connect, drag },
   } = useNode((node) => ({ props: node.data.props }))
   const { visualHelp, ...rest } = props
 
   return (
-    <Button {...{
+    <Input {...{
       innerRef: ref => connect(drag(ref)),
       ...rest,
     }} />
   )
 }
 
-CraftButton.craft = {
-  displayName: 'Button',
-  related: {
-    settings: Settings,
-  },
+CraftInput.craft = {
+  displayName: 'Input',
   props: {
-    ...Button.defaultProps,
-    label: 'Button',
+    ...Input.defaultProps,
   },
   rules: {
     canMoveIn: () => false,
   },
 }
 
-export default CraftButton
+export default CraftInput

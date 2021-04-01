@@ -34,6 +34,7 @@ import Spacer from './Spacer'
 import Select from './Select'
 import Table from './Table'
 import Typography from './Typography'
+import Image from './Image'
 
 const components = {
   Context,
@@ -67,13 +68,19 @@ const components = {
   Spacer,
   Table,
   Typography,
+  Image,
 }
 
 export default Object.keys(components).reduce((memo, key) => {
   const Component = components[key]
   const refComponent = forwardRef((props, ref) => <Component {...props} innerRef={ref} />)
+  const styledComponent = styled(refComponent)`${(props = {}) => props.style || ''}`
+  styledComponent.defaultProps = Component.defaultProps
+  styledComponent.displayName = Component.displayName
+  styledComponent.transformFunctions = Component.transformFunctions
+
   return {
     ...memo,
-    [key]: styled(refComponent)`${(props = {}) => props.style || ''}`,
+    [key]: styledComponent,
   }
 }, {})

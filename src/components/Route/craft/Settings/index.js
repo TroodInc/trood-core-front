@@ -3,6 +3,8 @@ import React from 'react'
 import { useNode } from '@craftjs/core'
 import { TCheckbox, TInput } from '$trood/components'
 
+import { customChunkConstant } from '../../constants'
+
 import styles from './index.module.css'
 
 
@@ -15,7 +17,6 @@ const Settings = () => {
     props: node.data.props,
     custom: node.data.custom,
   }))
-  const customChunkConstant = 'custodian/data/page/'
 
   const inputProps = ({ label, key }) => ({
     className: styles.input,
@@ -56,7 +57,7 @@ const Settings = () => {
         label: 'Chunk',
         value: (custom.chunk || '').replace(customChunkConstant, ''),
         onChange: value => setCustom(
-          (custom) => (custom.chunk = `${customChunkConstant}${value}`),
+          (custom) => (custom.chunk = `${customChunkConstant}${value || ''}`),
           1000,
         ),
       }} />

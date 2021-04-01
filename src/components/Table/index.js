@@ -1,12 +1,13 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import BaseComponent from 'core/BaseComponent'
 import { Component } from 'core/pageStore'
 import Context from '../Context'
 
-import Paginator from '../internal/Paginator'
+import Paginator, { PAGINATION_TYPES } from '../internal/Paginator'
 
+import transform from './transform'
 import styles from './index.module.css'
-import PropTypes from 'prop-types'
 
 
 const getComponents = (columnComponents, componentKey = 'bodyCell', wrapper = 'td') =>
@@ -27,7 +28,7 @@ const Table = ({
   entity,
   queryOptions,
   columnComponents,
-  pagination = {},
+  pagination,
 }) => {
   const headerComponents = getComponents(columnComponents, 'headerCell', 'th')
   const bodyComponents = getComponents(columnComponents)
@@ -35,7 +36,7 @@ const Table = ({
   const bodyComponentsStore = Component.create({ nodes: bodyComponents })
 
   return (
-    <Paginator innerRef={innerRef} {...pagination} className={className} entity={entity} queryOptions={queryOptions}>
+    <Paginator {...pagination} innerRef={innerRef} className={className} entity={entity} queryOptions={queryOptions}>
       {({ items }) => (
         <table className={styles.table}>
           <thead>
@@ -56,6 +57,10 @@ const Table = ({
       )}
     </Paginator>
   )
+}
+
+Table.defaultProps = {
+  pagination: Paginator.defaultProps,
 }
 
 Table.propTypes = {
@@ -80,7 +85,7 @@ Table.propTypes = {
     bodyCell: PropTypes.object,
   })),
   pagination: PropTypes.shape({
-    type: PropTypes.oneOf(['classic', 'infinity', 'disabled']),
+    paginationType: PropTypes.oneOf(Object.values(PAGINATION_TYPES)),
     defaultPageSize: PropTypes.number,
     pagesControlsCount: PropTypes.number,
     pageSizes: PropTypes.arrayOf(PropTypes.number),
@@ -90,5 +95,7 @@ Table.propTypes = {
     infinityControls: PropTypes.oneOfType([PropTypes.bool, PropTypes.arrayOf(PropTypes.object)]),
   }),
 }
+
+Table.transformFunctions = transform
 
 export default Table

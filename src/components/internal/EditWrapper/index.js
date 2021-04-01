@@ -11,13 +11,18 @@ const EditWrapper = ({
   className,
   onChange,
 }) => {
-  const [isEditing, setIsEditing] = useState(false)
+  const [{ isEditing, isEditingActive }, setState] = useState(false)
 
   return (
     <div {...{
       ref: innerRef,
-      onMouseLeave: () => setIsEditing(false),
-      onMouseEnter: () => setIsEditing(true),
+      onMouseEnter: () => {
+        setState({ isEditing: true })
+      },
+      onMouseLeave: () => {
+        if (!isEditingActive) setState({ isEditing: false })
+      },
+      onBlur: () => setState({ isEditing: false, isEditingActive: false }),
     }}>
       {isEditing
         ? (
@@ -26,6 +31,7 @@ const EditWrapper = ({
             onChange={onChange}
             tagName={tagName}
             className={className}
+            onFocus={() => setState({ isEditing: true, isEditingActive: true })}
           />
         )
         : children}
