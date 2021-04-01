@@ -22,6 +22,9 @@ CraftImage.craft = {
   related: {
     settings: Settings,
   },
+  rules: {
+    canMoveIn: () => false,
+  },
 }
 
 export default CraftImage
