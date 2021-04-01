@@ -19,6 +19,8 @@ import SvgTags from './Tags/SvgTags/craft'
 import Button from './Button/craft'
 import Typography from './Typography/craft'
 
+import Table from './Table/craft'
+
 const components = {
   Switch,
   Route,
@@ -32,6 +34,7 @@ const components = {
   SvgTags,
   Button,
   Typography,
+  Table,
 }
 
 export default Object.keys(components).reduce((memo, key) => {

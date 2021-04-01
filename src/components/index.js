@@ -72,8 +72,13 @@ const components = {
 export default Object.keys(components).reduce((memo, key) => {
   const Component = components[key]
   const refComponent = forwardRef((props, ref) => <Component {...props} innerRef={ref} />)
+  const styledComponent = styled(refComponent)`${(props = {}) => props.style || ''}`
+  styledComponent.defaultProps = Component.defaultProps
+  styledComponent.displayName = Component.displayName
+  styledComponent.transformFunctions = Component.transformFunctions
+
   return {
     ...memo,
-    [key]: styled(refComponent)`${(props = {}) => props.style || ''}`,
+    [key]: styledComponent,
   }
 }, {})

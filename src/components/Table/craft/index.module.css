@@ -1,0 +1,23 @@
+.visualHelp {
+  padding: 10px;
+  background-color: rgba(0, 0, 255, 0.1);
+}
+
+.visualHelp table {
+  table-layout: fixed;
+}
+
+.visualHelp th {
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.visualHelp td {
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.35);
+}
+
+.visualHelp th:not(:last-child),
+.visualHelp td:not(:last-child) {
+  border-right: 1px dashed var(--trood-white);
+}
