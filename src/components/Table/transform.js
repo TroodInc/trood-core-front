@@ -8,7 +8,7 @@ const deleteNodes = (delNodes = [], nodes) => {
   })
 }
 
-export default {
+const transformFunctions = {
   saveTransform: (nodes = {}) => {
     Object.keys(nodes)
       .filter(key => nodes[key].type === 'Table' || nodes[key].type.resolvedName === 'Table')
@@ -42,3 +42,5 @@ export default {
     }
   },
 }
+
+export default transformFunctions

@@ -19,6 +19,11 @@ const Settings = () => {
     },
   } = props
 
+  let entityApiMatch
+  if (entity && entity.path) {
+    entityApiMatch = entity.path.match(/\$store\.apis\.([a-z0-9\-_]+)\.([a-z0-9\-_]+)/)
+  }
+
   return (
     <div>
       <TLabel.default label="Data Selector" />
@@ -35,29 +40,33 @@ const Settings = () => {
         mode: JsonEditor.MODES.code,
         onChange: vals => setProp((props) => props.queryOptions = vals),
       }} />
-      <TSelect.default {...{
-        className: styles.select,
-        label: 'Pagination Type',
-        items: Object.values(PAGINATION_TYPES).map(value => ({ value })),
-        values: paginationType ? [paginationType] : [],
-        onChange: vals => setProp((props) => props.pagination.paginationType = vals[0]),
-      }} />
-      {paginationType && paginationType !== PAGINATION_TYPES.disabled && (
+      {entityApiMatch && (
         <React.Fragment>
-          <TInput.default {...{
+          <TSelect.default {...{
             className: styles.select,
-            label: 'Page Size',
-            type: TInput.INPUT_TYPES.int,
-            value: defaultPageSize,
-            onChange: val => setProp((props) => props.pagination.defaultPageSize = val),
+            label: 'Pagination Type',
+            items: Object.values(PAGINATION_TYPES).map(value => ({ value })),
+            values: paginationType ? [paginationType] : [],
+            onChange: vals => setProp((props) => props.pagination.paginationType = vals[0]),
           }} />
-          <TInput.default {...{
-            className: styles.select,
-            label: 'Page Controls Count',
-            type: TInput.INPUT_TYPES.int,
-            value: pagesControlsCount,
-            onChange: val => setProp((props) => props.pagination.pagesControlsCount = val),
-          }} />
+          {paginationType && paginationType !== PAGINATION_TYPES.disabled && (
+            <React.Fragment>
+              <TInput.default {...{
+                className: styles.select,
+                label: 'Page Size',
+                type: TInput.INPUT_TYPES.int,
+                value: defaultPageSize,
+                onChange: val => setProp((props) => props.pagination.defaultPageSize = val),
+              }} />
+              <TInput.default {...{
+                className: styles.select,
+                label: 'Page Controls Count',
+                type: TInput.INPUT_TYPES.int,
+                value: pagesControlsCount,
+                onChange: val => setProp((props) => props.pagination.pagesControlsCount = val),
+              }} />
+            </React.Fragment>
+          )}
         </React.Fragment>
       )}
     </div>

@@ -11,7 +11,7 @@ import baseStyles from '../index.module.css'
 import styles from './index.module.css'
 
 
-const entity = {
+const apiEntity = {
   getPage: () => [],
   getPageLoading: () => false,
   getPagesCount: () => 10,
@@ -28,15 +28,19 @@ const CraftTable = (props) => {
   } = useNode((node) => ({
     columns: node.data.props.columns,
   }))
-  const { className, visualHelp, pagination, ...rest } = props
+  const { className, visualHelp, pagination, entity, ...rest } = props
+  let entityApiMatch
+  if (entity && entity.path) {
+    entityApiMatch = entity.path.match(/\$store\.apis\.([a-z0-9\-_]+)\.([a-z0-9\-_]+)/)
+  }
   
   return (
     <Paginator
       {...pagination}
+      {...rest}
       innerRef={(dom) => connect(drag(dom))}
       className={classNames(className, visualHelp && styles.visualHelp)}
-      entity={entity}
-      {...rest}
+      entity={entityApiMatch ? apiEntity : []}
     >
       {() => (
         <table className={baseStyles.table}>
