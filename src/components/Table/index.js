@@ -65,15 +65,18 @@ Table.defaultProps = {
 
 Table.propTypes = {
   className: PropTypes.string,
-  entity: PropTypes.shape({
-    getPage: PropTypes.func,
-    getPageLoading: PropTypes.func,
-    getPagesCount: PropTypes.func,
-    getInfinityPages: PropTypes.func,
-    getInfinityPagesLoading: PropTypes.func,
-    getInfinityNextPage: PropTypes.func,
-    getInfinityNextPageNumber: PropTypes.func,
-  }).isRequired,
+  entity: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.shape({
+      getPage: PropTypes.func,
+      getPageLoading: PropTypes.func,
+      getPagesCount: PropTypes.func,
+      getInfinityPages: PropTypes.func,
+      getInfinityPagesLoading: PropTypes.func,
+      getInfinityNextPage: PropTypes.func,
+      getInfinityNextPageNumber: PropTypes.func,
+    }),
+  ]),
   queryOptions: PropTypes.shape({
     headers: PropTypes.object,
     hash: PropTypes.string,
