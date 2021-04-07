@@ -1,1 +1,1 @@
-export const customChunkConstant = 'custodian/data/page/'
+export const customChunkConstant = ''
