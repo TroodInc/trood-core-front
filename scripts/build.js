@@ -71,9 +71,26 @@ checkBrowsers(paths.appPath, isInteractive)
   .then(
     ({ stats, previousFileSizes, warnings }) => {
       // create single entry point
+      let publicUrl = paths.publicUrlOrPath
+      publicUrl = publicUrl ? publicUrl.replace(/\/$/, '') + '/' : publicUrl
+      console.log(publicUrl)
       const manifest = require(paths.appBuildManifest)
-      const jsEntries = JSON.stringify(manifest.entrypoints.js || [])
-      const cssEntries = JSON.stringify(manifest.entrypoints.css || [])
+      const jsEntries = JSON.stringify(
+        (manifest.entrypoints.js || []).map(item => {
+          if (publicUrl) {
+            return publicUrl + item
+          }
+          return item
+        }),
+      )
+      const cssEntries = JSON.stringify(
+        (manifest.entrypoints.css || []).map(item => {
+          if (publicUrl) {
+            return publicUrl + item
+          }
+          return item
+        }),
+      )
       const indexJsTemplate = fs.readFileSync(paths.indexJsTemplate, 'utf8')
       const indexJs = indexJsTemplate.replace('$JS_ENTRIES', jsEntries).replace('$CSS_ENTRIES', cssEntries)
       fs.writeFileSync(paths.appBuildIndexJs, indexJs)
@@ -111,7 +128,6 @@ checkBrowsers(paths.appPath, isInteractive)
       console.log()
 
       const appPackage = require(paths.appPackageJson)
-      const publicUrl = paths.publicUrlOrPath
       const publicPath = paths.appBuild
       const buildFolder = path.relative(process.cwd(), paths.appBuild)
       printHostingInstructions(
