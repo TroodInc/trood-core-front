@@ -5,6 +5,7 @@ import { Component } from 'core/pageStore'
 import Context from '../Context'
 
 import Paginator, { PAGINATION_TYPES } from '../internal/Paginator'
+import transform from './transform'
 
 const List = ({
   innerRef,
@@ -56,5 +57,11 @@ List.propTypes = {
     infinityControls: PropTypes.oneOfType([PropTypes.bool, PropTypes.arrayOf(PropTypes.object)]),
   }),
 }
+
+List.defaultProps = {
+  pagination: Paginator.defaultProps,
+}
+
+List.transformFunctions = transform
 
 export default List
