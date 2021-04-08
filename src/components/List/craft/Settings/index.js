@@ -33,15 +33,15 @@ const Settings = () => {
         mode: JsonEditor.MODES.code,
         onChange: vals => setProp((props) => props.entity = vals),
       }} />
-      <TLabel.default label="Query Options" />
-      <JsonEditor.default {...{
-        className: styles.jsonEditor,
-        value: queryOptions,
-        mode: JsonEditor.MODES.code,
-        onChange: vals => setProp((props) => props.queryOptions = vals),
-      }} />
       {entityApiMatch && (
         <React.Fragment>
+          <TLabel.default label="Query Options" />
+          <JsonEditor.default {...{
+            className: styles.jsonEditor,
+            value: queryOptions,
+            mode: JsonEditor.MODES.code,
+            onChange: vals => setProp((props) => props.queryOptions = vals),
+          }} />
           <TSelect.default {...{
             className: styles.select,
             label: 'Pagination Type',
