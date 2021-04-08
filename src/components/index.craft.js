@@ -21,6 +21,7 @@ import Typography from './Typography/craft'
 import Image from './Image/craft'
 
 import Table from './Table/craft'
+import List from './List/craft'
 
 const components = {
   Switch,
@@ -37,6 +38,7 @@ const components = {
   Typography,
   Image,
   Table,
+  List,
 }
 
 export default Object.keys(components).reduce((memo, key) => {
