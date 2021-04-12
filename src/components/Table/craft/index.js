@@ -24,11 +24,8 @@ const apiEntity = {
 const CraftTable = (props) => {
   const {
     connectors: { connect, drag },
-    columns,
-  } = useNode((node) => ({
-    columns: node.data.props.columns,
-  }))
-  const { className, visualHelp, pagination, entity, ...rest } = props
+  } = useNode()
+  const { className, visualHelp, columns, pagination, entity, ...rest } = props
   let entityApiMatch
   if (entity && entity.path) {
     entityApiMatch = entity.path.match(/\$store\.apis\.([a-z0-9\-_]+)\.([a-z0-9\-_]+)/)

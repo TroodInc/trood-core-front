@@ -3,10 +3,10 @@ import styled from 'styled-components'
 
 import Context from './Context'
 
-import Row from './Grids/Row'
-import Cell from './Grids/Cell'
+import GridRow from './Grids/Row'
+import GridCell from './Grids/Cell'
+import GridContainer from './Grids/Container'
 import Conditional from './Conditional'
-import Container from './Grids/Container'
 
 import HtmlTags from './Tags/HtmlTags'
 import SvgTags from './Tags/SvgTags'
@@ -38,10 +38,10 @@ import Image from './Image'
 
 const components = {
   Context,
-  Row,
-  Cell,
+  GridRow,
+  GridCell,
+  GridContainer,
   Conditional,
-  Container,
   HtmlTags,
   SvgTags,
   Link,

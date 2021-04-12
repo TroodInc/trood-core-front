@@ -9,7 +9,8 @@ import { PAGINATION_TYPES } from '../../../internal/Paginator'
 
 const Settings = () => {
   const { actions: { setProp }, props } = useNode((node) => ({ props: node.data.props }))
-  const { 
+  const {
+    columns,
     entity,
     queryOptions,
     pagination: {
@@ -26,6 +27,13 @@ const Settings = () => {
 
   return (
     <div>
+      <TInput.default {...{
+        className: styles.select,
+        label: 'Columns',
+        type: TInput.INPUT_TYPES.int,
+        value: columns,
+        onChange: val => setProp((props) => props.columns = val),
+      }} />
       <TLabel.default label="Data Selector" />
       <JsonEditor.default {...{
         className: styles.jsonEditor,
