@@ -8,10 +8,10 @@
                 },
                 "nodes": [
                     {
-                        "type": "Row",
+                        "type": "GridRow",
                         "nodes": [
                             {
-                                "type": "Cell",
+                                "type": "GridCell",
                                 "nodes": [
                                     {
                                         "type": "div",
@@ -25,7 +25,7 @@
                                 ]
                             },
                             {
-                                "type": "Cell",
+                                "type": "GridCell",
                                 "props": {
                                     "xsAuto": true
                                 },
@@ -59,7 +59,7 @@
                 "type": "Block",
                 "nodes": [
                     {
-                        "type": "Cell",
+                        "type": "GridCell",
                         "props": {
                             "style": {
                                 "borderRadius": "3px",
@@ -95,10 +95,10 @@
                                     },
                                     "nodes": [
                                         {
-                                            "type": "Row",
+                                            "type": "GridRow",
                                             "nodes": [
                                                 {
-                                                    "type": "Cell",
+                                                    "type": "GridCell",
                                                     "props": {
                                                         "xsAuto": true,
                                                         "children": {
@@ -108,7 +108,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "Cell",
+                                                    "type": "GridCell",
                                                     "nodes": [
                                                         {
                                                             "type": "Link",
@@ -126,7 +126,7 @@
                                                     ]
                                                 },
                                                 {
-                                                    "type": "Cell",
+                                                    "type": "GridCell",
                                                     "props": {
                                                         "children": {
                                                             "$type": "$data",
@@ -135,7 +135,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "Cell",
+                                                    "type": "GridCell",
                                                     "nodes": [
                                                         {
                                                             "type": "Button",
@@ -327,7 +327,7 @@
                                 "size": 800
                             },
                             {
-                                "type": "Row",
+                                "type": "GridRow",
                                 "props": {
                                     "style": {
                                         "marginTop": "auto"
@@ -335,7 +335,7 @@
                                 },
                                 "nodes": [
                                     {
-                                        "type": "Cell",
+                                        "type": "GridCell",
                                         "nodes": [
                                             {
                                                 "type": "Button",
@@ -405,7 +405,7 @@
                                         ]
                                     },
                                     {
-                                        "type": "Cell",
+                                        "type": "GridCell",
                                         "props": {
                                             "xsAuto": true
                                         },

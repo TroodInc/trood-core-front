@@ -17,15 +17,22 @@ const CraftTypography = props => {
   } = useNode((node) => ({ props: node.data.props }))
   const { visualHelp, ...rest } = props
 
+  let { value } = props
+  const isValueFromDataSelector = typeof value === 'object'
+
+  if (isValueFromDataSelector) {
+    return <Typography { ...rest } value={value.path} innerRef={ref => connect(drag(ref))} />
+  }
+
   return (
     <EditWrapper {...{
       innerRef: ref => connect(drag(ref)),
       onChange: e => setProp(props => props.value = e.target.value.replace(/<\/?[^>]+(>|$)/g, '')),
-      text: props.value,
+      text: value,
       tagName: Typography.knownTypes[props.type],
-      className: classNames(styles[props.type], props.bold && styles.bold),
+      className: classNames(styles[props.type], props.bold && styles.bold, props.className),
     }}>
-      <Typography {...rest} />
+      <Typography { ...rest } />
     </EditWrapper>
   )
 }

@@ -11,10 +11,10 @@
                 },
                 "nodes": [
                     {
-                        "type": "Cell",
+                        "type": "GridCell",
                         "nodes": [
                             {
-                                "type": "Cell",
+                                "type": "GridCell",
                                 "props": {
                                     "children": {
                                         "$type": "$data",
@@ -23,7 +23,7 @@
                                 }
                             },
                             {
-                                "type": "Cell",
+                                "type": "GridCell",
                                 "props": {
                                     "children": {
                                         "$type": "$data",

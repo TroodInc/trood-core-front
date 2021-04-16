@@ -2,13 +2,13 @@
     "ROOT": {
         "nodes": [
             {
-                "type": "Container",
+                "type": "GridContainer",
                 "props": {
                     "fluid": true
                 },
                 "nodes": [
                     {
-                        "type": "Row",
+                        "type": "GridRow",
                         "props": {
                             "style": {
                                 "height": "100vh",
@@ -18,7 +18,7 @@
                         },
                         "nodes": [
                             {
-                                "type": "Cell",
+                                "type": "GridCell",
                                 "props": {
                                     "xsAuto": true,
                                     "style": {
@@ -208,10 +208,10 @@
                                                                 "size": 16
                                                             },
                                                             {
-                                                                "type": "Row",
+                                                                "type": "GridRow",
                                                                 "nodes": [
                                                                     {
-                                                                        "type": "Cell",
+                                                                        "type": "GridCell",
                                                                         "nodes": [
                                                                             {
                                                                                 "type": "Button",
@@ -230,7 +230,7 @@
                                                                         ]
                                                                     },
                                                                     {
-                                                                        "type": "Cell",
+                                                                        "type": "GridCell",
                                                                         "props": {
                                                                             "xsAuto": true
                                                                         },
@@ -267,7 +267,7 @@
                                 ]
                             },
                             {
-                                "type": "Cell",
+                                "type": "GridCell",
                                 "props": {
                                     "style": {
                                         "overflowX": "hidden",
@@ -278,7 +278,7 @@
                                 },
                                 "nodes": [
                                     {
-                                        "type": "Row",
+                                        "type": "GridRow",
                                         "props": {
                                             "style": {
                                                 "backgroundColor": "#fff"
@@ -286,20 +286,20 @@
                                         },
                                         "nodes": [
                                             {
-                                                "type": "Cell",
+                                                "type": "GridCell",
                                                 "props": {
                                                     "xsAuto": true,
                                                     "children": "back"
                                                 }
                                             },
                                             {
-                                                "type": "Cell",
+                                                "type": "GridCell",
                                                 "props": {
                                                     "children": "tabs"
                                                 }
                                             },
                                             {
-                                                "type": "Cell",
+                                                "type": "GridCell",
                                                 "props": {
                                                     "xsAuto": true,
                                                     "children": "avatar"
@@ -308,10 +308,10 @@
                                         ]
                                     },
                                     {
-                                        "type": "Row",
+                                        "type": "GridRow",
                                         "nodes": [
                                             {
-                                                "type": "Cell",
+                                                "type": "GridCell",
                                                 "nodes": [
                                                     {
                                                         "type": "Switch",

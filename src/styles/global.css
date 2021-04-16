@@ -4,7 +4,7 @@ html {
 
 html,
 body,
-:global(#root) {
+#root {
   box-sizing: border-box;
   height: 100%;
   width: 100%;
