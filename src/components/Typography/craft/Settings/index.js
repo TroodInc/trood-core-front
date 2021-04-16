@@ -2,18 +2,40 @@
 import React from 'react'
 import Typography from '../../index'
 import { useNode } from '@craftjs/core'
-import { TCheckbox, TSelect } from '$trood/components'
+import { TCheckbox, TSelect, TButton } from '$trood/components'
 
 import styles from './index.module.css'
 
 
-const Settings = ({
-  DataSelector,
-}) => {
-  const { actions: { setProp }, props } = useNode((node) => ({ props: node.data.props }))
+const Settings = () => {
+  const {
+    id,
+    actions: { setProp },
+    props,
+    custom,
+  } = useNode((node) => ({
+    props: node.data.props,
+    custom: node.data.custom,
+  }))
 
   return (
     <div>
+      <TButton.default
+        className={styles.dataSelectorButton}
+        type={TButton.BUTTON_TYPES.text}
+        label="Select Data"
+        onClick={() => custom.openDataSelector(id, {
+          id: props.value?.path,
+          values: {
+            path: props.value?.path,
+          },
+          onSubmit: value => {
+            setProp((props) => {
+              props.value = value
+            })
+          },
+        })}
+      />
       <TSelect.default {...{
         className: styles.select,
         label: 'Type',
@@ -32,9 +54,6 @@ const Settings = ({
           })
         },
       }} />
-      {/*
-      <DataSelector setProp={setProp} props={props} propName="value" $context={props.$context} />
-      */}
     </div>
   )
 }

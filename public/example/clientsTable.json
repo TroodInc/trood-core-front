@@ -22,7 +22,7 @@
                 "type": "Block",
                 "nodes": [
                     {
-                        "type": "Cell",
+                        "type": "GridCell",
                         "props": {
                             "style": {
                                 "borderRadus": "16px",
@@ -36,7 +36,7 @@
                                     "pagination": {
                                         "topControls": [
                                             {
-                                                "type": "Row",
+                                                "type": "GridRow",
                                                 "nodes": [
                                                     {
                                                         "type": "Conditional",
@@ -107,14 +107,14 @@
                                     "columnComponents": [
                                         {
                                             "headerCell": {
-                                                "type": "Cell",
+                                                "type": "GridCell",
                                                 "props": {
                                                     "xsAuto": true,
                                                     "children": "Id"
                                                 }
                                             },
                                             "bodyCell": {
-                                                "type": "Cell",
+                                                "type": "GridCell",
                                                 "props": {
                                                     "xsAuto": true,
                                                     "children": {

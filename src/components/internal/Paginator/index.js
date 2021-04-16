@@ -22,7 +22,6 @@ const PAGINATION_TYPES = {
 
 class Paginator extends PureComponent {
   static defaultProps = {
-    entity: [],
     defaultPageSize: 10,
     pagesControlsCount: 5,
     paginationType: PAGINATION_TYPES.classic,
