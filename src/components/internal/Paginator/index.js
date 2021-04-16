@@ -109,6 +109,7 @@ class Paginator extends PureComponent {
     } = this.props
 
     if (
+      !entity ||
       Array.isArray(entity) ||
       paginationType !== PAGINATION_TYPES.classic ||
       (topControls === false && !bottom) ||
@@ -203,7 +204,7 @@ class Paginator extends PureComponent {
 
     const { pageSize } = this.paginator
 
-    if (Array.isArray(entity) || paginationType !== PAGINATION_TYPES.infinity ||
+    if (!entity || Array.isArray(entity) || paginationType !== PAGINATION_TYPES.infinity ||
       infinityControls === false || !this.mount || this.scrollContainerNode) return null
 
     const nextPage = entity.getInfinityNextPageNumber(pageSize, queryOptions)
@@ -259,18 +260,20 @@ class Paginator extends PureComponent {
     return (
       <Observer>
         {() => {
-          let items
-          let loading
-          if (Array.isArray(entity)) {
-            items = entity
-            loading = false
-          } else if (paginationType === PAGINATION_TYPES.infinity) {
-            items = entity.getInfinityPages(pageSize, queryOptions)
-            loading = entity.getInfinityPagesLoading(pageSize, queryOptions)
-            this.handleScroll()
-          } else {
-            items = entity.getPage(page, pageSize, queryOptions)
-            loading = entity.getPageLoading(page, pageSize, queryOptions)
+          let items = []
+          let loading = false
+          if (entity) {
+            if (Array.isArray(entity)) {
+              items = entity
+              loading = false
+            } else if (paginationType === PAGINATION_TYPES.infinity) {
+              items = entity.getInfinityPages(pageSize, queryOptions)
+              loading = entity.getInfinityPagesLoading(pageSize, queryOptions)
+              this.handleScroll()
+            } else {
+              items = entity.getPage(page, pageSize, queryOptions)
+              loading = entity.getPageLoading(page, pageSize, queryOptions)
+            }
           }
 
           return (
