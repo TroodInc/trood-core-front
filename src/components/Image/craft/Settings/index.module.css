@@ -17,3 +17,25 @@
   margin-bottom: 10px;
   min-height: 40px;
 }
+
+.tabs {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.tab {
+  color: var(--trood-text-gray);
+  cursor: pointer;
+}
+
+.activeTab {
+  color: var(--trood-blue);
+  text-decoration: underline;
+  pointer-events: none;
+}
+
+.tab,
+.activeTab {
+  font-weight: 500;
+  padding: 5px 10px;
+}

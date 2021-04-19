@@ -15,6 +15,7 @@ const Image = (props) => {
     height,
     heightUnits,
     imageUrl,
+    alt,
     fit,
     innerRef,
     ...other
@@ -27,7 +28,7 @@ const Image = (props) => {
       className={classNames(styles.root, className)}
       style={{ width: `${width}${widthUnits}`, height: `${height}${heightUnits}` }}
     >
-      <img src={imageUrl} alt="" style={{ objectFit: fit }} className={styles.image} />
+      <img src={imageUrl} alt={imageUrl || alt} style={{ objectFit: fit }} className={styles.image} />
     </div>
   )
 }
