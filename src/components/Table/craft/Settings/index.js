@@ -1,14 +1,23 @@
 /* eslint-disable jsx-a11y/no-onchange */
 import React from 'react'
 import { useNode } from '@craftjs/core'
-import { TLabel, JsonEditor, TSelect, TInput } from '$trood/components'
+import { TLabel, JsonEditor, TSelect, TInput, TButton } from '$trood/components'
 
 import styles from './index.module.css'
 import { PAGINATION_TYPES } from '../../../internal/Paginator'
 
 
 const Settings = () => {
-  const { actions: { setProp }, props } = useNode((node) => ({ props: node.data.props }))
+  const {
+    id,
+    actions: { setProp },
+    props,
+    custom,
+  } = useNode((node) => ({
+    props: node.data.props,
+    custom: node.data.custom,
+  }))
+
   const {
     columns,
     entity,
@@ -20,9 +29,12 @@ const Settings = () => {
     },
   } = props
 
-  let entityApiMatch
+  let entityIsApi
   if (entity && entity.path) {
-    entityApiMatch = entity.path.match(/\$store\.apis\.([a-z0-9\-_]+)\.([a-z0-9\-_]+)/)
+    const entityApiMatch = entity.path.match(/\$store\.apis\.([a-z0-9\-_]+)\.([a-z0-9\-_]+)$/)
+    if (entityApiMatch) {
+      entityIsApi = entityApiMatch[1] !== 'default' && entityApiMatch[2] !== 'default'
+    }
   }
 
   return (
@@ -34,14 +46,23 @@ const Settings = () => {
         value: columns,
         onChange: val => setProp((props) => props.columns = val),
       }} />
-      <TLabel.default label="Data Selector" />
-      <JsonEditor.default {...{
-        className: styles.jsonEditor,
-        value: entity,
-        mode: JsonEditor.MODES.code,
-        onChange: vals => setProp((props) => props.entity = vals),
-      }} />
-      {entityApiMatch && (
+      <TButton.default
+        className={styles.dataSelectorButton}
+        type={TButton.BUTTON_TYPES.text}
+        label="Select Data"
+        onClick={() => custom.openDataSelector(id, {
+          id: props.entity?.path,
+          values: {
+            path: props.entity?.path,
+          },
+          onSubmit: value => {
+            setProp((props) => {
+              props.entity = value
+            })
+          },
+        })}
+      />
+      {entityIsApi && (
         <React.Fragment>
           <TLabel.default label="Query Options" />
           <JsonEditor.default {...{

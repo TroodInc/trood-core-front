@@ -26,9 +26,13 @@ const CraftTable = (props) => {
     connectors: { connect, drag },
   } = useNode()
   const { className, visualHelp, columns, pagination, entity, ...rest } = props
-  let entityApiMatch
+
+  let entityIsApi
   if (entity && entity.path) {
-    entityApiMatch = entity.path.match(/\$store\.apis\.([a-z0-9\-_]+)\.([a-z0-9\-_]+)/)
+    const entityApiMatch = entity.path.match(/\$store\.apis\.([a-z0-9\-_]+)\.([a-z0-9\-_]+)$/)
+    if (entityApiMatch) {
+      entityIsApi = entityApiMatch[1] !== 'default' && entityApiMatch[2] !== 'default'
+    }
   }
   
   return (
@@ -37,7 +41,7 @@ const CraftTable = (props) => {
       {...rest}
       innerRef={(dom) => connect(drag(dom))}
       className={classNames(className, visualHelp && styles.visualHelp)}
-      entity={entityApiMatch ? apiEntity : []}
+      entity={entityIsApi ? apiEntity : []}
     >
       {() => (
         <table className={baseStyles.table}>

@@ -1,0 +1,7 @@
+.error {
+  padding: 10px;
+  font-size: 20px;
+  font-weight: 700;
+  word-wrap: break-word;
+  color: var(--trood-red);
+}

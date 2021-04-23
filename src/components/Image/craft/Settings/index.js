@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/no-onchange */
-import React from 'react'
+import React, { useState } from 'react'
 import { useNode } from '@craftjs/core'
 import classNames from 'classnames'
-import { TSelect, TInput } from '$trood/components'
+import { TSelect, TInput, TButton } from '$trood/components'
 
 import styles from './index.module.css'
 
@@ -10,7 +10,18 @@ import { IMAGE_FIT, cssMeasurementUnits } from '../../constants'
 
 
 const Settings = () => {
-  const { actions: { setProp }, props } = useNode((node) => ({ props: node.data.props }))
+  const {
+    id,
+    actions: { setProp },
+    props,
+    custom,
+  } = useNode((node) => ({
+    props: node.data.props,
+    custom: node.data.custom,
+  }))
+
+  const defaultType = typeof props.imageUrl === 'object' ? 'data' : 'static'
+  const [type, setType] = useState(defaultType)
 
   const selectProps = ({ label, key, items }) => ({
     className: styles.field,
@@ -30,6 +41,54 @@ const Settings = () => {
 
   return (
     <div>
+      <div>
+        <div className={styles.tabs}>
+          <div
+            className={type === 'static' ? styles.activeTab : styles.tab}
+            onClick={() => {
+              setProp((props) => props.imageUrl = undefined)
+              setType('static')
+            }}
+          >
+            Static
+          </div>
+          <div
+            className={type === 'data' ? styles.activeTab : styles.tab}
+            onClick={() => {
+              setProp((props) => props.imageUrl = undefined)
+              setType('data')
+            }}
+          >
+            From Data
+          </div>
+        </div>
+        {type === 'static' && (
+          <TInput.default {...{
+            ...inputProps({
+              label: 'Image Url',
+              key: 'imageUrl',
+            }),
+          }} />
+        )}
+        {type === 'data' && (
+          <TButton.default
+            className={styles.dataSelectorButton}
+            type={TButton.BUTTON_TYPES.text}
+            label="Select Data"
+            onClick={() => custom.openDataSelector(id, {
+              id: props.imageUrl?.path,
+              values: {
+                path: props.imageUrl?.path,
+              },
+              onSubmit: value => {
+                setProp((props) => {
+                  props.imageUrl = value
+                })
+              },
+            })}
+          />
+        )}
+      </div>
       <div className={classNames(styles.field, styles.fieldContainer)}>
         <TInput.default {...{
           ...inputProps({
@@ -60,12 +119,6 @@ const Settings = () => {
           }),
         }} />
       </div>
-      <TInput.default {...{
-        ...inputProps({
-          label: 'Image Url',
-          key: 'imageUrl',
-        }),
-      }} />
       <TSelect.default {...{
         ...selectProps({
           label: 'Image fit',
