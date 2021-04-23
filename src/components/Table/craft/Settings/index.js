@@ -29,9 +29,12 @@ const Settings = () => {
     },
   } = props
 
-  let entityApiMatch
+  let entityIsApi
   if (entity && entity.path) {
-    entityApiMatch = entity.path.match(/\$store\.apis\.([a-z0-9\-_]+)\.([a-z0-9\-_]+)/)
+    const entityApiMatch = entity.path.match(/\$store\.apis\.([a-z0-9\-_]+)\.([a-z0-9\-_]+)$/)
+    if (entityApiMatch) {
+      entityIsApi = entityApiMatch[1] !== 'default' && entityApiMatch[2] !== 'default'
+    }
   }
 
   return (
@@ -59,7 +62,7 @@ const Settings = () => {
           },
         })}
       />
-      {entityApiMatch && (
+      {entityIsApi && (
         <React.Fragment>
           <TLabel.default label="Query Options" />
           <JsonEditor.default {...{

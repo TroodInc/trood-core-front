@@ -1,6 +1,9 @@
+import React from 'react'
 import styled from 'styled-components'
 
 import 'styles/variables.css'
+
+import ErrorWrapper from './internal/ErrorWrapper'
 
 import Switch from './Switch/craft'
 import Route from './Route/craft'
@@ -43,8 +46,15 @@ const components = {
 
 export default Object.keys(components).reduce((memo, key) => {
   const Component = components[key]
+  const WrappedComponent = ({ onError, ...props }) => (
+    <ErrorWrapper onError={onError} childrenProps={props}>
+      <Component {...props} />
+    </ErrorWrapper>
+  )
+  WrappedComponent.craft = Component.craft
+
   return {
     ...memo,
-    [key]: styled(Component)`${(props = {}) => props.style || ''}`,
+    [key]: styled(WrappedComponent)`${(props = {}) => props.style || ''}`,
   }
 }, {})
