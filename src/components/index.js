@@ -35,6 +35,7 @@ import Select from './Select'
 import Table from './Table'
 import Typography from './Typography'
 import Image from './Image'
+import Fragment from './Fragment'
 
 const components = {
   Context,
@@ -69,6 +70,7 @@ const components = {
   Table,
   Typography,
   Image,
+  Fragment,
 }
 
 export default Object.keys(components).reduce((memo, key) => {

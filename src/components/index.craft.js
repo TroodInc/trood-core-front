@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
+
+import EditorContext from '$trood/composerContext'
 
 import 'styles/variables.css'
 
@@ -26,6 +28,9 @@ import Image from './Image/craft'
 import Table from './Table/craft'
 import List from './List/craft'
 
+import Fragment from './Fragment/craft'
+
+
 const components = {
   Switch,
   Route,
@@ -42,16 +47,30 @@ const components = {
   Image,
   Table,
   List,
+  Fragment,
 }
 
 export default Object.keys(components).reduce((memo, key) => {
   const Component = components[key]
-  const WrappedComponent = ({ onError, ...props }) => (
-    <ErrorWrapper onError={onError} childrenProps={props}>
-      <Component {...props} />
-    </ErrorWrapper>
-  )
+  const WrappedComponent = ({ onError, ...props }) => {
+    const globalProps = useContext(EditorContext)
+    return (
+      <ErrorWrapper onError={onError} childrenProps={props}>
+        <Component {...globalProps} {...props} />
+      </ErrorWrapper>
+    )
+  }
   WrappedComponent.craft = Component.craft
+  WrappedComponent.craft.related = Object.keys(WrappedComponent.craft.related || {}).reduce((memo, key) => {
+    const RComponent = WrappedComponent.craft.related[key]
+    return {
+      ...memo,
+      [key]: props => {
+        const globalProps = useContext(EditorContext)
+        return <RComponent {...globalProps} {...props} />
+      },
+    }
+  }, {})
 
   return {
     ...memo,

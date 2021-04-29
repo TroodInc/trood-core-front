@@ -9,7 +9,7 @@ const CraftImage = props => {
   const {
     connectors: { connect, drag },
   } = useNode((node) => ({ props: node.data.props }))
-  const { visualHelp, ...rest } = props
+  const { onlyRender, visualHelp, ...rest } = props
   let { imageUrl } = props
   let alt
   if (typeof imageUrl === 'object') {
@@ -18,7 +18,12 @@ const CraftImage = props => {
   }
 
   return (
-    <Image {...rest} innerRef={ref => connect(drag(ref))} imageUrl={imageUrl} alt={alt} />
+    <Image
+      {...rest}
+      innerRef={onlyRender ? undefined : ref => connect(drag(ref))}
+      imageUrl={imageUrl}
+      alt={alt}
+    />
   )
 }
 

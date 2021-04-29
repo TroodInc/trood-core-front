@@ -25,7 +25,7 @@ const CraftTable = (props) => {
   const {
     connectors: { connect, drag },
   } = useNode()
-  const { className, visualHelp, columns, pagination, entity, ...rest } = props
+  const { className, onlyRender, visualHelp, columns, pagination, entity, ...rest } = props
 
   let entityIsApi
   if (entity && entity.path) {
@@ -39,34 +39,56 @@ const CraftTable = (props) => {
     <Paginator
       {...pagination}
       {...rest}
-      innerRef={(dom) => connect(drag(dom))}
+      innerRef={onlyRender ? undefined : ref => connect(drag(ref))}
       className={classNames(className, visualHelp && styles.visualHelp)}
       entity={entityIsApi ? apiEntity : []}
     >
-      {() => (
-        <table className={baseStyles.table}>
-          <thead>
-            <tr>
-              {Array(columns).fill(0).map((item, i) => (
-                <Element key={i} id={`th${i}`} is="th" canvas custom={{ displayName: 'Cell Header' }}>
-                </Element>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {/* TODO <Context> after dataSelector */}
-            <tr>
-              {Array(columns).fill(0).map((item, i) => (
-                <Element key={i} id={`td${i}`} is="td" canvas custom={{ displayName: 'Cell Value' }}>
-                </Element>
-              ))}
-            </tr>
-            <tr>
-              {Array(columns).fill(0).map((item, i) => <td key={i}>...</td>)}
-            </tr>
-          </tbody>
-        </table>
-      )}
+      {() => {
+        if (onlyRender) {
+          return (
+            <table className={baseStyles.table}>
+              <thead>
+                <tr>
+                  {rest.columnComponents.map(item => item.headerCell)}
+                </tr>
+              </thead>
+              <tbody>
+                {/* TODO <Context> after dataSelector */}
+                <tr>
+                  {rest.columnComponents.map(item => item.bodyCell)}
+                </tr>
+                <tr>
+                  {rest.columnComponents.map((_, i) => <td key={i}>...</td>)}
+                </tr>
+              </tbody>
+            </table>
+          )
+        }
+        return (
+          <table className={baseStyles.table}>
+            <thead>
+              <tr>
+                {Array(columns).fill(0).map((item, i) => (
+                  <Element key={i} id={`th${i}`} is="th" canvas custom={{ displayName: 'Cell Header' }}>
+                  </Element>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {/* TODO <Context> after dataSelector */}
+              <tr>
+                {Array(columns).fill(0).map((item, i) => (
+                  <Element key={i} id={`td${i}`} is="td" canvas custom={{ displayName: 'Cell Value' }}>
+                  </Element>
+                ))}
+              </tr>
+              <tr>
+                {Array(columns).fill(0).map((item, i) => <td key={i}>...</td>)}
+              </tr>
+            </tbody>
+          </table>
+        )
+      }}
     </Paginator>
   )
 }

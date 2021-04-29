@@ -15,13 +15,20 @@ const CraftTypography = props => {
     connectors: { connect, drag },
     actions: { setProp },
   } = useNode((node) => ({ props: node.data.props }))
-  const { visualHelp, ...rest } = props
+
+  const { onlyRender, visualHelp, ...rest } = props
 
   let { value } = props
   const isValueFromDataSelector = typeof value === 'object'
 
-  if (isValueFromDataSelector) {
-    return <Typography { ...rest } value={value.path} innerRef={ref => connect(drag(ref))} />
+  if (isValueFromDataSelector || onlyRender) {
+    return (
+      <Typography
+        { ...rest }
+        value={isValueFromDataSelector ? value.path : value}
+        innerRef={onlyRender ? undefined : ref => connect(drag(ref))}
+      />
+    )
   }
 
   return (

@@ -14,6 +14,7 @@ const CraftHtmlTags = props => {
   } = useNode((node) => ({ props: node.data.props }))
   const {
     className,
+    onlyRender,
     visualHelp,
     ...rest
   } = props
@@ -21,7 +22,7 @@ const CraftHtmlTags = props => {
   return (
     <HtmlTags {...{
       ...rest,
-      innerRef: ref => connect(drag(ref)),
+      innerRef: onlyRender ? undefined : ref => connect(drag(ref)),
       className: classNames(className, visualHelp && styles.visualHelp),
     }}>
       {props.children}

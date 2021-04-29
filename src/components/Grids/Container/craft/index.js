@@ -13,6 +13,7 @@ const CraftContainer = props => {
     connectors: { connect, drag },
   } = useNode((node) => ({ props: node.data.props }))
   const {
+    onlyRender,
     className,
     visualHelp,
     ...rest
@@ -21,7 +22,7 @@ const CraftContainer = props => {
   return (
     <Container {...{
       ...rest,
-      innerRef: ref => connect(drag(ref)),
+      ref: onlyRender ? undefined : ref => connect(drag(ref)),
       className: classNames(className, visualHelp && styles.visualHelp),
     }}>
       {props.children}
