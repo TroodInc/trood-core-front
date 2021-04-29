@@ -29,7 +29,18 @@ class ErrorWrapper extends PureComponent {
   }
 
   static getDerivedStateFromProps(props, state) {
-    const propsHash = objectHash(props.childrenProps)
+    const propsHash = objectHash(
+      props.childrenProps,
+      {
+        excludeKeys: key => {
+          return (
+            key === '__proto__' ||
+            !props.childrenProps[key] ||
+            props.childrenProps[key].$$typeof
+          )
+        },
+      },
+    )
 
     if (state.propsHash !== propsHash) {
       return {

@@ -12,12 +12,12 @@ const CraftNavLink = props => {
   const {
     connectors: { connect, drag },
   } = useNode((node) => ({ props: node.data.props }))
-  const { visualHelp, className, ...rest } = props
+  const { onlyRender, visualHelp, className, ...rest } = props
 
   return (
     <NavLink
       {...rest}
-      innerRef={ref => connect(drag(ref))}
+      ref={onlyRender ? undefined : ref => connect(drag(ref))}
       className={classNames({ className, [styles.visualHelp]: visualHelp })}
       onClick={e => e.preventDefault()}
     >

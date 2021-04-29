@@ -14,6 +14,7 @@ const CraftCell = props => {
   } = useNode((node) => ({ props: node.data.props }))
   const {
     className,
+    onlyRender,
     sizeType, // service props for settings
     visualHelp,
     ...rest
@@ -22,7 +23,7 @@ const CraftCell = props => {
   return (
     <Cell {...{
       ...rest,
-      innerRef: ref => connect(drag(ref)),
+      innerRef: onlyRender ? undefined : ref => connect(drag(ref)),
       className: classNames(className, visualHelp && styles.visualHelp),
     }}>
       {props.children}

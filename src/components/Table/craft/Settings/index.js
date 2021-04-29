@@ -7,15 +7,13 @@ import styles from './index.module.css'
 import { PAGINATION_TYPES } from '../../../internal/Paginator'
 
 
-const Settings = () => {
+const Settings = ({ openDataSelector }) => {
   const {
     id,
     actions: { setProp },
     props,
-    custom,
   } = useNode((node) => ({
     props: node.data.props,
-    custom: node.data.custom,
   }))
 
   const {
@@ -50,7 +48,7 @@ const Settings = () => {
         className={styles.dataSelectorButton}
         type={TButton.BUTTON_TYPES.text}
         label="Select Data"
-        onClick={() => custom.openDataSelector(id, {
+        onClick={() => openDataSelector(id, {
           id: props.entity?.path,
           values: {
             path: props.entity?.path,

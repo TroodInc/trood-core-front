@@ -9,15 +9,13 @@ import styles from './index.module.css'
 import { IMAGE_FIT, cssMeasurementUnits } from '../../constants'
 
 
-const Settings = () => {
+const Settings = ({ openDataSelector }) => {
   const {
     id,
     actions: { setProp },
     props,
-    custom,
   } = useNode((node) => ({
     props: node.data.props,
-    custom: node.data.custom,
   }))
 
   const defaultType = typeof props.imageUrl === 'object' ? 'data' : 'static'
@@ -75,7 +73,7 @@ const Settings = () => {
             className={styles.dataSelectorButton}
             type={TButton.BUTTON_TYPES.text}
             label="Select Data"
-            onClick={() => custom.openDataSelector(id, {
+            onClick={() => openDataSelector(id, {
               id: props.imageUrl?.path,
               values: {
                 path: props.imageUrl?.path,

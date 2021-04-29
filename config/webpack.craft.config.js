@@ -39,6 +39,7 @@ module.exports = function ({
       'react-contenteditable': 'react-contenteditable',
       '@craftjs/core': '@craftjs/core',
       '$trood/components': '$trood/components',
+      '$trood/composerContext': '$trood/composerContext',
     },
     resolve: {
       modules: ['node_modules', paths.appNodeModules, paths.appSrc],

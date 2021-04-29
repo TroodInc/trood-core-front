@@ -9,10 +9,14 @@ const CraftSwitch = props => {
   const {
     connectors: { connect, drag },
   } = useNode((node) => ({ props: node.data.props }))
-  const { visualHelp, ...rest } = props
+  const { onlyRender, visualHelp, ...rest } = props
 
   return (
-    <div {...rest} ref={ref => connect(drag(ref))} className={classNames({ [styles.visualHelp]: visualHelp })}>
+    <div
+      {...rest}
+      ref={onlyRender ? undefined : ref => connect(drag(ref))}
+      className={classNames({ [styles.visualHelp]: visualHelp })}
+    >
       {props.children}
     </div>
   )

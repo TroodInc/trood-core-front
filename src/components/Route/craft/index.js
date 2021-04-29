@@ -17,10 +17,14 @@ const CraftRoute = props => {
     props: node.data.props,
     custom: node.data.custom,
   }))
-  const { visualHelp, ...rest } = props
+  const { onlyRender, visualHelp, ...rest } = props
 
   return (
-    <div {...rest} ref={ref => connect(drag(ref))} className={classNames({ [styles.visualHelp]: visualHelp })}>
+    <div
+      {...rest}
+      ref={onlyRender ? undefined : ref => connect(drag(ref))}
+      className={classNames({ [styles.visualHelp]: visualHelp })}
+    >
       {visualHelp && (
         <>
           Title: {props.title}<br/>

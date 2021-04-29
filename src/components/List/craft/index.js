@@ -24,7 +24,7 @@ const CraftList = (props) => {
   const {
     connectors: { connect, drag },
   } = useNode()
-  const { className, visualHelp, pagination, entity, ...rest } = props
+  const { className, onlyRender, visualHelp, pagination, entity, ...rest } = props
 
   let entityIsApi
   if (entity && entity.path) {
@@ -38,15 +38,15 @@ const CraftList = (props) => {
     <Paginator
       {...pagination}
       {...rest}
-      innerRef={(dom) => connect(drag(dom))}
+      innerRef={onlyRender ? undefined : ref => connect(drag(ref))}
       className={classNames(className, visualHelp && styles.visualHelp)}
       entity={entityIsApi ? apiEntity : []}
     >
       {/* TODO <Context> after dataSelector */}
-      {() => (
-        <Element id="listRow" is="div" canvas custom={{ displayName: 'List Item' }}>
-        </Element>
-      )}
+      {() => {
+        if (onlyRender) return rest.nodes
+        return <Element id="listRow" is="div" canvas custom={{ displayName: 'List Item' }} />
+      }}
     </Paginator>
   )
 }
