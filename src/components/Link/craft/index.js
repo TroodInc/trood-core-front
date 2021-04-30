@@ -33,7 +33,6 @@ CraftLink.craft = {
   },
   props: {
     to: '/',
-    children: 'Link',
   },
 }
 
