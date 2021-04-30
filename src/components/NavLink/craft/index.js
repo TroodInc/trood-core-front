@@ -33,7 +33,6 @@ CraftNavLink.craft = {
   },
   props: {
     to: '/',
-    children: 'NavLink',
   },
 }
 
