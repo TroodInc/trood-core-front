@@ -7,6 +7,7 @@ import ContextContext from 'core/ContextContext'
 import { useObserver } from 'mobx-react-lite'
 import { useHistory, useLocation, useParams } from 'react-router-dom'
 import { Parser } from 'expr-eval'
+import get from 'lodash/get'
 
 import LoadingIndicator from 'components/LoadingIndicator'
 
@@ -49,8 +50,18 @@ const connectProps = (props, $data, childBaseComponent) => {
     (memo, key) => {
       const item = props[key]
       if (typeof item === 'object' && item.$type === '$data') {
-        const propValue =
+        let propValue =
                     typeof item.path === 'object' ? connectProps(item.path, $data) : getData(item.path, $data)
+        if (item.template) {
+          let templateValue = item.template
+          for (const m of item.template.matchAll(/\${([^}]+)}/g)) {
+            const literal = m[0]
+            const path = m[1]
+            const value = get({ value: propValue }, path)
+            templateValue = templateValue.replace(literal, value)
+          }
+          propValue = templateValue
+        }
         return { ...memo, [key]: propValue }
       }
 

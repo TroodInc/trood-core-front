@@ -129,12 +129,14 @@
                                                 "type": "Link",
                                                 "props": {
                                                     "to": {
-                                                        "$type": "$expression",
-                                                        "expression": "\"/client/\" || data(\"$context.id\")"
+                                                        "$type": "$data",
+                                                        "path": "$context",
+                                                        "template": "/client/${value.id}"
                                                     },
                                                     "children": {
                                                         "$type": "$data",
-                                                        "path": "$context.name"
+                                                        "path": "$context.name",
+                                                        "template": "Test ${value} and ${value.1}"
                                                     }
                                                 }
                                             }
