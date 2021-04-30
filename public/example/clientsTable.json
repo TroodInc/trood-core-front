@@ -131,12 +131,12 @@
                                                     "to": {
                                                         "$type": "$data",
                                                         "path": "$context",
-                                                        "template": "/client/${value.id}"
+                                                        "template": "/client/{{value.id}}"
                                                     },
                                                     "children": {
                                                         "$type": "$data",
                                                         "path": "$context.name",
-                                                        "template": "Test ${value} and ${value.1}"
+                                                        "template": "Client {{value}} {{{value.0}}}"
                                                     }
                                                 }
                                             }

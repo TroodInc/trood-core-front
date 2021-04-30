@@ -54,7 +54,7 @@ const connectProps = (props, $data, childBaseComponent) => {
                     typeof item.path === 'object' ? connectProps(item.path, $data) : getData(item.path, $data)
         if (item.template) {
           let templateValue = item.template
-          for (const m of item.template.matchAll(/\${([^}]+)}/g)) {
+          for (const m of item.template.matchAll(/{{([^{}]+)}}/g)) {
             const literal = m[0]
             const path = m[1]
             const value = get({ value: propValue }, path)
