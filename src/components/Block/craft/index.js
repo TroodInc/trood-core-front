@@ -14,7 +14,7 @@ const CraftBlock = props => {
   return (
     <Block
       {...rest}
-      ref={onlyRender ? undefined : ref => connect(drag(ref))}
+      innerRef={onlyRender ? undefined : ref => connect(drag(ref))}
     >
       {props.children}
     </Block>
