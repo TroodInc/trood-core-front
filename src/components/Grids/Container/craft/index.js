@@ -22,7 +22,7 @@ const CraftContainer = props => {
   return (
     <Container {...{
       ...rest,
-      ref: onlyRender ? undefined : ref => connect(drag(ref)),
+      innerRef: onlyRender ? undefined : ref => connect(drag(ref)),
       className: classNames(className, visualHelp && styles.visualHelp),
     }}>
       {props.children}
