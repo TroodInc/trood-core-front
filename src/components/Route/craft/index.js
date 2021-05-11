@@ -47,6 +47,9 @@ CraftRoute.craft = {
   related: {
     settings: Settings,
   },
+  custom: {
+    getStyleSettings: () => false,
+  },
 }
 
 export default CraftRoute

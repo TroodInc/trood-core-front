@@ -9,6 +9,7 @@ const EditWrapper = ({
   text,
   tagName,
   className,
+  style,
   onChange,
 }) => {
   const [{ isEditing, isEditingActive }, setState] = useState(false)
@@ -31,6 +32,7 @@ const EditWrapper = ({
             onChange={onChange}
             tagName={tagName}
             className={className}
+            style={style}
             onFocus={() => setState({ isEditing: true, isEditingActive: true })}
           />
         )

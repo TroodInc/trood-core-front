@@ -24,6 +24,9 @@ const CraftSwitch = props => {
 
 CraftSwitch.craft = {
   displayName: 'Switch',
+  custom: {
+    getStyleSettings: () => false,
+  },
 }
 
 export default CraftSwitch
