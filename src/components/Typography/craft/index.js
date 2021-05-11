@@ -38,6 +38,7 @@ const CraftTypography = props => {
       text: value,
       tagName: Typography.knownTypes[props.type],
       className: classNames(styles[props.type], props.bold && styles.bold, props.className),
+      style: props.style,
     }}>
       <Typography { ...rest } />
     </EditWrapper>

@@ -93,6 +93,9 @@ CraftFragment.craft = {
   rules: {
     canMoveIn: () => false,
   },
+  custom: {
+    getStyleSettings: () => false,
+  },
 }
 
 export default CraftFragment
