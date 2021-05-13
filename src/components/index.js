@@ -3,9 +3,6 @@ import styled from 'styled-components'
 
 import Context from './Context'
 
-import GridRow from './Grids/Row'
-import GridCell from './Grids/Cell'
-import GridContainer from './Grids/Container'
 import Conditional from './Conditional'
 
 import HtmlTags from './Tags/HtmlTags'
@@ -13,6 +10,7 @@ import SvgTags from './Tags/SvgTags'
 
 import { Link, NavLink, Switch } from 'react-router-dom'
 
+import Container from './Container'
 import Block from './Block'
 import Button from './Button'
 import Checkbox from './Checkbox'
@@ -39,15 +37,13 @@ import Fragment from './Fragment'
 
 const components = {
   Context,
-  GridRow,
-  GridCell,
-  GridContainer,
   Conditional,
   HtmlTags,
   SvgTags,
   Link,
   NavLink,
   Switch,
+  Container,
   Block,
   Button,
   Checkbox,
