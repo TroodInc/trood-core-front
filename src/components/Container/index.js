@@ -8,31 +8,28 @@ import styles from './index.module.css'
 const Container = ({
   children,
   className,
-  fluid,
   innerRef,
   ...other
 }) => (
   <div
     {...other}
     ref={innerRef}
-    className={classNames(
-      className,
-      styles['aa-Container'],
-      !fluid && styles['aa-Container_withMaxWidth'],
-    )}
+    className={classNames(className, styles.root)}
   >
     {children}
   </div>
 )
 
 Container.defaultProps = {
-  fluid: false,
+  style: {
+    flexDirection: 'column',
+    flexWrap: 'nowrap',
+  },
 }
 
 Container.propTypes = {
   children: PropTypes.oneOfType([PropTypes.element, PropTypes.string, PropTypes.array]),
   className: PropTypes.string,
-  fluid: PropTypes.bool,
 }
 
 export default Container
