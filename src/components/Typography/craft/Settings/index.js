@@ -2,10 +2,21 @@
 import React from 'react'
 import Typography from '../../index'
 import { useNode } from '@craftjs/core'
-import { TCheckbox, TSelect, TButton } from '$trood/components'
+import { TCheckbox, TSelect, TButton, TInput } from '$trood/components'
+import styles from '../../../List/craft/Settings/index.module.css'
 
-import styles from './index.module.css'
 
+const setStyle = (field, value) => props => {
+  let val = value
+  if (typeof val === 'string' && val.replace(/[\d\-.]/g, '').length === 0) {
+    val = +val
+  }
+
+  props.style = {
+    ...props.style,
+    [field]: val,
+  }
+}
 
 const Settings = ({ openDataSelector }) => {
   const {
@@ -17,9 +28,8 @@ const Settings = ({ openDataSelector }) => {
   }))
 
   return (
-    <div>
+    <React.Fragment>
       <TButton.default
-        className={styles.dataSelectorButton}
         type={TButton.BUTTON_TYPES.text}
         label="Select Data"
         onClick={() => openDataSelector(id, {
@@ -35,13 +45,18 @@ const Settings = ({ openDataSelector }) => {
         })}
       />
       <TSelect.default {...{
-        className: styles.select,
         label: 'Type',
         items: Object.keys(Typography.knownTypes).map(value => ({ value })),
         values: props.type ? [props.type] : [],
         onChange: vals => setProp((props) => {
           props.type = vals[0]
         }),
+      }} />
+      <TInput.default {...{
+        className: styles.select,
+        label: 'Font Size',
+        value: props.style?.fontSize,
+        onChange: val => setProp(setStyle('fontSize', val)),
       }} />
       <TCheckbox.default {...{
         label: 'Bold',
@@ -52,7 +67,7 @@ const Settings = ({ openDataSelector }) => {
           })
         },
       }} />
-    </div>
+    </React.Fragment>
   )
 }
 
