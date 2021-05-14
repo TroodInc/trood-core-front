@@ -68,6 +68,7 @@ class Checkbox extends PureComponent {
   static defaultProps = {
     disabled: false,
     value: false,
+    labelPosition: LABEL_POSITION_TYPES.right,
     viewType: CHECK_VIEW_TYPES.checkbox,
     color: CHECK_COLORS.blue,
   }

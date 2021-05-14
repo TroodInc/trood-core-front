@@ -26,6 +26,7 @@ import Table from './Table/craft'
 import List from './List/craft'
 
 import Input from './Input/craft'
+import Checkbox from './Checkbox/craft'
 
 import Fragment from './Fragment/craft'
 
@@ -45,6 +46,7 @@ const components = {
   Table,
   List,
   Input,
+  Checkbox,
   Fragment,
 }
 
