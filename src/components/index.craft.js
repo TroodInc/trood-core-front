@@ -25,6 +25,8 @@ import Image from './Image/craft'
 import Table from './Table/craft'
 import List from './List/craft'
 
+import Input from './Input/craft'
+
 import Fragment from './Fragment/craft'
 
 
@@ -42,6 +44,7 @@ const components = {
   Image,
   Table,
   List,
+  Input,
   Fragment,
 }
 
