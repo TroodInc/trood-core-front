@@ -5,7 +5,7 @@ import Settings from './Settings'
 import Checkbox from '../index'
 
 
-const CraftInput = props => {
+const CraftCheckbox = props => {
   const {
     connectors: { connect, drag },
   } = useNode((node) => ({ props: node.data.props }))
@@ -19,7 +19,7 @@ const CraftInput = props => {
   )
 }
 
-CraftInput.craft = {
+CraftCheckbox.craft = {
   displayName: 'Checkbox',
   related: {
     settings: Settings,
@@ -32,4 +32,4 @@ CraftInput.craft = {
   },
 }
 
-export default CraftInput
+export default CraftCheckbox
