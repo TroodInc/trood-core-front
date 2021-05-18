@@ -179,7 +179,11 @@ const BaseComponent = Wrapper(({ component, coreComponents }) => {
   const history = useHistory()
   const location = useLocation()
   const params = useParams()
-  const searchParams = new URLSearchParams(location.search)
+  const tmpSearchParams = new URLSearchParams(location.search)
+  const searchParams = Array.from(tmpSearchParams.keys()).reduce((memo, key) => ({
+    ...memo,
+    [key]: tmpSearchParams.getAll(key),
+  }), {})
 
   const $data = {
     $store,
