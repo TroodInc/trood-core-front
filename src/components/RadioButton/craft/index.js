@@ -2,34 +2,34 @@ import React from 'react'
 import { useNode } from '@craftjs/core'
 
 import Settings from './Settings'
-import Input from '../index'
+import RadioButton from '../index'
 
 
-const CraftInput = props => {
+const CraftRadioButton = props => {
   const {
     connectors: { connect, drag },
   } = useNode((node) => ({ props: node.data.props }))
   const { visualHelp, onlyRender, ...rest } = props
 
   return (
-    <Input {...{
+    <RadioButton {...{
       innerRef: onlyRender ? undefined : ref => connect(drag(ref)),
       ...rest,
     }} />
   )
 }
 
-CraftInput.craft = {
-  displayName: 'Input',
+CraftRadioButton.craft = {
+  displayName: 'Radio Button',
+  related: {
+    settings: Settings,
+  },
   props: {
-    ...Input.defaultProps,
+    ...RadioButton.defaultProps,
   },
   rules: {
     canMoveIn: () => false,
   },
-  related: {
-    settings: Settings,
-  },
 }
 
-export default CraftInput
+export default CraftRadioButton

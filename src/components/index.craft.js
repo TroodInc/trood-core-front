@@ -12,6 +12,7 @@ import Route from './Route/craft'
 import Link from './Link/craft'
 import NavLink from './NavLink/craft'
 
+import Context from './Context/craft'
 import Container from './Container/craft'
 import Block from './Block/craft'
 
@@ -25,6 +26,10 @@ import Image from './Image/craft'
 import Table from './Table/craft'
 import List from './List/craft'
 
+import Input from './Input/craft'
+import Checkbox from './Checkbox/craft'
+import RadioButton from './RadioButton/craft'
+
 import Fragment from './Fragment/craft'
 
 
@@ -33,6 +38,7 @@ const components = {
   Route,
   Link,
   NavLink,
+  Context,
   Container,
   Block,
   HtmlTags,
@@ -42,6 +48,9 @@ const components = {
   Image,
   Table,
   List,
+  Input,
+  Checkbox,
+  RadioButton,
   Fragment,
 }
 

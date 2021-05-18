@@ -64,7 +64,7 @@ class RadioButton extends PureComponent {
   static defaultProps = {
     disabled: false,
     value: false,
-
+    labelPosition: LABEL_POSITION_TYPES.right,
     color: RADIO_COLORS.blue,
     size: RADIO_SIZES.normal,
   }

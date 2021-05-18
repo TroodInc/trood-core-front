@@ -2,34 +2,34 @@ import React from 'react'
 import { useNode } from '@craftjs/core'
 
 import Settings from './Settings'
-import Input from '../index'
+import Checkbox from '../index'
 
 
-const CraftInput = props => {
+const CraftCheckbox = props => {
   const {
     connectors: { connect, drag },
   } = useNode((node) => ({ props: node.data.props }))
   const { visualHelp, onlyRender, ...rest } = props
 
   return (
-    <Input {...{
+    <Checkbox {...{
       innerRef: onlyRender ? undefined : ref => connect(drag(ref)),
       ...rest,
     }} />
   )
 }
 
-CraftInput.craft = {
-  displayName: 'Input',
+CraftCheckbox.craft = {
+  displayName: 'Checkbox',
+  related: {
+    settings: Settings,
+  },
   props: {
-    ...Input.defaultProps,
+    ...Checkbox.defaultProps,
   },
   rules: {
     canMoveIn: () => false,
   },
-  related: {
-    settings: Settings,
-  },
 }
 
-export default CraftInput
+export default CraftCheckbox
