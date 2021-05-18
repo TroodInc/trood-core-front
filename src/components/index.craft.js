@@ -12,6 +12,7 @@ import Route from './Route/craft'
 import Link from './Link/craft'
 import NavLink from './NavLink/craft'
 
+import Context from './Context/craft'
 import Container from './Container/craft'
 import Block from './Block/craft'
 
@@ -37,6 +38,7 @@ const components = {
   Route,
   Link,
   NavLink,
+  Context,
   Container,
   Block,
   HtmlTags,
