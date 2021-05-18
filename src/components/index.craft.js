@@ -27,6 +27,7 @@ import List from './List/craft'
 
 import Input from './Input/craft'
 import Checkbox from './Checkbox/craft'
+import RadioButton from './RadioButton/craft'
 
 import Fragment from './Fragment/craft'
 
@@ -47,6 +48,7 @@ const components = {
   List,
   Input,
   Checkbox,
+  RadioButton,
   Fragment,
 }
 
