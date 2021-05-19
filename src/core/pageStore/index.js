@@ -9,7 +9,30 @@ const normalizeApiPath = (path) => {
 }
 
 const convertObject = (cur, data) => {
-  const type = typeof cur.type === 'string' ? cur.type : (cur.type || {}).resolvedName
+  let { type } = cur
+  if (!type || (typeof type === 'object' && !components[type.resolvedName])) {
+    const error = !type || (typeof type === 'object' && !type.resolvedName) ?
+      'Empty component type' : `Unknown component type ${type.resolvedName || type}`
+    return {
+      type: 'HtmlTags',
+      props: {
+        type: 'div',
+        children: `Error!\n${error}`,
+        style: {
+          backgroundColor: '#F009',
+          color: '#FFF',
+          fontSize: 24,
+          padding: 5,
+          whiteSpace: 'pre-wrap',
+        },
+      },
+      displayName: `Error in ${cur.displayName}`,
+      nodes: [],
+      ...cur.custom,
+    }
+  }
+
+  type = type.resolvedName || type
 
   if (components[type]?.transformFunctions?.loadTransform) {
     return components[type].transformFunctions.loadTransform(cur, data, node => convertObject(node, data))
@@ -25,12 +48,6 @@ const convertObject = (cur, data) => {
     component.nodes = [
       {
         type: 'LoadingIndicator',
-        props: {
-          tmp: {
-            '$type': '$data',
-            'path': '$store',
-          },
-        },
       },
     ] // add standard loader component for async component
   }

@@ -22,8 +22,7 @@ const Settings = ({
   const fragmentAlias = (custom.chunk || '').replace(/^fragments\//, '').replace(/\.json$/, '')
   const fragmentArray = emApplicationFragmentEntities.getArray({
     filter: {
-      rql: `eq(application,${currentApplicationId})`,
-      // ,not(eq(id,${applicationCurrentFragment}))`,
+      rql: `eq(application,${currentApplicationId}),not(eq(id,${applicationCurrentFragment}))`,
     },
   })
 
