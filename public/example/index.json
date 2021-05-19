@@ -1,791 +1,374 @@
 {
   "ROOT": {
     "type": "div",
-    "isCanvas": true,
-    "props": {
-      "style": {
-        "minHeight": "100%"
-      }
-    },
-    "displayName": "pe",
-    "custom": {
-      "displayName": "Root"
-    },
-    "hidden": false,
     "nodes": [
-      "9YKrV15S2"
-    ],
-    "linkedNodes": {}
-  },
-  "vHKChYhr6": {
-    "type": {
-      "resolvedName": "Container"
-    },
-    "isCanvas": true,
-    "props": {
-      "style": {
-        "flexDirection": "column",
-        "flexWrap": "nowrap"
+      {
+        "type": "Container",
+        "props": {
+          "style": {
+            "flexDirection": "column"
+          }
+        },
+        "nodes": [
+          {
+            "type": "Container",
+            "props": {
+              "style": {
+                "flexDirection": "row",
+                "height": "100vh",
+                "backgroundColor": "#f0f0f5"
+              }
+            },
+            "nodes": [
+              {
+                "type": "Container",
+                "props": {
+                  "style": {
+                    "flexDirection": "column",
+                    "zIndex": 1
+                  }
+                },
+                "nodes": [
+                  {
+                    "type": "div",
+                    "props": {
+                      "style": {
+                        "display": "flex",
+                        "flexFlow": "column nowrap",
+                        "height": "100%",
+                        "boxShadow": "0 0 15px #c0c0c040",
+                        "backgroundColor": "#fff"
+                      }
+                    },
+                    "nodes": [
+                      {
+                        "type": "Menu",
+                        "props": {
+                          "itemActiveStyle": {
+                            "color": "#00b807"
+                          },
+                          "items": [
+                            {
+                              "path": "/",
+                              "title": {
+                                "type": "img",
+                                "props": {
+                                  "src": "/images/logo.svg"
+                                }
+                              },
+                              "redirectTo": "/components"
+                            },
+                            {
+                              "path": "/clients",
+                              "title": "Clients",
+                              "redirectTo": "/clients/list"
+                            },
+                            {
+                              "path": "/matters",
+                              "title": "Matters",
+                              "redirectTo": "/matters/list",
+                              "items": [
+                                {
+                                  "path": "/list",
+                                  "title": "List"
+                                },
+                                {
+                                  "path": "/table",
+                                  "title": "Table"
+                                }
+                              ]
+                            },
+                            {
+                              "path": "/remote",
+                              "title": "Remote"
+                            },
+                            {
+                              "path": "/components",
+                              "children": {
+                                "$type": "$expression",
+                                "expression": "data(\"$route.location.pathname\") == \"/components\" ? \"Components*\" : \"Components\""
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "type": "Button",
+                        "props": {
+                          "style": {
+                            "margin": "auto 0 16px 0"
+                          },
+                          "type": "text",
+                          "label": "Login",
+                          "onClick": {
+                            "$type": "$action",
+                            "path": "$page.openModal",
+                            "args": [
+                              "LoginModal",
+                              {
+                                "form": {
+                                  "$type": "$data",
+                                  "path": "$auth.getLoginForm[]"
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        "type": "Modal",
+                        "props": {
+                          "type": "center",
+                          "isOpen": {
+                            "$type": "$data",
+                            "path": "$page.isModalOpen[\"LoginModal\"]"
+                          },
+                          "close": {
+                            "$type": "$action",
+                            "path": "$page.closeModal",
+                            "args": [
+                              "LoginModal"
+                            ]
+                          }
+                        },
+                        "nodes": [
+                          {
+                            "type": "Typography",
+                            "props": {
+                              "type": "h1",
+                              "value": "Login"
+                            }
+                          },
+                          {
+                            "type": "Spacer",
+                            "size": 16
+                          },
+                          {
+                            "type": "Context",
+                            "props": {
+                              "context": {
+                                "$type": "$data",
+                                "path": "$page.getContext[\"LoginModal\"]"
+                              }
+                            },
+                            "nodes": [
+                              {
+                                "type": "Input",
+                                "props": {
+                                  "label": "Login",
+                                  "value": {
+                                    "$type": "$data",
+                                    "path": "$context.form.data.login"
+                                  },
+                                  "onChange": {
+                                    "$type": "$action",
+                                    "path": "$context.form.changeFields",
+                                    "args": [
+                                      {
+                                        "$type": "$data",
+                                        "path": {
+                                          "login": {
+                                            "$type": "$data",
+                                            "path": "$event"
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              },
+                              {
+                                "type": "Spacer",
+                                "size": 16
+                              },
+                              {
+                                "type": "Input",
+                                "props": {
+                                  "label": "Password",
+                                  "value": {
+                                    "$type": "$data",
+                                    "path": "$context.form.data.password"
+                                  },
+                                  "onChange": {
+                                    "$type": "$action",
+                                    "path": "$context.form.changeFields",
+                                    "args": [
+                                      {
+                                        "$type": "$data",
+                                        "path": {
+                                          "password": {
+                                            "$type": "$data",
+                                            "path": "$event"
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              },
+                              {
+                                "type": "Spacer",
+                                "size": 16
+                              },
+                              {
+                                "type": "Container",
+                                "props": {
+                                  "style": {
+                                    "flexDirection": "row"
+                                  }
+                                },
+                                "nodes": [
+                                  {
+                                    "type": "Container",
+                                    "props": {
+                                      "style": {
+                                        "flexDirection": "column"
+                                      }
+                                    },
+                                    "nodes": [
+                                      {
+                                        "type": "Button",
+                                        "props": {
+                                          "label": "Close",
+                                          "type": "text",
+                                          "onClick": {
+                                            "$type": "$action",
+                                            "path": "$page.closeModal",
+                                            "args": [
+                                              "LoginModal"
+                                            ]
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "Container",
+                                    "props": {
+                                      "style": {
+                                        "flexDirection": "column"
+                                      }
+                                    },
+                                    "nodes": [
+                                      {
+                                        "type": "Button",
+                                        "props": {
+                                          "label": "Save",
+                                          "onClick": {
+                                            "$type": "$action",
+                                            "path": "$auth.login",
+                                            "args": [
+                                              "https://legal.dev.trood.ru/authorization/api/v1.0/login/"
+                                            ],
+                                            "then": {
+                                              "path": "$page.closeModal",
+                                              "args": [
+                                                "LoginModal"
+                                              ]
+                                            }
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Container",
+                "props": {
+                  "style": {
+                    "flexDirection": "column",
+                    "overflowX": "hidden",
+                    "overflowY": "auto",
+                    "height": "100%",
+                    "flexGrow": 1
+                  },
+                  "id": "MAIN_SCROLL_CONTAINER"
+                },
+                "nodes": [
+                  {
+                    "type": "Container",
+                    "props": {
+                      "style": {
+                        "flexDirection": "row",
+                        "backgroundColor": "#fff"
+                      }
+                    },
+                    "nodes": [
+                      {
+                        "type": "Container",
+                        "props": {
+                          "style": {
+                            "flexDirection": "column"
+                          },
+                          "children": "back"
+                        }
+                      },
+                      {
+                        "type": "Container",
+                        "props": {
+                          "style": {
+                            "flexDirection": "column"
+                          },
+                          "children": "tabs"
+                        }
+                      },
+                      {
+                        "type": "Container",
+                        "props": {
+                          "style": {
+                            "flexDirection": "column"
+                          },
+                          "children": "avatar"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Container",
+                    "props": {
+                      "style": {
+                        "flexDirection": "column"
+                      }
+                    },
+                    "nodes": [
+                      {
+                        "type": "Container",
+                        "props": {
+                          "style": {
+                            "flexDirection": "column",
+                            "padding": 16,
+                            "alignItems": "flex-start"
+                          }
+                        },
+                        "nodes": [
+                          {
+                            "type": "Switch",
+                            "nodes": [
+                              {
+                                "type": "LoadingIndicator"
+                              }
+                            ],
+                            "chunk": "example/pages.json"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       }
-    },
-    "displayName": "Container",
-    "custom": {
-      "DataSelector": {
-        "compare": null,
-        "displayName": "Connect(Component)"
-      }
-    },
-    "hidden": false,
-    "nodes": [
-      "mPS8zaR6W"
-    ],
-    "linkedNodes": {},
-    "parent": "XDGX4eigm"
-  },
-  "p-2kQwbOU": {
-    "type": {
-      "resolvedName": "Container"
-    },
-    "isCanvas": true,
-    "props": {
-      "style": {
-        "flexDirection": "column",
-        "flexWrap": "nowrap"
-      }
-    },
-    "displayName": "Container",
-    "custom": {
-      "DataSelector": {
-        "compare": null,
-        "displayName": "Connect(Component)"
-      }
-    },
-    "hidden": false,
-    "nodes": [
-      "Pv8up3Pfd",
-      "lhSE7jrZ6",
-      "JtP1hUzX7",
-      "1aysKg3As"
-    ],
-    "linkedNodes": {},
-    "parent": "9iARYTU2k"
-  },
-  "pg_CUjuRy": {
-    "type": {
-      "resolvedName": "Container"
-    },
-    "isCanvas": true,
-    "props": {
-      "style": {
-        "flexDirection": "column",
-        "flexWrap": "nowrap"
-      }
-    },
-    "displayName": "Container",
-    "custom": {
-      "DataSelector": {
-        "compare": null,
-        "displayName": "Connect(Component)"
-      }
-    },
-    "hidden": false,
-    "nodes": [
-      "rfhHZ05I5",
-      "R8GCnL_im",
-      "qV2EIsbSz"
-    ],
-    "linkedNodes": {},
-    "parent": "9iARYTU2k"
-  },
-  "rfhHZ05I5": {
-    "type": {
-      "resolvedName": "Typography"
-    },
-    "isCanvas": true,
-    "props": {
-      "type": "h1",
-      "value": "Інформація"
-    },
-    "displayName": "Typography",
-    "custom": {
-      "DataSelector": {
-        "compare": null,
-        "displayName": "Connect(Component)"
-      }
-    },
-    "hidden": false,
-    "nodes": [],
-    "linkedNodes": {},
-    "parent": "pg_CUjuRy"
-  },
-  "Pv8up3Pfd": {
-    "type": {
-      "resolvedName": "Typography"
-    },
-    "isCanvas": true,
-    "props": {
-      "type": "h1",
-      "value": "Контакти"
-    },
-    "displayName": "Typography",
-    "custom": {
-      "DataSelector": {
-        "compare": null,
-        "displayName": "Connect(Component)"
-      }
-    },
-    "hidden": false,
-    "nodes": [],
-    "linkedNodes": {},
-    "parent": "p-2kQwbOU"
-  },
-  "oZjG5AEA-": {
-    "type": {
-      "resolvedName": "Typography"
-    },
-    "isCanvas": true,
-    "props": {
-      "type": "body",
-      "value": "made by 2021",
-      "style": {
-        "textAlign": "center",
-        "color": "#D1D1D1",
-        "fontSize": "12px",
-        "padding": "20px",
-        "borderTop": "1px solid #D6D9DF"
-      }
-    },
-    "displayName": "Typography",
-    "custom": {
-      "DataSelector": {
-        "compare": null,
-        "displayName": "Connect(Component)"
-      }
-    },
-    "hidden": false,
-    "nodes": [],
-    "linkedNodes": {},
-    "parent": "JAPzDvxLM"
-  },
-  "ZFvjb3usY": {
-    "type": {
-      "resolvedName": "Typography"
-    },
-    "isCanvas": true,
-    "props": {
-      "type": "body",
-      "value": "Стати партнером"
-    },
-    "displayName": "Typography",
-    "custom": {
-      "DataSelector": {
-        "compare": null,
-        "displayName": "Connect(Component)"
-      }
-    },
-    "hidden": false,
-    "nodes": [],
-    "linkedNodes": {},
-    "parent": "qV2EIsbSz"
-  },
-  "0F2VC0YsB": {
-    "type": {
-      "resolvedName": "Typography"
-    },
-    "isCanvas": true,
-    "props": {
-      "type": "body",
-      "value": "Про проект"
-    },
-    "displayName": "Typography",
-    "custom": {
-      "DataSelector": {
-        "compare": null,
-        "displayName": "Connect(Component)"
-      }
-    },
-    "hidden": false,
-    "nodes": [],
-    "linkedNodes": {},
-    "parent": "R8GCnL_im"
-  },
-  "prNzaMtKz": {
-    "type": {
-      "resolvedName": "Typography"
-    },
-    "isCanvas": true,
-    "props": {
-      "type": "body",
-      "value": "Підтримати проект"
-    },
-    "displayName": "Typography",
-    "custom": {
-      "DataSelector": {
-        "compare": null,
-        "displayName": "Connect(Component)"
-      }
-    },
-    "hidden": false,
-    "nodes": [],
-    "linkedNodes": {},
-    "parent": "1aysKg3As"
-  },
-  "kNH7r40jr": {
-    "type": {
-      "resolvedName": "Typography"
-    },
-    "isCanvas": true,
-    "props": {
-      "type": "body",
-      "value": "Для партнерів"
-    },
-    "displayName": "Typography",
-    "custom": {
-      "DataSelector": {
-        "compare": null,
-        "displayName": "Connect(Component)"
-      }
-    },
-    "hidden": false,
-    "nodes": [],
-    "linkedNodes": {},
-    "parent": "lhSE7jrZ6"
-  },
-  "mPS8zaR6W": {
-    "type": {
-      "resolvedName": "Switch"
-    },
-    "isCanvas": true,
-    "props": {},
-    "displayName": "Switch",
-    "custom": {
-      "DataSelector": {
-        "compare": null,
-        "displayName": "Connect(Component)"
-      }
-    },
-    "hidden": false,
-    "nodes": [
-      "KXNYwgZY9",
-      "sE7f3elSp",
-      "mryWMKVr5",
-      "Bw9vHMpe4"
-    ],
-    "linkedNodes": {},
-    "parent": "vHKChYhr6"
-  },
-  "KXNYwgZY9": {
-    "type": {
-      "resolvedName": "Route"
-    },
-    "isCanvas": true,
-    "props": {
-      "title": "Про нас",
-      "path": "/about"
-    },
-    "displayName": "Route",
-    "custom": {
-      "DataSelector": {
-        "compare": null,
-        "displayName": "Connect(Component)"
-      },
-      "chunk": "fragments/about_page.json"
-    },
-    "hidden": false,
-    "nodes": [],
-    "linkedNodes": {},
-    "parent": "mPS8zaR6W"
-  },
-  "5a7_Y3yN7": {
-    "type": {
-      "resolvedName": "Container"
-    },
-    "isCanvas": true,
-    "props": {
-      "style": {
-        "flexDirection": "row",
-        "flexWrap": "nowrap",
-        "textAlign": "start",
-        "justifyContent": "space-between"
-      }
-    },
-    "displayName": "Container",
-    "custom": {
-      "DataSelector": {
-        "compare": null,
-        "displayName": "Connect(Component)"
-      }
-    },
-    "hidden": false,
-    "nodes": [
-      "iNE1N8WIX",
-      "Sw71u0ucn"
-    ],
-    "linkedNodes": {},
-    "parent": "sZ5uvj25M"
-  },
-  "iNE1N8WIX": {
-    "type": {
-      "resolvedName": "Container"
-    },
-    "isCanvas": true,
-    "props": {
-      "style": {
-        "flexDirection": "column",
-        "flexWrap": "nowrap"
-      }
-    },
-    "displayName": "Container",
-    "custom": {},
-    "hidden": false,
-    "nodes": [
-      "Hit57mNQH"
-    ],
-    "linkedNodes": {},
-    "parent": "5a7_Y3yN7"
-  },
-  "Sw71u0ucn": {
-    "type": {
-      "resolvedName": "Container"
-    },
-    "isCanvas": true,
-    "props": {
-      "style": {
-        "flexDirection": "column",
-        "flexWrap": "nowrap"
-      }
-    },
-    "displayName": "Container",
-    "custom": {},
-    "hidden": false,
-    "nodes": [
-      "BqOIR5WSv"
-    ],
-    "linkedNodes": {},
-    "parent": "5a7_Y3yN7"
-  },
-  "EnUoNElU1": {
-    "type": {
-      "resolvedName": "Typography"
-    },
-    "isCanvas": true,
-    "props": {
-      "type": "body",
-      "value": "Екскурсії музею (тури)"
-    },
-    "displayName": "Typography",
-    "custom": {
-      "DataSelector": {
-        "compare": null,
-        "displayName": "Connect(Component)"
-      }
-    },
-    "hidden": false,
-    "nodes": [],
-    "linkedNodes": {},
-    "parent": "Hit57mNQH"
-  },
-  "LC8dGXoFu": {
-    "type": {
-      "resolvedName": "Typography"
-    },
-    "isCanvas": true,
-    "props": {
-      "type": "body",
-      "value": "- головна сторінка проекту"
-    },
-    "displayName": "Typography",
-    "custom": {
-      "DataSelector": {
-        "compare": null,
-        "displayName": "Connect(Component)"
-      }
-    },
-    "hidden": false,
-    "nodes": [],
-    "linkedNodes": {},
-    "parent": "BqOIR5WSv"
-  },
-  "Hit57mNQH": {
-    "type": {
-      "resolvedName": "Links"
-    },
-    "isCanvas": true,
-    "props": {
-      "to": "/",
-      "children": "Link"
-    },
-    "displayName": "Link",
-    "custom": {},
-    "hidden": false,
-    "nodes": [
-      "EnUoNElU1"
-    ],
-    "linkedNodes": {},
-    "parent": "iNE1N8WIX"
-  },
-  "BqOIR5WSv": {
-    "type": {
-      "resolvedName": "Link"
-    },
-    "isCanvas": true,
-    "props": {
-      "to": "/",
-      "children": "Link"
-    },
-    "displayName": "Link",
-    "custom": {},
-    "hidden": false,
-    "nodes": [
-      "LC8dGXoFu"
-    ],
-    "linkedNodes": {},
-    "parent": "Sw71u0ucn"
-  },
-  "sZ5uvj25M": {
-    "type": {
-      "resolvedName": "Container"
-    },
-    "isCanvas": true,
-    "props": {
-      "style": {
-        "flexDirection": "column",
-        "flexWrap": "nowrap",
-        "backgroundImage": "url(https://muzeums.saas.trood.ru/media/header-main-main-090421145032.jpg)",
-        "height": "170px",
-        "paddingTop": "70px"
-      }
-    },
-    "displayName": "Container",
-    "custom": {
-      "DataSelector": {
-        "compare": null,
-        "displayName": "Connect(Component)"
-      }
-    },
-    "hidden": false,
-    "nodes": [
-      "cLK2fFfMs",
-      "5a7_Y3yN7"
-    ],
-    "linkedNodes": {},
-    "parent": "XDGX4eigm"
-  },
-  "cLK2fFfMs": {
-    "type": {
-      "resolvedName": "Typography"
-    },
-    "isCanvas": true,
-    "props": {
-      "type": "h1",
-      "value": "....",
-      "style": {
-        "color": "white",
-        "textAlign": "center",
-        "fontSize": "24px"
-      }
-    },
-    "displayName": "Typography",
-    "custom": {
-      "DataSelector": {
-        "compare": null,
-        "displayName": "Connect(Component)"
-      }
-    },
-    "hidden": false,
-    "nodes": [],
-    "linkedNodes": {},
-    "parent": "sZ5uvj25M"
-  },
-  "XDGX4eigm": {
-    "type": {
-      "resolvedName": "Container"
-    },
-    "isCanvas": true,
-    "props": {
-      "style": {
-        "flexDirection": "column",
-        "flexWrap": "nowrap",
-        "width": "1020px"
-      }
-    },
-    "displayName": "Container",
-    "custom": {
-      "DataSelector": {
-        "compare": null,
-        "displayName": "Connect(Component)"
-      }
-    },
-    "hidden": false,
-    "nodes": [
-      "sZ5uvj25M",
-      "vHKChYhr6",
-      "JAPzDvxLM",
-      "qZcRb89n9"
-    ],
-    "linkedNodes": {},
-    "parent": "9YKrV15S2"
-  },
-  "9iARYTU2k": {
-    "type": {
-      "resolvedName": "Container"
-    },
-    "isCanvas": true,
-    "props": {
-      "style": {
-        "flexDirection": "row",
-        "flexWrap": "nowrap",
-        "padding": "36px 120px",
-        "justifyContent": "space-around"
-      }
-    },
-    "displayName": "Container",
-    "custom": {
-      "DataSelector": {
-        "compare": null,
-        "displayName": "Connect(Component)"
-      }
-    },
-    "hidden": false,
-    "nodes": [
-      "pg_CUjuRy",
-      "p-2kQwbOU"
-    ],
-    "linkedNodes": {},
-    "parent": "JAPzDvxLM"
-  },
-  "qZcRb89n9": {
-    "type": {
-      "resolvedName": "Block"
-    },
-    "isCanvas": true,
-    "props": {
-      "rounded": false,
-      "transparent": false,
-      "style": {
-        "backgroundColor": "#F5F5F5",
-        "padding": "0px"
-      }
-    },
-    "displayName": "Block",
-    "custom": {
-      "DataSelector": {
-        "compare": null,
-        "displayName": "Connect(Component)"
-      }
-    },
-    "hidden": false,
-    "nodes": [],
-    "linkedNodes": {},
-    "parent": "XDGX4eigm"
-  },
-  "JAPzDvxLM": {
-    "type": {
-      "resolvedName": "Container"
-    },
-    "isCanvas": true,
-    "props": {
-      "style": {
-        "flexDirection": "column",
-        "flexWrap": "nowrap",
-        "backgroundColor": "#F5F5F5",
-        "margin": "0",
-        "padding": "0"
-      }
-    },
-    "displayName": "Container",
-    "custom": {
-      "DataSelector": {
-        "compare": null,
-        "displayName": "Connect(Component)"
-      }
-    },
-    "hidden": false,
-    "nodes": [
-      "9iARYTU2k",
-      "oZjG5AEA-"
-    ],
-    "linkedNodes": {},
-    "parent": "XDGX4eigm"
-  },
-  "sE7f3elSp": {
-    "type": {
-      "resolvedName": "Route"
-    },
-    "isCanvas": true,
-    "props": {
-      "title": "Головна",
-      "path": "/",
-      "exact": true
-    },
-    "displayName": "Route",
-    "custom": {
-      "chunk": "fragments/fragment_main.json"
-    },
-    "hidden": false,
-    "nodes": [],
-    "linkedNodes": {},
-    "parent": "mPS8zaR6W"
-  },
-  "mryWMKVr5": {
-    "type": {
-      "resolvedName": "Route"
-    },
-    "isCanvas": true,
-    "props": {
-      "path": "/object/:id"
-    },
-    "displayName": "Route",
-    "custom": {
-      "chunk": "fragments/object_page.json"
-    },
-    "hidden": false,
-    "nodes": [],
-    "linkedNodes": {},
-    "parent": "mPS8zaR6W"
-  },
-  "9YKrV15S2": {
-    "type": {
-      "resolvedName": "Container"
-    },
-    "isCanvas": true,
-    "props": {
-      "style": {
-        "flexDirection": "column",
-        "flexWrap": "nowrap",
-        "alignItems": "center"
-      }
-    },
-    "displayName": "Container",
-    "custom": {},
-    "hidden": false,
-    "nodes": [
-      "XDGX4eigm"
-    ],
-    "linkedNodes": {},
-    "parent": "ROOT"
-  },
-  "R8GCnL_im": {
-    "type": {
-      "resolvedName": "Link"
-    },
-    "isCanvas": true,
-    "props": {
-      "to": "/about"
-    },
-    "displayName": "Link",
-    "custom": {},
-    "hidden": false,
-    "nodes": [
-      "0F2VC0YsB"
-    ],
-    "linkedNodes": {},
-    "parent": "pg_CUjuRy"
-  },
-  "Bw9vHMpe4": {
-    "type": {
-      "resolvedName": "Route"
-    },
-    "isCanvas": true,
-    "props": {
-      "title": "Музеї",
-      "path": "/museums",
-      "exact": true
-    },
-    "displayName": "Route",
-    "custom": {
-      "chunk": "fragments/museums.json"
-    },
-    "hidden": false,
-    "nodes": [],
-    "linkedNodes": {},
-    "parent": "mPS8zaR6W"
-  },
-  "qV2EIsbSz": {
-    "type": {
-      "resolvedName": "Link"
-    },
-    "isCanvas": true,
-    "props": {
-      "to": "/get_partner_page"
-    },
-    "displayName": "Link",
-    "custom": {},
-    "hidden": false,
-    "nodes": [
-      "ZFvjb3usY"
-    ],
-    "linkedNodes": {},
-    "parent": "pg_CUjuRy"
-  },
-  "lhSE7jrZ6": {
-    "type": {
-      "resolvedName": "Link"
-    },
-    "isCanvas": true,
-    "props": {
-      "to": "/partners_contact_page"
-    },
-    "displayName": "Link",
-    "custom": {},
-    "hidden": false,
-    "nodes": [
-      "kNH7r40jr"
-    ],
-    "linkedNodes": {},
-    "parent": "p-2kQwbOU"
-  },
-  "PtBuclKZZ": {
-    "type": {},
-    "isCanvas": true,
-    "props": {
-      "type": "body",
-      "value": "Пропозиції"
-    },
-    "displayName": "Typography",
-    "custom": {
-      "DataSelector": {
-        "compare": null,
-        "displayName": "Connect(Component)"
-      }
-    },
-    "hidden": false,
-    "nodes": [],
-    "linkedNodes": {},
-    "parent": "JtP1hUzX7"
-  },
-  "JtP1hUzX7": {
-    "type": {
-      "resolvedName": "Link"
-    },
-    "isCanvas": true,
-    "props": {
-      "to": "/portions_contact_page"
-    },
-    "displayName": "Link",
-    "custom": {},
-    "hidden": false,
-    "nodes": [
-      "PtBuclKZZ"
-    ],
-    "linkedNodes": {},
-    "parent": "p-2kQwbOU"
-  },
-  "1aysKg3As": {
-    "type": {
-      "resolvedName": "Link"
-    },
-    "isCanvas": true,
-    "props": {
-      "to": "/support_contact_page"
-    },
-    "displayName": "Link",
-    "custom": {},
-    "hidden": false,
-    "nodes": [
-      "prNzaMtKz"
-    ],
-    "linkedNodes": {},
-    "parent": "p-2kQwbOU"
+    ]
   }
 }
