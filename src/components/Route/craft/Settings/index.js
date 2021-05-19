@@ -1,14 +1,16 @@
 /* eslint-disable jsx-a11y/no-onchange */
 import React from 'react'
 import { useNode } from '@craftjs/core'
-import { TCheckbox, TInput } from '$trood/components'
-
-import { customChunkConstant } from '../../constants'
+import { TCheckbox, TInput, TSelect } from '$trood/components'
 
 import styles from './index.module.css'
 
 
-const Settings = () => {
+const Settings = ({
+  emApplicationFragmentEntities,
+  applicationCurrentFragment,
+  currentApplicationId,
+}) => {
   const {
     actions: { setProp, setCustom },
     props,
@@ -32,6 +34,13 @@ const Settings = () => {
     onChange: value => setProp((props) => props[key] = value),
   })
 
+  const fragmentAlias = (custom.chunk || '').replace(/^fragments\//, '').replace(/\.json$/, '')
+  const fragmentArray = emApplicationFragmentEntities.getArray({
+    filter: {
+      rql: `eq(application,${currentApplicationId}),not(eq(id,${applicationCurrentFragment}))`,
+    },
+  })
+
   return (
     <div>
       <TInput.default {...{
@@ -52,14 +61,20 @@ const Settings = () => {
           key: 'exact',
         }),
       }} />
-      <TInput.default {...{
+      <TSelect.default {...{
         className: styles.input,
-        label: 'Chunk',
-        value: (custom.chunk || '').replace(customChunkConstant, ''),
-        onChange: value => setCustom(
-          (custom) => (custom.chunk = `${customChunkConstant}${value || ''}`),
-          1000,
-        ),
+        label: 'Fragment',
+        placeHolder: 'Not Set',
+        items: fragmentArray.map(item => ({ value: item.alias })),
+        values: fragmentAlias ? [fragmentAlias] : [],
+        onChange: values => {
+          const val = values[0]
+          if (val) {
+            setCustom((custom) => (custom.chunk = `fragments/${val}.json`))
+          } else {
+            setCustom((custom) => (custom.chunk = undefined))
+          }
+        },
       }} />
     </div>
   )

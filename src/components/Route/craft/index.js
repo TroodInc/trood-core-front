@@ -4,8 +4,6 @@ import classNames from 'classnames'
 
 import Settings from './Settings'
 
-import { customChunkConstant } from '../constants'
-
 import styles from './index.module.css'
 
 
@@ -18,6 +16,7 @@ const CraftRoute = props => {
     custom: node.data.custom,
   }))
   const { onlyRender, visualHelp, ...rest } = props
+  const fragmentAlias = (custom.chunk || '').replace(/^fragments\//, '').replace(/\.json$/, '')
 
   return (
     <div
@@ -32,9 +31,9 @@ const CraftRoute = props => {
           Exact: {props.exact ? 'yes' : 'no'}<br/>
         </>
       )}
-      {(custom.chunk || '').replace(customChunkConstant, '') && (
+      {(fragmentAlias || '') && (
         <>
-          Chunk: {custom.chunk}
+          Fragment: {fragmentAlias}
         </>
       )}
       {props.children}
