@@ -75,6 +75,8 @@ class DateTimePicker extends PureComponent {
     onInvalid: PropTypes.func,
     /** placeholder text */
     placeholder: PropTypes.node,
+    /** innerRef a ref for root element */
+    innerRef: PropTypes.func,
   }
 
   static defaultProps = {
@@ -225,6 +227,7 @@ class DateTimePicker extends PureComponent {
       validate,
       showTextErrors,
       dataAttributes,
+      innerRef,
     } = this.props
 
     const {
@@ -245,7 +248,7 @@ class DateTimePicker extends PureComponent {
     }
 
     return (
-      <div className={classNames(className, style.root)}>
+      <div ref={innerRef} className={classNames(className, style.root)}>
         <div className={style.wrapper}>
           {
             showDate &&
