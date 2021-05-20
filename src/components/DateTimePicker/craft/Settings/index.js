@@ -33,9 +33,9 @@ const Settings = () => {
   })
 
   const datePickerProps = ({ label, key, type }) => ({
-    calendarPosition: CALENDAR_POSITIONS.right,
+    calendarPosition: TDateTimePicker.CALENDAR_POSITIONS.right,
     label,
-    type: PICKER_TYPES.date,
+    type: TDateTimePicker.PICKER_TYPES.date,
     value: get(props, key),
     onChange: value => setProp((props) => set(props, key, value)),
   })
