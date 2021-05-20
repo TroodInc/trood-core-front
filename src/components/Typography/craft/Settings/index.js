@@ -3,7 +3,6 @@ import React from 'react'
 import Typography from '../../index'
 import { useNode } from '@craftjs/core'
 import { TCheckbox, TSelect, TButton, TInput } from '$trood/components'
-import styles from '../../../List/craft/Settings/index.module.css'
 
 
 const setStyle = (field, value) => props => {
@@ -53,7 +52,6 @@ const Settings = ({ openDataSelector }) => {
         }),
       }} />
       <TInput.default {...{
-        className: styles.select,
         label: 'Font Size',
         value: props.style?.fontSize,
         onChange: val => setProp(setStyle('fontSize', val)),
