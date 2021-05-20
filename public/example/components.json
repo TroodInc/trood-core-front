@@ -585,6 +585,32 @@
             ]
           }
         ]
+      },
+      {
+        "type": "Container",
+        "props": {
+          "style": {
+            "flexDirection": "column"
+          }
+        },
+        "nodes": [
+          {
+            "type": "Typography",
+            "props": {
+              "type": "label",
+              "bold": true
+            },
+            "nodes": [
+              {
+                "type": "Typography",
+                "props": {
+                  "type": "h2",
+                  "value": {}
+                }
+              }
+            ]
+          }
+        ]
       }
     ]
   }

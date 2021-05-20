@@ -5,7 +5,7 @@ import EditorContext from '$trood/composerContext'
 
 import 'styles/variables.css'
 
-import ErrorWrapper from './internal/ErrorWrapper'
+import ErrorWrapper from './internal/ErrorWrapper/index.craft'
 
 import Switch from './Switch/craft'
 import Route from './Route/craft'

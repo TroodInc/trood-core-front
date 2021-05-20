@@ -1,5 +1,8 @@
 import React, { forwardRef } from 'react'
+import { Link, NavLink, Switch } from 'react-router-dom'
 import styled from 'styled-components'
+
+import ErrorWrapper from './internal/ErrorWrapper'
 
 import Context from './Context'
 
@@ -7,8 +10,6 @@ import Conditional from './Conditional'
 
 import HtmlTags from './Tags/HtmlTags'
 import SvgTags from './Tags/SvgTags'
-
-import { Link, NavLink, Switch } from 'react-router-dom'
 
 import Container from './Container'
 import Block from './Block'
@@ -71,7 +72,12 @@ const components = {
 
 export default Object.keys(components).reduce((memo, key) => {
   const Component = components[key]
-  const refComponent = forwardRef((props, ref) => <Component {...props} innerRef={ref} />)
+  const HandledErrorComponent = (props) => (
+    <ErrorWrapper>
+      <Component {...props} />
+    </ErrorWrapper>
+  )
+  const refComponent = forwardRef((props, ref) => <HandledErrorComponent {...props} innerRef={ref} />)
   const styledComponent = styled(refComponent)`${(props = {}) => props.style || ''}`
   styledComponent.defaultProps = Component.defaultProps
   styledComponent.displayName = Component.displayName
