@@ -29,6 +29,7 @@ import List from './List/craft'
 import Input from './Input/craft'
 import Checkbox from './Checkbox/craft'
 import RadioButton from './RadioButton/craft'
+import DateTimePicker from './DateTimePicker/craft'
 
 import Fragment from './Fragment/craft'
 
@@ -51,6 +52,7 @@ const components = {
   Input,
   Checkbox,
   RadioButton,
+  DateTimePicker,
   Fragment,
 }
 

@@ -79,6 +79,7 @@ class DateTimePicker extends PureComponent {
 
   static defaultProps = {
     type: PICKER_TYPES.dateTime,
+    calendarPosition: CALENDAR_POSITIONS.left,
     validate: {},
     showTextErrors: true,
     zeroTimeIsValue: false,
