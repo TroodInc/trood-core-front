@@ -70,9 +70,8 @@ const Settings = () => {
       }} />
       <TInput.default {...{
         ...inputProps({
-          label: 'Calendar position',
-          key: 'calendarPosition',
-          items: Object.values(CALENDAR_POSITIONS).map(value => ({ value })),
+          label: 'Placeholder',
+          key: 'placeholder',
         }),
       }} />
       <TCheckbox.default {...{
