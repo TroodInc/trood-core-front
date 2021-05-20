@@ -5,7 +5,7 @@ import EditorContext from '$trood/composerContext'
 
 import 'styles/variables.css'
 
-import ErrorWrapper from './internal/ErrorWrapper'
+import ErrorWrapper from './internal/ErrorWrapper/index.craft'
 
 import Switch from './Switch/craft'
 import Route from './Route/craft'
@@ -29,6 +29,7 @@ import List from './List/craft'
 import Input from './Input/craft'
 import Checkbox from './Checkbox/craft'
 import RadioButton from './RadioButton/craft'
+import DateTimePicker from './DateTimePicker/craft'
 
 import Fragment from './Fragment/craft'
 
@@ -51,6 +52,7 @@ const components = {
   Input,
   Checkbox,
   RadioButton,
+  DateTimePicker,
   Fragment,
 }
 

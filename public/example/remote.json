@@ -1,18 +1,19 @@
 {
-    "ROOT": {
-        "nodes": [
-            {
-                "type": "div",
-                "props": {
-                    "children": "Remote component"
-                }
-            },
-            {
-                "type": "Remote",
-                "props": {
-                    "url": "https://raw.githubusercontent.com/Paciolan/remote-component/master/examples/remote-components/Time.js"
-                }
-            }
-        ]
-    }
+  "ROOT": {
+    "type": "div",
+    "nodes": [
+      {
+        "type": "div",
+        "props": {
+          "children": "Remote component"
+        }
+      },
+      {
+        "type": "Remote",
+        "props": {
+          "url": "https://raw.githubusercontent.com/Paciolan/remote-component/master/examples/remote-components/Time.js"
+        }
+      }
+    ]
+  }
 }

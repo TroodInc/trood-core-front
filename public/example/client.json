@@ -1,41 +1,53 @@
 {
-    "ROOT": {
+  "ROOT": {
+    "type": "div",
+    "nodes": [
+      {
+        "type": "Context",
+        "props": {
+          "context": {
+            "$type": "$data",
+            "path": "$store.apis.custodian.client.getByPk[{\"$type\":\"$data\", \"path\":\"$route.params.id\"}]"
+          }
+        },
         "nodes": [
-            {
-                "type": "Context",
+          {
+            "type": "Container",
+            "props": {
+              "style": {
+                "flexDirection": "column"
+              }
+            },
+            "nodes": [
+              {
+                "type": "Container",
                 "props": {
-                    "context": {
-                        "$type": "$data",
-                        "path": "$store.apis.custodian.client.getByPk[{\"$type\":\"$data\", \"path\":\"$route.params.id\"}]"
-                    }
-                },
-                "nodes": [
-                    {
-                        "type": "GridCell",
-                        "nodes": [
-                            {
-                                "type": "GridCell",
-                                "props": {
-                                    "children": {
-                                        "$type": "$data",
-                                        "path": "$route.params.id",
-                                        "tamplate": "Client ${value}"
-                                    }
-                                }
-                            },
-                            {
-                                "type": "GridCell",
-                                "props": {
-                                    "children": {
-                                        "$type": "$data",
-                                        "path": "$context.name"
-                                    }
-                                }
-                            }
-                        ]
-                    }
-                ]
-            }
+                  "style": {
+                    "flexDirection": "column"
+                  },
+                  "children": {
+                    "$type": "$data",
+                    "path": "$route.params.id",
+                    "tamplate": "Client ${value}"
+                  }
+                }
+              },
+              {
+                "type": "Container",
+                "props": {
+                  "style": {
+                    "flexDirection": "column"
+                  },
+                  "children": {
+                    "$type": "$data",
+                    "path": "$context.name"
+                  }
+                }
+              }
+            ]
+          }
         ]
-    }
+      }
+    ]
+  }
 }

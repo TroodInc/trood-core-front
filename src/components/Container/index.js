@@ -28,7 +28,7 @@ Container.defaultProps = {
 }
 
 Container.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.element, PropTypes.string, PropTypes.array]),
+  children: PropTypes.oneOfType([PropTypes.node, PropTypes.array]),
   className: PropTypes.string,
 }
 
