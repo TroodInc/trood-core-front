@@ -6,8 +6,6 @@ import { TCheckbox, TSelect, TInput, TDateTimePicker } from '$trood/components'
 
 import { PICKER_TYPES, CALENDAR_POSITIONS } from '../../constants'
 
-import styles from './index.module.css'
-
 
 const Settings = () => {
   const { actions: { setProp }, props } = useNode((node) => ({ props: node.data.props }))
@@ -41,7 +39,7 @@ const Settings = () => {
   })
 
   return (
-    <div className={styles.root}>
+    <>
       <TSelect.default {...{
         ...selectProps({
           label: 'Picker type',
@@ -104,7 +102,7 @@ const Settings = () => {
           key: 'validate.maxDate',
         }),
       }} />
-    </div>
+    </>
   )
 }
 

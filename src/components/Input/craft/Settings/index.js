@@ -6,21 +6,17 @@ import { TCheckbox, TSelect, TInput } from '$trood/components'
 
 import { INPUT_TYPES } from '../../constants'
 
-import styles from './index.module.css'
-
 
 const Settings = () => {
   const { actions: { setProp }, props } = useNode((node) => ({ props: node.data.props }))
 
   const checkboxProps = ({ label, key }) => ({
-    className: styles.control,
     label,
     value: get(props, key),
     onChange: value => setProp((props) => set(props, key, value)),
   })
 
   const inputProps = ({ label, key, type }) => ({
-    className: styles.control,
     label,
     type,
     value: get(props, key),
@@ -28,9 +24,8 @@ const Settings = () => {
   })
 
   return (
-    <div>
+    <>
       <TSelect.default {...{
-        className: styles.control,
         label: 'Input type',
         items: Object.values(INPUT_TYPES).map(value => ({ value })),
         values: props.type ? [props.type] : [],
@@ -80,7 +75,7 @@ const Settings = () => {
           key: 'autofocus',
         }),
       }} />
-    </div>
+    </>
   )
 }
 

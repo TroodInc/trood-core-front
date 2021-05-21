@@ -3,16 +3,13 @@ import React from 'react'
 import { useNode } from '@craftjs/core'
 import { TCheckbox } from '$trood/components'
 
-import styles from './index.module.css'
-
 
 const Settings = () => {
   const { actions: { setProp }, props } = useNode((node) => ({ props: node.data.props }))
 
   return (
-    <div>
+    <>
       <TCheckbox.default {...{
-        className: styles.checkbox,
         label: 'Rounded',
         value: props.rounded,
         onChange: value => {
@@ -30,7 +27,7 @@ const Settings = () => {
           })
         },
       }} />
-    </div>
+    </>
   )
 }
 

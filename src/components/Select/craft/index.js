@@ -14,6 +14,15 @@ const CraftSelect = props => {
     <Select {...{
       innerRef: ref => connect(drag(ref)),
       ...rest,
+      onValid: () => {},
+      onInvalid: () => {},
+      onChange: () => {},
+      onBlur: () => {},
+      onFocus: () => {},
+      onSearch: () => {},
+      onAdd: () => {},
+      missingValueResolver: () => {},
+      onScrollToEnd: () => {},
     }} />
   )
 }

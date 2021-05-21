@@ -15,21 +15,19 @@ const Settings = ({ openDataSelector }) => {
   const [type, setType] = useState(defaultType)
 
   const inputProps = ({ label, key }) => ({
-    className: styles.input,
     label,
     value: props[key],
     onChange: value => setProp((props) => props[key] = value),
   })
 
   const checkboxProps = ({ label, key }) => ({
-    className: styles.checkbox,
     label,
     value: props[key],
     onChange: value => setProp((props) => props[key] = value),
   })
 
   return (
-    <div>
+    <>
       <div>
         <div className={styles.tabs}>
           <div
@@ -53,7 +51,6 @@ const Settings = ({ openDataSelector }) => {
         </div>
         {type === 'static' && (
           <TInput.default {...{
-            className: styles.input,
             label: 'To',
             value: props.to,
             onChange: value => {
@@ -65,7 +62,6 @@ const Settings = ({ openDataSelector }) => {
         )}
         {type === 'data' && (
           <TButton.default
-            className={styles.dataSelectorButton}
             type={TButton.BUTTON_TYPES.text}
             label="Select Data"
             onClick={() => openDataSelector(id, {
@@ -101,7 +97,6 @@ const Settings = ({ openDataSelector }) => {
         }),
       }} />
       <TSelect.default {...{
-        className: styles.select,
         label: 'Aria-current',
         values: props['aria-current'] ? [props['aria-current']] : [],
         items: ariaCurrentItems.map(value => ({ value })),
@@ -109,7 +104,7 @@ const Settings = ({ openDataSelector }) => {
         clearable: true,
         placeHolder: 'Not Set',
       }} />
-    </div>
+    </>
   )
 }
 
