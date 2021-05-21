@@ -15,6 +15,9 @@ const CraftRadioButton = props => {
     <RadioButton {...{
       innerRef: onlyRender ? undefined : ref => connect(drag(ref)),
       ...rest,
+      onChange: () => {},
+      onValid: () => {},
+      onInvalid: () => {},
     }} />
   )
 }

@@ -13,7 +13,7 @@ const Settings = ({ openDataSelector }) => {
   const [type, setType] = useState(defaultType)
 
   return (
-    <div>
+    <>
       <div>
         <div className={styles.tabs}>
           <div
@@ -37,7 +37,6 @@ const Settings = ({ openDataSelector }) => {
         </div>
         {type === 'static' && (
           <TInput.default {...{
-            className: styles.input,
             label: 'To',
             value: props.to,
             onChange: value => {
@@ -49,7 +48,6 @@ const Settings = ({ openDataSelector }) => {
         )}
         {type === 'data' && (
           <TButton.default
-            className={styles.dataSelectorButton}
             type={TButton.BUTTON_TYPES.text}
             label="Select Data"
             onClick={() => openDataSelector(id, {
@@ -75,7 +73,7 @@ const Settings = ({ openDataSelector }) => {
           })
         },
       }} />
-    </div>
+    </>
   )
 }
 

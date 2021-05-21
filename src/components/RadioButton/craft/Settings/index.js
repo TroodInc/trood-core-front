@@ -7,8 +7,6 @@ import { TCheckbox, TSelect, TInput } from '$trood/components'
 import { RADIO_SIZES, RADIO_COLORS } from '../../constants'
 import { LABEL_POSITION_TYPES } from '../../../internal/EnchancedSwitch'
 
-import styles from './index.module.css'
-
 
 const Settings = () => {
   const { actions: { setProp }, props } = useNode((node) => ({ props: node.data.props }))
@@ -27,7 +25,7 @@ const Settings = () => {
   })
 
   return (
-    <div className={styles.root}>
+    <>
       <TSelect.default {...{
         ...selectProps({
           label: 'Size',
@@ -66,7 +64,7 @@ const Settings = () => {
           key: 'validate.checkOnBlur',
         }),
       }} />
-    </div>
+    </>
   )
 }
 

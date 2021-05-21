@@ -3,8 +3,6 @@ import React from 'react'
 import { useNode } from '@craftjs/core'
 import { TCheckbox, TInput, TSelect } from '$trood/components'
 
-import styles from './index.module.css'
-
 
 const Settings = ({
   emApplicationFragmentEntities,
@@ -21,14 +19,12 @@ const Settings = ({
   }))
 
   const inputProps = ({ label, key }) => ({
-    className: styles.input,
     label,
     value: props[key],
     onChange: value => setProp((props) => props[key] = value),
   })
 
   const checkboxProps = ({ label, key }) => ({
-    className: styles.checkbox,
     label,
     value: props[key],
     onChange: value => setProp((props) => props[key] = value),
@@ -42,7 +38,7 @@ const Settings = ({
   })
 
   return (
-    <div>
+    <>
       <TInput.default {...{
         ...inputProps({
           label: 'Title',
@@ -62,7 +58,6 @@ const Settings = ({
         }),
       }} />
       <TSelect.default {...{
-        className: styles.input,
         label: 'Fragment',
         placeHolder: 'Not Set',
         items: fragmentArray.map(item => ({ value: item.alias })),
@@ -76,7 +71,7 @@ const Settings = ({
           }
         },
       }} />
-    </div>
+    </>
   )
 }
 

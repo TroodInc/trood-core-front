@@ -5,8 +5,6 @@ import { TCheckbox, TSelect, TInput } from '$trood/components'
 
 import { BUTTON_TYPES, BUTTON_SPECIAL_TYPES, BUTTON_COLORS } from '../../constants'
 
-import styles from './index.module.css'
-
 
 const Settings = () => {
   const { actions: { setProp }, props } = useNode((node) => ({ props: node.data.props }))
@@ -32,7 +30,7 @@ const Settings = () => {
   })
 
   return (
-    <div className={styles.root}>
+    <>
       <TInput.default {...{
         ...inputProps({
           label: 'Label',
@@ -94,7 +92,7 @@ const Settings = () => {
           key: 'tooltip',
         }),
       }} />
-    </div>
+    </>
   )
 }
 
