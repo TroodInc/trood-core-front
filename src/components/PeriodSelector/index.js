@@ -88,6 +88,15 @@ class PeriodSelector extends PureComponent {
             className: style.filterInput,
             maxRows: 8,
             values: [periodType || periods[0]],
+            labelNodes: [{
+              type: 'div',
+              props: {
+                children: {
+                  $type: '$data',
+                  path: '$context.label',
+                },
+              },
+            }],
             items: periods.map(key => ({
               value: key,
               label: PERIOD_TYPES[key],

@@ -38,7 +38,7 @@ const Settings = ({ openDataSelector }) => {
   })
 
   return (
-    <div>
+    <>
       <div>
         <div className={styles.tabs}>
           <div
@@ -70,7 +70,6 @@ const Settings = ({ openDataSelector }) => {
         )}
         {type === 'data' && (
           <TButton.default
-            className={styles.dataSelectorButton}
             type={TButton.BUTTON_TYPES.text}
             label="Select Data"
             onClick={() => openDataSelector(id, {
@@ -87,7 +86,7 @@ const Settings = ({ openDataSelector }) => {
           />
         )}
       </div>
-      <div className={classNames(styles.field, styles.fieldContainer)}>
+      <div className={styles.fieldContainer}>
         <TInput.default {...{
           ...inputProps({
             label: 'Width',
@@ -102,7 +101,7 @@ const Settings = ({ openDataSelector }) => {
           }),
         }} />
       </div>
-      <div className={classNames(styles.field, styles.fieldContainer)}>
+      <div className={styles.fieldContainer}>
         <TInput.default {...{
           ...inputProps({
             label: 'Height',
@@ -124,7 +123,7 @@ const Settings = ({ openDataSelector }) => {
           items: Object.values(IMAGE_FIT).map(value => ({ value })),
         }),
       }} />
-    </div>
+    </>
   )
 }
 

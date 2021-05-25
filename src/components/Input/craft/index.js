@@ -15,6 +15,13 @@ const CraftInput = props => {
     <Input {...{
       innerRef: onlyRender ? undefined : ref => connect(drag(ref)),
       ...rest,
+      onChange: () => {},
+      onValid: () => {},
+      onInvalid: () => {},
+      onEnter: () => {},
+      onSearch: () => {},
+      onFocus: () => {},
+      onBlur: () => {},
     }} />
   )
 }

@@ -3,8 +3,6 @@ import React from 'react'
 import { useNode } from '@craftjs/core'
 import { TSelect } from '$trood/components'
 
-import styles from './index.module.css'
-
 
 const Settings = ({
   emApplicationFragmentEntities,
@@ -27,9 +25,8 @@ const Settings = ({
   })
 
   return (
-    <div>
+    <>
       <TSelect.default {...{
-        className: styles.input,
         label: 'Fragment',
         placeHolder: 'Not Set',
         items: fragmentArray.map(item => ({ value: item.alias })),
@@ -43,7 +40,7 @@ const Settings = ({
           }
         },
       }} />
-    </div>
+    </>
   )
 }
 

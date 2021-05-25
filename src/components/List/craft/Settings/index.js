@@ -3,7 +3,6 @@ import React from 'react'
 import { useNode } from '@craftjs/core'
 import { TLabel, JsonEditor, TSelect, TInput, TButton } from '$trood/components'
 
-import styles from './index.module.css'
 import { PAGINATION_TYPES } from '../../../internal/Paginator'
 
 
@@ -16,7 +15,7 @@ const Settings = ({ openDataSelector }) => {
     props: node.data.props,
   }))
 
-  const { 
+  const {
     entity,
     queryOptions,
     pagination: {
@@ -35,9 +34,8 @@ const Settings = ({ openDataSelector }) => {
   }
 
   return (
-    <div>
+    <>
       <TButton.default
-        className={styles.dataSelectorButton}
         type={TButton.BUTTON_TYPES.text}
         label="Select Data"
         onClick={() => openDataSelector(id, {
@@ -56,13 +54,11 @@ const Settings = ({ openDataSelector }) => {
         <React.Fragment>
           <TLabel.default label="Query Options" />
           <JsonEditor.default {...{
-            className: styles.jsonEditor,
             value: queryOptions,
             mode: JsonEditor.MODES.code,
             onChange: vals => setProp((props) => props.queryOptions = vals),
           }} />
           <TSelect.default {...{
-            className: styles.select,
             label: 'Pagination Type',
             items: Object.values(PAGINATION_TYPES).map(value => ({ value })),
             values: paginationType ? [paginationType] : [],
@@ -71,14 +67,12 @@ const Settings = ({ openDataSelector }) => {
           {paginationType && paginationType !== PAGINATION_TYPES.disabled && (
             <React.Fragment>
               <TInput.default {...{
-                className: styles.select,
                 label: 'Page Size',
                 type: TInput.INPUT_TYPES.int,
                 value: defaultPageSize,
                 onChange: val => setProp((props) => props.pagination.defaultPageSize = val),
               }} />
               <TInput.default {...{
-                className: styles.select,
                 label: 'Page Controls Count',
                 type: TInput.INPUT_TYPES.int,
                 value: pagesControlsCount,
@@ -88,7 +82,7 @@ const Settings = ({ openDataSelector }) => {
           )}
         </React.Fragment>
       )}
-    </div>
+    </>
   )
 }
 
