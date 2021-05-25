@@ -14,3 +14,18 @@ const getFullUrl = (url = '') => {
 
 export const pageEntryFullUrl = getFullUrl(pageEntryUrl)
 export const storeConfigFullUrl = getFullUrl(storeConfigUrl)
+
+export const cssMeasurementUnits = [
+  'px',
+  '%',
+  'cm',
+  'em',
+  'ex',
+  'in',
+  'mm',
+  'pc',
+  'pt',
+  'vw',
+  'vh',
+  'vmin',
+]

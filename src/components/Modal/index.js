@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 import Block from '../Block'
+import { MODAL_TYPES } from './constants'
 
 import styles from './index.module.css'
 
@@ -10,11 +11,11 @@ import styles from './index.module.css'
 const Modal = ({
   innerRef,
   className,
-  width = 320,
-  type = 'center',
+  width,
+  type,
   isOpen,
-  close = () => {},
-  closeOnOverlayClick = true,
+  close,
+  closeOnOverlayClick,
   children,
 }) => {
   const overlayRef = useRef()
@@ -24,8 +25,8 @@ const Modal = ({
   }
 
   const style = {
-    width: type === 'full' ? '100%' : width,
-    height: type === 'full' ? '100%' : undefined,
+    width: type === MODAL_TYPES.full ? '100%' : width,
+    height: type === MODAL_TYPES.full ? '100%' : undefined,
   }
 
   return (
@@ -40,11 +41,18 @@ const Modal = ({
 Modal.propTypes = {
   className: PropTypes.string,
   width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  type: PropTypes.oneOf(['full', 'center', 'left', 'right']),
+  type: PropTypes.oneOf(Object.values(MODAL_TYPES)),
   isOpen: PropTypes.bool,
   close: PropTypes.func,
   closeOnOverlayClick: PropTypes.bool,
   children: PropTypes.node,
+}
+
+Modal.defaultProps = {
+  width: 320,
+  type: MODAL_TYPES.center,
+  close: () => {},
+  closeOnOverlayClick: true,
 }
 
 export default Modal

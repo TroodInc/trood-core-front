@@ -1,0 +1,16 @@
+.fieldContainer {
+  display: flex;
+  align-items: flex-end;
+}
+
+.fieldContainer > div:first-child {
+  flex: 1;
+}
+
+.fieldContainer > div:last-child {
+  display: flex;
+  align-items: flex-end;
+  flex: 1;
+  margin-left: 10px;
+  min-height: 40px;
+}
