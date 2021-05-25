@@ -5,13 +5,13 @@ import { useNode } from '@craftjs/core'
 import styles from './index.module.css'
 
 
-const Error = ({ compType }) => {
+const Error = ({ compType, onlyRender }) => {
   const {
     connectors: { connect, drag },
   } = useNode()
 
   return (
-    <div className={styles.error} ref={(dom) => connect(drag(dom))}>
+    <div className={styles.error} ref={onlyRender ? undefined : (dom) => connect(drag(dom))}>
       <h2>Something went wrong in "{compType}"</h2>
     </div>
   )
@@ -61,11 +61,11 @@ class ErrorWrapper extends PureComponent {
   }
 
   render() {
-    const { children } = this.props
+    const { children, childrenProps: { onlyRender } } = this.props
 
     if (this.state.error) {
       return (
-        <Error compType={children.type.craft.displayName} />
+        <Error compType={children.type.craft.displayName} onlyRender={onlyRender} />
       )
     }
 

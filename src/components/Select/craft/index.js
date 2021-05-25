@@ -1,8 +1,21 @@
 import React from 'react'
-import { useNode } from '@craftjs/core'
+import { Element, useNode } from '@craftjs/core'
 
-import Select from '../index'
+import Settings from './Settings'
+import SelectComponent, { getSelect } from '../index'
 
+
+const Select = getSelect({
+  Node: (
+    <Element
+      id="itemView"
+      is="div"
+      canvas
+      custom={{ displayName: 'View' }}
+      style={{ minHeight: 16 }}
+    />
+  ),
+})
 
 const CraftSelect = props => {
   const {
@@ -14,6 +27,16 @@ const CraftSelect = props => {
     <Select {...{
       innerRef: ref => connect(drag(ref)),
       ...rest,
+      labelNodes: [{
+        type: 'div',
+        props: {
+          children: {
+            $type: '$data',
+            path: '$context.label',
+          },
+        },
+      }],
+      items: [{ value: 1, label: 'Item' }],
       onValid: () => {},
       onInvalid: () => {},
       onChange: () => {},
@@ -30,11 +53,16 @@ const CraftSelect = props => {
 CraftSelect.craft = {
   displayName: 'Select',
   props: {
-    ...Select.defaultProps,
-    items: [{ value: 1 }],
+    ...SelectComponent.defaultProps,
+  },
+  custom: {
+    ...Select.transformFunctions,
   },
   rules: {
     canMoveIn: () => false,
+  },
+  related: {
+    settings: Settings,
   },
 }
 

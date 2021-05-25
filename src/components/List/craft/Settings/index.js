@@ -3,7 +3,6 @@ import React from 'react'
 import { useNode } from '@craftjs/core'
 import { TLabel, JsonEditor, TSelect, TInput, TButton } from '$trood/components'
 
-import styles from './index.module.css'
 import { PAGINATION_TYPES } from '../../../internal/Paginator'
 
 
@@ -55,7 +54,6 @@ const Settings = ({ openDataSelector }) => {
         <React.Fragment>
           <TLabel.default label="Query Options" />
           <JsonEditor.default {...{
-            className: styles.jsonEditor,
             value: queryOptions,
             mode: JsonEditor.MODES.code,
             onChange: vals => setProp((props) => props.queryOptions = vals),

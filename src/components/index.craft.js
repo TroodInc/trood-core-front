@@ -22,6 +22,7 @@ import SvgTags from './Tags/SvgTags/craft'
 import Button from './Button/craft'
 import Typography from './Typography/craft'
 import Image from './Image/craft'
+import Select from './Select/craft'
 
 import Table from './Table/craft'
 import List from './List/craft'
@@ -54,6 +55,7 @@ const components = {
   RadioButton,
   DateTimePicker,
   Fragment,
+  Select,
 }
 
 export default Object.keys(components).reduce((memo, key) => {

@@ -53,6 +53,7 @@ const withTooltip = WrappedComponent => {
   }
 
   Component.defaultProps = WrappedComponent.defaultProps
+  Component.transformFunctions = WrappedComponent.transformFunctions
 
   return Component
 }

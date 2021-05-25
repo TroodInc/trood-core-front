@@ -4,17 +4,14 @@ import HtmlTags from '../../index'
 import { useNode } from '@craftjs/core'
 import { TSelect, JsonEditor } from '$trood/components'
 
-import styles from './index.module.css'
-
 
 const Settings = () => {
   const { actions: { setProp }, props } = useNode((node) => ({ props: node.data.props }))
   const { tag, ...other } = props
 
   return (
-    <div>
+    <>
       <TSelect.default {...{
-        className: styles.select,
         label: 'Tag Name',
         items: HtmlTags.knownTags.map(value => ({ value })),
         values: tag ? [tag] : [],
@@ -23,7 +20,6 @@ const Settings = () => {
         }),
       }} />
       <JsonEditor.default {...{
-        className: styles.jsonEditor,
         value: other,
         mode: JsonEditor.MODES.code,
         onChange: vals => setProp((props) => {
@@ -34,7 +30,7 @@ const Settings = () => {
           })
         }),
       }} />
-    </div>
+    </>
   )
 }
 
