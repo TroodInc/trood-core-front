@@ -19,7 +19,7 @@ const ComponentsWrapper = loadable.lib(() => import('components'))
 const deepParseJson = value => {
   if (!value) return value
   if (Array.isArray(value)) {
-    return value.map(item => deepParseJson(value))
+    return value.map(item => deepParseJson(item))
   }
   if (typeof value === 'object') {
     return Object.keys(value).reduce((memo, key) => ({
@@ -28,7 +28,7 @@ const deepParseJson = value => {
     }), {})
   }
   try {
-    return JSON.parse(value)
+    return deepParseJson(JSON.parse(value))
   } catch {
     return value
   }
