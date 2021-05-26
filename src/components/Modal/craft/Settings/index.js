@@ -28,21 +28,6 @@ const Settings = () => {
 
   return (
     <>
-      <div className={styles.fieldContainer}>
-        <TInput.default {...{
-          ...inputProps({
-            label: 'Width',
-            key: 'width',
-            type: 'int',
-          }),
-        }} />
-        <TSelect.default {...{
-          ...selectProps({
-            key: 'widthUnits',
-            items: cssMeasurementUnits.map(value => ({ value })),
-          }),
-        }} />
-      </div>
       <TSelect.default {...{
         ...selectProps({
           label: 'Type',
@@ -50,6 +35,23 @@ const Settings = () => {
           items: Object.values(MODAL_TYPES).map(value => ({ value })),
         }),
       }} />
+      {props.type !== MODAL_TYPES.full && (
+        <div className={styles.fieldContainer}>
+          <TInput.default {...{
+            ...inputProps({
+              label: 'Width',
+              key: 'width',
+              type: 'int',
+            }),
+          }} />
+          <TSelect.default {...{
+            ...selectProps({
+              key: 'widthUnits',
+              items: cssMeasurementUnits.map(value => ({ value })),
+            }),
+          }} />
+        </div>
+      )}
       <TCheckbox.default {...{
         label: 'Close on overlay click',
         value: props.closeOnOverlayClick,
