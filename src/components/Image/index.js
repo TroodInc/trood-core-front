@@ -4,7 +4,8 @@ import classNames from 'classnames'
 
 import styles from './index.module.css'
 
-import { IMAGE_FIT, cssMeasurementUnits } from './constants'
+import { IMAGE_FIT } from './constants'
+import { cssMeasurementUnits } from '../../constants'
 
 
 const Image = (props) => {
