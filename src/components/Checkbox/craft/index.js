@@ -4,6 +4,8 @@ import { useNode } from '@craftjs/core'
 import Settings from './Settings'
 import Checkbox from '../index'
 
+import { COMPONENT_GROUPS } from '../../../constants'
+
 
 const CraftCheckbox = props => {
   const {
@@ -23,6 +25,7 @@ const CraftCheckbox = props => {
 }
 
 CraftCheckbox.craft = {
+  group: COMPONENT_GROUPS.inputControls,
   displayName: 'Checkbox',
   related: {
     settings: Settings,

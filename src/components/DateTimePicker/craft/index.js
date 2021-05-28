@@ -4,6 +4,8 @@ import { useNode } from '@craftjs/core'
 import Settings from './Settings'
 import DateTimePicker from '../index'
 
+import { COMPONENT_GROUPS } from '../../../constants'
+
 
 const CraftDateTimePicker = props => {
   const {
@@ -23,6 +25,7 @@ const CraftDateTimePicker = props => {
 }
 
 CraftDateTimePicker.craft = {
+  group: COMPONENT_GROUPS.inputControls,
   displayName: 'DateTimePicker',
   related: {
     settings: Settings,

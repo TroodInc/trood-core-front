@@ -4,6 +4,8 @@ import classNames from 'classnames'
 
 import Settings from './Settings'
 
+import { COMPONENT_GROUPS } from '../../../constants'
+
 import styles from './index.module.css'
 
 
@@ -42,6 +44,7 @@ const CraftRoute = props => {
 }
 
 CraftRoute.craft = {
+  group: COMPONENT_GROUPS.navControls,
   displayName: 'Route',
   related: {
     settings: Settings,

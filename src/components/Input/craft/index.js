@@ -4,6 +4,8 @@ import { useNode } from '@craftjs/core'
 import Settings from './Settings'
 import Input from '../index'
 
+import { COMPONENT_GROUPS } from '../../../constants'
+
 
 const CraftInput = props => {
   const {
@@ -27,6 +29,7 @@ const CraftInput = props => {
 }
 
 CraftInput.craft = {
+  group: COMPONENT_GROUPS.inputControls,
   displayName: 'Input',
   props: {
     ...Input.defaultProps,
