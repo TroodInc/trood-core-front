@@ -29,3 +29,17 @@ export const cssMeasurementUnits = [
   'vh',
   'vmin',
 ]
+
+const COMPONENT_GROUP_INPUT_CONTROLS = {
+  id: 'inputControls',
+  title: 'Input Controls',
+}
+const COMPONENT_GROUP_NAV_CONTROLS = {
+  id: 'navControls',
+  title: 'Navigation Controls',
+}
+
+export const COMPONENT_GROUPS = {
+  [COMPONENT_GROUP_INPUT_CONTROLS.id]: COMPONENT_GROUP_INPUT_CONTROLS,
+  [COMPONENT_GROUP_NAV_CONTROLS.id]: COMPONENT_GROUP_NAV_CONTROLS,
+}

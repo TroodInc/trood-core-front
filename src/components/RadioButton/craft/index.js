@@ -4,6 +4,8 @@ import { useNode } from '@craftjs/core'
 import Settings from './Settings'
 import RadioButton from '../index'
 
+import { COMPONENT_GROUPS } from '../../../constants'
+
 
 const CraftRadioButton = props => {
   const {
@@ -23,6 +25,7 @@ const CraftRadioButton = props => {
 }
 
 CraftRadioButton.craft = {
+  group: COMPONENT_GROUPS.inputControls,
   displayName: 'Radio Button',
   related: {
     settings: Settings,

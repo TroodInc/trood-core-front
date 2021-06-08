@@ -2,6 +2,8 @@ import React from 'react'
 import { useNode } from '@craftjs/core'
 import classNames from 'classnames'
 
+import { COMPONENT_GROUPS } from '../../../constants'
+
 import styles from './index.module.css'
 
 
@@ -23,6 +25,7 @@ const CraftSwitch = props => {
 }
 
 CraftSwitch.craft = {
+  group: COMPONENT_GROUPS.navControls,
   displayName: 'Switch',
   custom: {
     getStyleSettings: () => false,
