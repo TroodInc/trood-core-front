@@ -15,6 +15,7 @@ import NavLink from './NavLink/craft'
 import Context from './Context/craft'
 import Container from './Container/craft'
 import Block from './Block/craft'
+import Modal from './Modal/craft'
 
 import HtmlTags from './Tags/HtmlTags/craft'
 import SvgTags from './Tags/SvgTags/craft'
@@ -43,6 +44,7 @@ const components = {
   Context,
   Container,
   Block,
+  Modal,
   HtmlTags,
   SvgTags,
   Button,

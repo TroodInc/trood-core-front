@@ -5,6 +5,8 @@ import classNames from 'classnames'
 
 import Settings from './Settings'
 
+import { COMPONENT_GROUPS } from '../../../constants'
+
 import styles from './index.module.css'
 
 
@@ -27,6 +29,7 @@ const CraftNavLink = props => {
 }
 
 CraftNavLink.craft = {
+  group: COMPONENT_GROUPS.navControls,
   displayName: 'NavLink',
   related: {
     settings: Settings,

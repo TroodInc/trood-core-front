@@ -1,12 +1,12 @@
 /* eslint-disable jsx-a11y/no-onchange */
 import React, { useState } from 'react'
 import { useNode } from '@craftjs/core'
-import classNames from 'classnames'
 import { TSelect, TInput, TButton } from '$trood/components'
 
 import styles from './index.module.css'
 
-import { IMAGE_FIT, cssMeasurementUnits } from '../../constants'
+import { IMAGE_FIT } from '../../constants'
+import { cssMeasurementUnits } from '../../../../constants'
 
 
 const Settings = ({ openDataSelector }) => {
@@ -22,7 +22,6 @@ const Settings = ({ openDataSelector }) => {
   const [type, setType] = useState(defaultType)
 
   const selectProps = ({ label, key, items }) => ({
-    className: styles.field,
     label,
     items,
     values: props[key] ? [props[key]] : [],
@@ -30,7 +29,6 @@ const Settings = ({ openDataSelector }) => {
   })
 
   const inputProps = ({ label, key, type }) => ({
-    className: styles.field,
     label,
     type,
     value: props[key],

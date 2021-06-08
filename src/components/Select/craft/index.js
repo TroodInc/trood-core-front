@@ -4,6 +4,8 @@ import { Element, useNode } from '@craftjs/core'
 import Settings from './Settings'
 import SelectComponent, { getSelect } from '../index'
 
+import { COMPONENT_GROUPS } from '../../../constants'
+
 
 const Select = getSelect({
   Node: (
@@ -51,6 +53,7 @@ const CraftSelect = props => {
 }
 
 CraftSelect.craft = {
+  group: COMPONENT_GROUPS.inputControls,
   displayName: 'Select',
   props: {
     ...SelectComponent.defaultProps,

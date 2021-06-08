@@ -13,11 +13,30 @@ import LoadingIndicator from 'components/LoadingIndicator'
 
 import loadable from '@loadable/component'
 
+
 const ComponentsWrapper = loadable.lib(() => import('components'))
+
+const deepParseJson = value => {
+  if (!value) return value
+  if (Array.isArray(value)) {
+    return value.map(item => deepParseJson(item))
+  }
+  if (typeof value === 'object') {
+    return Object.keys(value).reduce((memo, key) => ({
+      ...memo,
+      [key]: deepParseJson(value[key]),
+    }), {})
+  }
+  try {
+    return deepParseJson(JSON.parse(value))
+  } catch {
+    return value
+  }
+}
 
 const getData = (path, $data) => {
   const connectedPath = path.replace(/\[.*?\]/g, (replacement) => {
-    const parsedParams = JSON.parse(replacement)
+    const parsedParams = deepParseJson(replacement)
     const connectedParams = parsedParams.map((param) => {
       return param.$type ? connectProps([param], $data)[0] : connectProps(param, $data)
     })
@@ -51,7 +70,7 @@ const connectProps = (props, $data, childBaseComponent) => {
       const item = props[key]
       if (typeof item === 'object' && item.$type === '$data') {
         let propValue =
-                    typeof item.path === 'object' ? connectProps(item.path, $data) : getData(item.path, $data)
+          typeof item.path === 'object' ? connectProps(item.path, $data) : getData(item.path, $data)
         if (item.template) {
           let templateValue = item.template
           for (const m of item.template.matchAll(/{{([^{}]+)}}/g)) {

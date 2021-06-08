@@ -11,19 +11,3 @@ export const IMAGE_FIT = {
   [IMAGE_FIT_NONE]: IMAGE_FIT_NONE,
   scaleDown: IMAGE_FIT_SCALE_DOWN,
 }
-
-export const cssMeasurementUnits = [
-  'px',
-  '%',
-  'cm',
-  'em',
-  'ex',
-  'in',
-  'mm',
-  'pc',
-  'pt',
-  'vw',
-  'vh',
-  'vmin',
-]
-
