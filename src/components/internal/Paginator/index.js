@@ -10,15 +10,10 @@ import Context from '../../Context'
 
 import Select from '../../Select'
 import LoadingIndicator from '../../LoadingIndicator'
+import { PAGINATION_TYPES, FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT } from './constants'
 
 import styles from './index.module.css'
 
-
-const PAGINATION_TYPES = {
-  classic: 'classic',
-  infinity: 'infinity',
-  disabled: 'disabled',
-}
 
 class Paginator extends PureComponent {
   static defaultProps = {
@@ -26,6 +21,9 @@ class Paginator extends PureComponent {
     pagesControlsCount: 5,
     paginationType: PAGINATION_TYPES.classic,
     pageSizes: [10, 25, 50, 100],
+    flexDirection: FLEX_DIRECTION.column,
+    alignItems: ALIGN_ITEMS.stretch,
+    justifyContent: JUSTIFY_CONTENT.flexStart,
   }
 
   constructor(props) {
@@ -262,6 +260,9 @@ class Paginator extends PureComponent {
       entity,
       queryOptions,
       children,
+      flexDirection,
+      alignItems,
+      justifyContent,
     } = this.props
 
     const { page, pageSize } = this.paginator
@@ -288,7 +289,9 @@ class Paginator extends PureComponent {
           return (
             <div ref={innerRef} className={classNames(styles.root, className)}>
               {this.renderClassicControls()}
-              {children({ items })}
+              <div className={styles.childContainer} style={{ flexDirection, alignItems, justifyContent }}>
+                {children({ items })}
+              </div>
               {loading && (
                 <LoadingIndicator />
               )}
@@ -302,7 +305,7 @@ class Paginator extends PureComponent {
   }
 }
 
-export { PAGINATION_TYPES }
+export { PAGINATION_TYPES, FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT }
 
 const wrappedPaginator = withRouter(Paginator)
 wrappedPaginator.defaultProps = Paginator.defaultProps
