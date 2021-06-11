@@ -44,11 +44,16 @@ class ClickOutside extends PureComponent {
 
   render() {
     const childElement = React.Children.only(this.props.children)
+    if (!childElement) return null
 
     return React.cloneElement(
       childElement,
       {
-        ref: el => this.ref = el,
+        ref: el => {
+          this.ref = el
+          if(childElement.props?.innerRef) childElement.props?.innerRef(el)
+          if(childElement.ref) childElement.ref(el)
+        },
       },
     )
   }

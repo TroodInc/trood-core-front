@@ -33,8 +33,9 @@ const CraftTypography = props => {
 
   return (
     <EditWrapper {...{
+      type: rest.type === 'html' ? 'wysiwyg' : 'text',
       innerRef: ref => connect(drag(ref)),
-      onChange: e => setProp(props => props.value = e.target.value.replace(/<\/?[^>]+(>|$)/g, '')),
+      onChange: value => setProp(props => props.value = value),
       text: value,
       tagName: Typography.knownTypes[props.type],
       className: classNames(styles[props.type], props.bold && styles.bold, props.className),

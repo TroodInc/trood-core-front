@@ -87,7 +87,9 @@ input {
   margin: 0;
   padding: 0;
   border: 0;
-  font: inherit;
+  font-variant: inherit;
+  line-height: inherit;
+  font-family: inherit;
   font-size: 100%;
   vertical-align: baseline;
 }

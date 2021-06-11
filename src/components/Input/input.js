@@ -18,7 +18,7 @@ import {
 
 import Icon, { ICONS_TYPES } from '../Icon'
 import Label from '../Label'
-import WysiwygEditor from './Wysiwyg'
+import WysiwygEditor from '../internal/Wysiwyg'
 
 import style from './index.module.css'
 

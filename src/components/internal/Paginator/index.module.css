@@ -67,3 +67,8 @@
   font-weight: 500;
   cursor: pointer;
 }
+
+.childContainer {
+  display: flex;
+  flex-wrap: wrap;
+}

@@ -2,7 +2,8 @@ import classNames from 'classnames'
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
-import { Editor, EditorState, RichUtils, ContentState, convertToRaw, convertFromHTML } from 'draft-js'
+import { Editor, EditorState, RichUtils, ContentState, convertToRaw } from 'draft-js'
+import htmlToDraft from 'html-to-draftjs'
 import draftToHtml from 'draftjs-to-html'
 
 import StylizationMenu from './components/StylizationMenu'
@@ -45,13 +46,13 @@ class WysiwygEditor extends PureComponent {
 
   constructor(props) {
     super(props)
-    const initialDraftValue = convertFromHTML(this.props.value)
-    let initialContent
-    if (initialDraftValue.contentBlocks) {
-      initialContent = ContentState.createFromBlockArray(initialDraftValue)
+    const contentBlock = htmlToDraft(this.props.value)
+    let contentState
+    if (contentBlock?.contentBlocks) {
+      contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks)
     }
     this.state = {
-      editorState: initialContent ? EditorState.createWithContent(initialContent) : EditorState.createEmpty(),
+      editorState: contentState ? EditorState.createWithContent(contentState) : EditorState.createEmpty(),
     }
     this.usedStylesSchema = props.usedStyles.map(s => DEFAULT_STYLES_SCHEMA[s]).filter(v => v)
     this.customStyleMap = {}
@@ -91,7 +92,7 @@ class WysiwygEditor extends PureComponent {
   }
 
   render() {
-    const { className, placeholder } = this.props
+    const { className, placeholder, onFocus } = this.props
 
     const { editorState } = this.state
 
@@ -110,6 +111,7 @@ class WysiwygEditor extends PureComponent {
           editorState,
           onChange: this.onChange,
           placeholder,
+          onFocus,
         }} />
       </div>
     )
