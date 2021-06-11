@@ -3,7 +3,7 @@ import React from 'react'
 import { useNode } from '@craftjs/core'
 import { TLabel, JsonEditor, TSelect, TInput, TButton } from '$trood/components'
 
-import { PAGINATION_TYPES } from '../../../internal/Paginator'
+import { PAGINATION_TYPES, FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT } from '../../../internal/Paginator'
 
 
 const Settings = ({ openDataSelector }) => {
@@ -22,8 +22,15 @@ const Settings = ({ openDataSelector }) => {
       paginationType,
       defaultPageSize,
       pagesControlsCount,
+      flexDirection,
+      alignItems,
+      justifyContent,
     },
   } = props
+  const isRow = flexDirection === FLEX_DIRECTION.row
+  const alignmentItems = isRow => (isRow ? JUSTIFY_CONTENT : ALIGN_ITEMS)
+  const alignmentKey = isRow => (isRow ? 'justifyContent': 'alignItems')
+  const alignmentValue = isRow => (isRow ? justifyContent: alignItems)
 
   let entityIsApi
   if (entity && entity.path) {
@@ -50,6 +57,24 @@ const Settings = ({ openDataSelector }) => {
           },
         })}
       />
+      <TSelect.default {...{
+        label: 'Direction',
+        items: Object.values(FLEX_DIRECTION).map(value => ({ value })),
+        values: flexDirection ? [flexDirection] : [],
+        onChange: vals => setProp((props) => props.pagination.flexDirection = vals[0]),
+      }} />
+      <TSelect.default {...{
+        label: 'Vertical Align',
+        items: Object.values(alignmentItems(isRow)).map(value => ({ value })),
+        values: alignmentValue(isRow) ? [alignmentValue(isRow)] : [],
+        onChange: vals => setProp((props) => props.pagination[alignmentKey(isRow)] = vals[0]),
+      }} />
+      <TSelect.default {...{
+        label: 'Horizontal Align',
+        items: Object.values(alignmentItems(!isRow)).map(value => ({ value })),
+        values: alignmentValue(!isRow) ? [alignmentValue(!isRow)] : [],
+        onChange: vals => setProp((props) => props.pagination[alignmentKey(!isRow)] = vals[0]),
+      }} />
       {entityIsApi && (
         <React.Fragment>
           <TLabel.default label="Query Options" />
