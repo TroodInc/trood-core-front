@@ -4,6 +4,8 @@ import classNames from 'classnames'
 
 import styles from './index.module.css'
 
+import VisualHtml from './components/VisualHtml'
+
 
 const knownTypes = {
   h1: 'h1',
@@ -14,6 +16,7 @@ const knownTypes = {
   h6: 'h6',
   body: 'div',
   label: 'span',
+  html: VisualHtml,
 }
 
 const Typography = ({
@@ -28,7 +31,7 @@ const Typography = ({
   const component = knownTypes[type]
   return React.createElement(component, {
     ...other,
-    ref: innerRef,
+    [typeof component === 'string' ? 'ref' : 'innerRef']: innerRef,
     className: classNames(className, styles[type], bold && styles.bold),
     children: children || value,
   })

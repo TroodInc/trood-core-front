@@ -10,4 +10,5 @@
 .menu {
   border-bottom: 1px solid var(--trood-border);
   margin-bottom: 10px;
+  background-color: var(--trood-white);
 }
