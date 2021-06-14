@@ -1,6 +1,8 @@
-FROM registry.tools.trood.ru/frontcore:latest
+FROM registry.tools.trood.ru/frontcore:latest AS previous
 
+FROM nginx:latest
 COPY build/static /usr/share/nginx/html/static
+COPY --from=previous /usr/share/nginx/html/static /usr/share/nginx/html/static
 COPY templates /home/templates
 COPY rollup.sh /home
 COPY fragment.py /home
