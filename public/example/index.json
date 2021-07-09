@@ -85,8 +85,7 @@
                             {
                               "path": "/components",
                               "children": {
-                                "$type": "$expression",
-                                "expression": "data(\"$route.location.pathname\") == \"/components\" ? \"Components*\" : \"Components\""
+                                "$expression": "data(\"$route.location.pathname\") == \"/components\" ? \"Components*\" : \"Components\""
                               }
                             }
                           ]
@@ -101,17 +100,13 @@
                           "type": "text",
                           "label": "Login",
                           "onClick": {
-                            "$type": "$action",
-                            "path": "$page.openModal",
-                            "args": [
-                              "LoginModal",
-                              {
-                                "form": {
-                                  "$type": "$data",
-                                  "path": "$auth.getLoginForm[]"
-                                }
+                            "$action": "$page.openModal[$arg0, $arg1]",
+                            "$arg0": "LoginModal",
+                            "$arg1": {
+                              "form": {
+                                "$data": "{{$auth.getLoginForm[]}}"
                               }
-                            ]
+                            }
                           }
                         }
                       },
@@ -120,15 +115,12 @@
                         "props": {
                           "type": "center",
                           "isOpen": {
-                            "$type": "$data",
-                            "path": "$page.isModalOpen[\"LoginModal\"]"
+                            "$data": "{{$page.isModalOpen[$arg0]}}",
+                            "$arg0": "LoginModal"
                           },
                           "close": {
-                            "$type": "$action",
-                            "path": "$page.closeModal",
-                            "args": [
-                              "LoginModal"
-                            ]
+                            "$action": "$page.closeModal[$arg0]",
+                            "$arg0": "LoginModal"
                           }
                         },
                         "nodes": [
@@ -147,8 +139,8 @@
                             "type": "Context",
                             "props": {
                               "context": {
-                                "$type": "$data",
-                                "path": "$page.getContext[\"LoginModal\"]"
+                                "$data": "{{$page.getContext[$arg0]}}",
+                                "$arg0": "LoginModal"
                               }
                             },
                             "nodes": [
@@ -157,23 +149,15 @@
                                 "props": {
                                   "label": "Login",
                                   "value": {
-                                    "$type": "$data",
-                                    "path": "$context.form.data.login"
+                                    "$data": "{{$context.form.data.login}}"
                                   },
                                   "onChange": {
-                                    "$type": "$action",
-                                    "path": "$context.form.changeFields",
-                                    "args": [
-                                      {
-                                        "$type": "$data",
-                                        "path": {
-                                          "login": {
-                                            "$type": "$data",
-                                            "path": "$event"
-                                          }
-                                        }
+                                    "$action": "$context.form.changeFields[$arg0]",
+                                    "$arg0": {
+                                      "login": {
+                                        "$data": "{{$event}}"
                                       }
-                                    ]
+                                    }
                                   }
                                 }
                               },
@@ -186,23 +170,15 @@
                                 "props": {
                                   "label": "Password",
                                   "value": {
-                                    "$type": "$data",
-                                    "path": "$context.form.data.password"
+                                    "$data": "{{$context.form.data.password}}"
                                   },
                                   "onChange": {
-                                    "$type": "$action",
-                                    "path": "$context.form.changeFields",
-                                    "args": [
-                                      {
-                                        "$type": "$data",
-                                        "path": {
-                                          "password": {
-                                            "$type": "$data",
-                                            "path": "$event"
-                                          }
-                                        }
+                                    "$action": "$context.form.changeFields[$arg0]",
+                                    "$arg0": {
+                                      "password": {
+                                        "$data": "{{$event}}"
                                       }
-                                    ]
+                                    }
                                   }
                                 }
                               },
@@ -232,11 +208,8 @@
                                           "label": "Close",
                                           "type": "text",
                                           "onClick": {
-                                            "$type": "$action",
-                                            "path": "$page.closeModal",
-                                            "args": [
-                                              "LoginModal"
-                                            ]
+                                            "$action": "$page.closeModal[$arg0]",
+                                            "$arg0": "LoginModal"
                                           }
                                         }
                                       }
@@ -255,17 +228,12 @@
                                         "props": {
                                           "label": "Save",
                                           "onClick": {
-                                            "$type": "$action",
-                                            "path": "$auth.login",
-                                            "args": [
-                                              "https://legal.dev.trood.ru/authorization/api/v1.0/login/"
-                                            ],
-                                            "then": {
-                                              "path": "$page.closeModal",
-                                              "args": [
-                                                "LoginModal"
-                                              ]
-                                            }
+                                            "$action": {
+                                              "action": "$auth.login[$arg0]",
+                                              "then": "$page.closeModal[$arg1]"
+                                            },
+                                            "$arg0": "https://legal.dev.trood.ru/authorization/api/v1.0/login/",
+                                            "$arg1": "LoginModal"
                                           }
                                         }
                                       }

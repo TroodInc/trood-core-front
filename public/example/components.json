@@ -28,8 +28,7 @@
               "tooltip": "DateTimePicker tooltip",
               "label": "DateTimePicker",
               "value": {
-                "$type": "$data",
-                "path": "$global.moment[]"
+                "$data": "{{$global.moment[]}}"
               }
             }
           }
@@ -284,30 +283,26 @@
             "props": {
               "label": "Select",
               "items": {
-                "$type": "$data",
-                "path": "$store.apis.custodian.client_type.getPage[0, 10]"
+                "$data": "{{$store.apis.custodian.client_type.getPage[$arg0, $arg1]}}",
+                "$arg0": 0,
+                "$arg1": 10
               },
-              "valuePath": "$context.id",
+              "valuePath": "id",
               "labelNodes": [
                 {
                   "type": "div",
                   "props": {
                     "children": {
-                      "$type": "$data",
-                      "path": "$context.name"
+                      "$data": "{{$context.name}}"
                     }
                   }
                 }
               ],
               "onChange": {
-                "$type": "$action",
-                "path": "$global.window.console.log",
-                "args": [
-                  {
-                    "$type": "$data",
-                    "path": "$event"
-                  }
-                ]
+                "$action": "$global.window.console.log[$arg0]",
+                "$arg0": {
+                  "$data": "{{$event}}"
+                }
               }
             }
           }
@@ -379,15 +374,12 @@
             "props": {
               "children": "modal",
               "isOpen": {
-                "$type": "$data",
-                "path": "$page.isModalOpen[\"modal\"]"
+                "$data": "{{$page.isModalOpen[$arg0]}}",
+                "$arg0": "modal"
               },
               "close": {
-                "$type": "$action",
-                "path": "$page.closeModal",
-                "args": [
-                  "modal"
-                ]
+                "$action": "$page.closeModal[$arg0]",
+                "$arg0": "modal"
               }
             }
           },
@@ -397,11 +389,8 @@
               "tooltip": "Button tooltip",
               "label": "open modal",
               "onClick": {
-                "$type": "$action",
-                "path": "$page.openModal",
-                "args": [
-                  "modal"
-                ]
+                "$action": "$page.openModal[$arg0]",
+                "$arg0": "modal"
               }
             }
           }
@@ -427,8 +416,8 @@
               "children": "popup",
               "bottom": 80,
               "isOpen": {
-                "$type": "$data",
-                "path": "$page.isPopupOpen[\"modal\"]"
+                "$data": "{{$page.isPopupOpen[$arg0]}}",
+                "$arg0": "modal"
               }
             }
           },
@@ -437,11 +426,8 @@
             "props": {
               "label": "open popup",
               "onClick": {
-                "$type": "$action",
-                "path": "$page.openPopup",
-                "args": [
-                  "modal"
-                ]
+                "$action": "$page.openPopup[$arg0]",
+                "$arg0": "modal"
               }
             }
           }
@@ -580,32 +566,6 @@
                 "props": {
                   "type": "h2",
                   "value": "Title"
-                }
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "type": "Container",
-        "props": {
-          "style": {
-            "flexDirection": "column"
-          }
-        },
-        "nodes": [
-          {
-            "type": "Typography",
-            "props": {
-              "type": "label",
-              "bold": true
-            },
-            "nodes": [
-              {
-                "type": "Typography",
-                "props": {
-                  "type": "h2",
-                  "value": {}
                 }
               }
             ]

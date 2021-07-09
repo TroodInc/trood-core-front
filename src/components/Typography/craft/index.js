@@ -25,7 +25,7 @@ const CraftTypography = props => {
     return (
       <Typography
         { ...rest }
-        value={isValueFromDataSelector ? value.path : value}
+        value={isValueFromDataSelector ? value.$data : value}
         innerRef={onlyRender ? undefined : ref => connect(drag(ref))}
       />
     )

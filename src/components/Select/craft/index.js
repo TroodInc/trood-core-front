@@ -33,8 +33,7 @@ const CraftSelect = props => {
         type: 'div',
         props: {
           children: {
-            $type: '$data',
-            path: '$context.label',
+            '$data': '{{$context.label}}',
           },
         },
       }],

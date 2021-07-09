@@ -58,8 +58,7 @@
                                 "type": "Conditional",
                                 "props": {
                                   "condition": {
-                                    "$type": "$expression",
-                                    "expression": "data('$context.currentPage') > 0"
+                                    "$expression": "data('$context.currentPage') > 0"
                                   },
                                   "ifTrue": [
                                     {
@@ -69,14 +68,10 @@
                                         "type": "text",
                                         "style": "& div:last-child{color:#e95c5c;}",
                                         "onClick": {
-                                          "$type": "$action",
-                                          "path": "$context.goToPage",
-                                          "args": [
-                                            {
-                                              "$type": "$expression",
-                                              "expression": "data('$context.currentPage') - 1"
-                                            }
-                                          ]
+                                          "$action": "$context.goToPage[$arg0]",
+                                          "$arg0": {
+                                            "$expression": "data('$context.currentPage') - 1"
+                                          }
                                         }
                                       }
                                     }
@@ -87,8 +82,7 @@
                                 "type": "Conditional",
                                 "props": {
                                   "condition": {
-                                    "$type": "$expression",
-                                    "expression": "data('$context.currentPage') < (data('$context.pagesCount') - 1)"
+                                    "$expression": "data('$context.currentPage') < (data('$context.pagesCount') - 1)"
                                   },
                                   "ifTrue": [
                                     {
@@ -98,14 +92,10 @@
                                         "type": "text",
                                         "style": "& div:last-child{color:#e95c5c;}",
                                         "onClick": {
-                                          "$type": "$action",
-                                          "path": "$context.goToPage",
-                                          "args": [
-                                            {
-                                              "$type": "$expression",
-                                              "expression": "data('$context.currentPage') + 1"
-                                            }
-                                          ]
+                                          "$action": "$context.goToPage[$arg0]",
+                                          "$arg0": {
+                                            "$expression": "data('$context.currentPage') + 1"
+                                          }
                                         }
                                       }
                                     }
@@ -117,8 +107,7 @@
                         ]
                       },
                       "entity": {
-                        "$type": "$data",
-                        "path": "$store.apis.custodian.client"
+                        "$data": "{{$store.apis.custodian.client}}"
                       },
                       "columnComponents": [
                         {
@@ -138,8 +127,7 @@
                                 "flexDirection": "row"
                               },
                               "children": {
-                                "$type": "$data",
-                                "path": "$context.id"
+                                "$data": "{{$context.id}}"
                               }
                             }
                           }
@@ -149,14 +137,10 @@
                             "type": "Link",
                             "props": {
                               "to": {
-                                "$type": "$data",
-                                "path": "$context",
-                                "template": "/client/{{value.id}}"
+                                "$data": "/client/{{$context.id}}"
                               },
                               "children": {
-                                "$type": "$data",
-                                "path": "$context.name",
-                                "template": "Client {{value}} {{{value.0}}}"
+                                "$data": "Client {{$context.name}} {{{$context.name.0}}}"
                               }
                             }
                           }
