@@ -30,12 +30,11 @@ const Settings = ({ openDataSelector }) => {
     <React.Fragment>
       <TButton.default
         type={TButton.BUTTON_TYPES.text}
+        specialType={TButton.BUTTON_SPECIAL_TYPES.data}
         label="Select Data"
         onClick={() => openDataSelector(id, {
-          id: props.value?.path,
-          values: {
-            path: props.value?.path,
-          },
+          id: props.value?.$data,
+          values: props.value,
           onSubmit: value => {
             setProp((props) => {
               props.value = value
