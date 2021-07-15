@@ -6,8 +6,10 @@
         "type": "Context",
         "props": {
           "context": {
-            "$type": "$data",
-            "path": "$store.apis.custodian.client.getByPk[{\"$type\":\"$data\", \"path\":\"$route.params.id\"}]"
+            "$data": "{{$store.apis.custodian.client.getByPk[$arg0]}}",
+            "$arg0": {
+              "$data": "{{$route.params.id}}"
+            }
           }
         },
         "nodes": [
@@ -26,9 +28,7 @@
                     "flexDirection": "column"
                   },
                   "children": {
-                    "$type": "$data",
-                    "path": "$route.params.id",
-                    "tamplate": "Client ${value}"
+                    "$data": "Client {{$context.id}}"
                   }
                 }
               },
@@ -39,8 +39,7 @@
                     "flexDirection": "column"
                   },
                   "children": {
-                    "$type": "$data",
-                    "path": "$context.name"
+                    "$data": "{{$context.name}}"
                   }
                 }
               }

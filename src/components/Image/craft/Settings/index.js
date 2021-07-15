@@ -69,12 +69,11 @@ const Settings = ({ openDataSelector }) => {
         {type === 'data' && (
           <TButton.default
             type={TButton.BUTTON_TYPES.text}
+            specialType={TButton.BUTTON_SPECIAL_TYPES.data}
             label="Select Data"
             onClick={() => openDataSelector(id, {
-              id: props.imageUrl?.path,
-              values: {
-                path: props.imageUrl?.path,
-              },
+              id: props.imageUrl?.$data,
+              values: props.imageUrl,
               onSubmit: value => {
                 setProp((props) => {
                   props.imageUrl = value

@@ -12,7 +12,7 @@ import Label from '../Label'
 import { SELECT_TYPES } from './constants'
 import transform from './transform'
 
-import BaseComponent, { getData } from 'core/BaseComponent'
+import BaseComponent, { parseProp } from 'core/BaseComponent'
 import { Component } from 'core/pageStore'
 import Context from '../Context'
 
@@ -167,7 +167,7 @@ const getSelect = craft => {
     }
 
     static defaultProps = {
-      valuePath: '$context.value',
+      valuePath: 'value',
       type: SELECT_TYPES.dropdown,
       values: [],
       items: [],
@@ -231,11 +231,13 @@ const getSelect = craft => {
         items: items.map((item, i) => ({
           label: (
             <Context key={i} context={item}>
-              <BaseComponent $context={item} component={labelStore} />
+              <BaseComponent component={labelStore} />
             </Context>
           ),
-          value: getData(
-            valuePath,
+          value: parseProp(
+            {
+              $data: `{{$context.${valuePath}}}`,
+            },
             {
               $context: item,
             },

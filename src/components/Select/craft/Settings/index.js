@@ -52,12 +52,11 @@ const Settings = ({ openDataSelector }) => {
         {type === 'data' && (
           <TButton.default
             type={TButton.BUTTON_TYPES.text}
+            specialType={TButton.BUTTON_SPECIAL_TYPES.data}
             label="Select Items"
             onClick={() => openDataSelector(id, {
-              id: props.items?.path,
-              values: {
-                path: props.items?.path,
-              },
+              id: props.items?.$data,
+              values: props.items,
               onSubmit: value => {
                 setProp((props) => {
                   props.items = value
@@ -85,12 +84,11 @@ const Settings = ({ openDataSelector }) => {
       <div>
         <TButton.default
           type={TButton.BUTTON_TYPES.text}
+          specialType={TButton.BUTTON_SPECIAL_TYPES.data}
           label="Select Values"
           onClick={() => openDataSelector(id, {
-            id: props.values?.path,
-            values: {
-              path: props.values?.path,
-            },
+            id: props.values?.$data,
+            values: props.values,
             onSubmit: value => {
               setProp((props) => {
                 props.values = value
@@ -102,12 +100,11 @@ const Settings = ({ openDataSelector }) => {
       <div>
         <TButton.default
           type={TButton.BUTTON_TYPES.text}
+          specialType={TButton.BUTTON_SPECIAL_TYPES.data}
           label="Select Errors"
           onClick={() => openDataSelector(id, {
-            id: props.errors?.path,
-            values: {
-              path: props.errors?.path,
-            },
+            id: props.errors?.$data,
+            values: props.errors,
             onSubmit: value => {
               setProp((props) => {
                 props.errors = value

@@ -187,8 +187,7 @@ class Paginator extends PureComponent {
             type: 'div',
             props: {
               children: {
-                $type: '$data',
-                path: '$context.label',
+                '$data': '{{$context.label}}',
               },
             },
           }],

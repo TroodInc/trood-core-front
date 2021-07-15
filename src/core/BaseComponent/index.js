@@ -7,7 +7,6 @@ import ContextContext from 'core/ContextContext'
 import { useObserver } from 'mobx-react-lite'
 import { useHistory, useLocation, useParams } from 'react-router-dom'
 import { Parser } from 'expr-eval'
-import get from 'lodash/get'
 
 import LoadingIndicator from 'components/LoadingIndicator'
 
@@ -16,50 +15,118 @@ import loadable from '@loadable/component'
 
 const ComponentsWrapper = loadable.lib(() => import('components'))
 
-const deepParseJson = value => {
-  if (!value) return value
-  if (Array.isArray(value)) {
-    return value.map(item => deepParseJson(item))
-  }
+const getData = (dataProp, $data) => {
+  let value = dataProp.$data
   if (typeof value === 'object') {
     return Object.keys(value).reduce((memo, key) => ({
       ...memo,
-      [key]: deepParseJson(value[key]),
+      [key]: parseProp(value[key], $data),
     }), {})
   }
-  try {
-    return deepParseJson(JSON.parse(value))
-  } catch {
-    return value
+  const pathMatch = dataProp.$data.match(/{{(\$[^}]*)}}/g) || []
+  const isTemplate = pathMatch.length > 1 || pathMatch[0] !== dataProp.$data.trim()
+  const pathMatches = dataProp.$data.matchAll(/{{(\$[^}]*)}}/g)
+  for (const [pathTemplate, path] of pathMatches) {
+    const pathValue = path.split('.').reduce(
+      (memo, key) => {
+        if (/\[([^\]]*)]/g.test(key)) {
+          const argsMatches = key.matchAll(/\[([^\]]*)]/g)
+          for (const [, args] of argsMatches) {
+            const argsArray = args.split(',').map(arg => (
+              parseProp(dataProp[arg.trim()], $data, true)
+            ))
+            const f = memo[key.replace(/\[([^\]]*)]/g, '')]
+            return f(...argsArray)
+          }
+        }
+        return memo[key]
+      },
+      $data,
+    )
+
+    if (isTemplate) {
+      value = value.replace(pathTemplate, pathValue)
+    } else {
+      value = pathValue
+    }
+  }
+  return value
+}
+
+const execAction = (actionPath, actionProp, $data) => {
+  return actionPath.split('.').reduce(
+    (memo, key) => {
+      if (/\[([^\]]*)]/g.test(key)) {
+        const argsMatches = key.matchAll(/\[([^\]]*)]/g)
+        for (const [, args] of argsMatches) {
+          const argsArray = args.split(',').map(arg => {
+            return (
+              parseProp(actionProp[arg.trim()], $data, true)
+            )
+          })
+          const f = memo[key.replace(/\[([^\]]*)]/g, '')]
+          return f(...argsArray)
+        }
+      }
+      return memo[key]
+    },
+    $data,
+  )
+}
+
+const getAction = (actionProp, $data) => {
+  const actions = (Array.isArray(actionProp.$action) ? actionProp.$action : [actionProp.$action])
+    .map(action => typeof action === 'object' ? action : { action })
+  return ($event) => {
+    let $result
+    actions.forEach(async action => {
+      try {
+        $result = await execAction(action.action, actionProp, { ...$data, $event })
+        if (action.then) {
+          const thens = Array.isArray(action.then) ? action.then : [action.then]
+          thens.forEach(async then => {
+            $result = await execAction(then, actionProp, { ...$data, $event, $result })
+          })
+        }
+      }
+      catch ($resultError) {
+        console.error($resultError)
+        if (action.catch) await execAction(action.catch, actionProp, { ...$data, $event, $resultError })
+      }
+      finally {
+        if (action.finally) await execAction(action.catch, actionProp, { ...$data, $event, $result })
+      }
+    })
   }
 }
 
-const getData = (path, $data) => {
-  const connectedPath = path.replace(/\[.*?\]/g, (replacement) => {
-    const parsedParams = deepParseJson(replacement)
-    const connectedParams = parsedParams.map((param) => {
-      return param.$type ? connectProps([param], $data)[0] : connectProps(param, $data)
-    })
-
-    return JSON.stringify(Object.values(connectedParams))
-  })
-
-  const paths = connectedPath
-    .replace(/\[[^\]]*\]/g, match => match.replace(/\./g, '\u2063')) // replace for save dot in args
-    .split('.')
-    .map(item => item.replace(/\u2063/g, '.')) // restore dot in args
-
-  return paths.reduce((memo, key) => {
-    if (memo === undefined) return memo
-    if (memo[key] !== undefined) return memo[key]
-    const params = /\[.*\]/g.exec(key)
-    if (params && params[0]) {
-      const action = key.split('[')[0]
-      const parsedParams = JSON.parse(params)
-      return memo[action](...parsedParams)
+const getExpression = (expressionProp, $data) => {
+  const parser = new Parser()
+  parser.functions.data = function (path) {
+    const dataProp = {
+      $data: `{{${path}}}`,
     }
-    return undefined
-  }, $data)
+    return getData(dataProp, $data)
+  }
+  return parser.evaluate(expressionProp.$expression)
+}
+
+const parseProp = (prop, $data, deep) => {
+  if (Array.isArray(prop)) {
+    return prop.map(value => parseProp(value, $data))
+  }
+  if (typeof prop === 'object') {
+    if (prop.$data) return getData(prop, $data)
+    if (prop.$action) return getAction(prop, $data)
+    if (prop.$expression) return getExpression(prop, $data)
+    if (deep) {
+      return Object.entries(prop).reduce((memo, [key, value]) => ({
+        ...memo,
+        [key]: parseProp(value, $data, deep),
+      }), prop)
+    }
+  }
+  return prop
 }
 
 const connectProps = (props, $data, childBaseComponent) => {
@@ -68,111 +135,12 @@ const connectProps = (props, $data, childBaseComponent) => {
   return Object.keys(props).reduce(
     (memo, key) => {
       const item = props[key]
-      if (typeof item === 'object' && item.$type === '$data') {
-        let propValue =
-          typeof item.path === 'object' ? connectProps(item.path, $data) : getData(item.path, $data)
-        if (item.template) {
-          let templateValue = item.template
-          for (const m of item.template.matchAll(/{{([^{}]+)}}/g)) {
-            const literal = m[0]
-            const path = m[1]
-            const value = get({ value: propValue }, path)
-            templateValue = templateValue.replace(literal, value)
-          }
-          propValue = templateValue
-        }
-        return { ...memo, [key]: propValue }
+      return {
+        ...memo,
+        [key]: parseProp(item, $data),
       }
-
-      if (typeof item === 'object' && item.$type === '$expression') {
-        const parser = new Parser()
-        parser.functions.data = function (path) {
-          return getData(path, $data)
-        }
-        const val = parser.evaluate(item.expression)
-        return { ...memo, [key]: val }
-      }
-
-      if (typeof item === 'object' && item.$type === '$action') {
-        const sequense = item.sequense ? item.sequense : [item]
-        const executor = async ($event) => {
-          const getConnectedFunction = (path, args) => {
-            const connectedAction = getData(path, $data)
-            return ($event) => {
-              const connectedArgs = args
-                ? args.map((param) => {
-                  return param.$type
-                    ? connectProps([param], { ...$data, $event })[0]
-                    : connectProps(param, { ...$data, $event })
-                })
-                : {}
-              return typeof connectedAction === 'function'
-                ? connectedAction(...Object.values(connectedArgs))
-                : undefined
-            }
-          }
-
-          const connectedActions = sequense.map((actionItem) => {
-            return {
-              action: getConnectedFunction(actionItem.path, actionItem.args),
-              then: actionItem.then
-                ? getConnectedFunction(actionItem.then.path, actionItem.then.args)
-                : null,
-              catch: actionItem.catch
-                ? getConnectedFunction(actionItem.catch.path, actionItem.catch.args)
-                : null,
-              finally: actionItem.finally
-                ? getConnectedFunction(actionItem.finally.path, actionItem.finally.args)
-                : null,
-            }
-          })
-          try {
-            for (const currentAction of connectedActions) {
-              // execute action, try and catch of action
-              let result
-              try {
-                result = await currentAction.action($event)
-                if (typeof currentAction.then === 'function') {
-                  currentAction.then(result)
-                }
-              } catch (error) {
-                if (typeof currentAction.catch === 'function') {
-                  currentAction.catch(error)
-                } else {
-                  throw error
-                }
-              } finally {
-                if (typeof currentAction.finally === 'function') {
-                  currentAction.finally(result)
-                }
-              }
-            }
-          } catch (error) {
-            if (item.sequense && item.catch) {
-              const action = getConnectedFunction(item.catch.path, item.catch.args)
-              action(error)
-            }
-            //TODO remove console
-            console.log(error)
-          } finally {
-            if (item.sequense && item.finally) {
-              const action = getConnectedFunction(item.finally.path, item.finally.args)
-              action()
-            }
-          }
-        }
-        return { ...memo, [key]: executor }
-      }
-      if (key === 'children' && childBaseComponent) {
-        return {
-          ...memo,
-          [key]: [...(Array.isArray(props[key]) ? props[key] : [props[key]]), childBaseComponent],
-        }
-      }
-
-      return memo
     },
-    { ...props },
+    {},
   )
 }
 
@@ -237,4 +205,4 @@ const BaseComponent = Wrapper(({ component, coreComponents }) => {
 })
 
 export default BaseComponent
-export { getData }
+export { parseProp }

@@ -49,12 +49,11 @@ const Settings = ({ openDataSelector }) => {
         {type === 'data' && (
           <TButton.default
             type={TButton.BUTTON_TYPES.text}
+            specialType={TButton.BUTTON_SPECIAL_TYPES.data}
             label="Select Data"
             onClick={() => openDataSelector(id, {
-              id: props.to?.path,
-              values: {
-                path: props.to?.path,
-              },
+              id: props.to?.$data,
+              values: props.to,
               onSubmit: value => {
                 setProp((props) => {
                   props.to = value
