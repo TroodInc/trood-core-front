@@ -35,11 +35,12 @@ const getData = (dataProp, $data) => {
             const argsArray = args.split(',').map(arg => (
               parseProp(dataProp[arg.trim()], $data, true)
             ))
-            const f = memo[key.replace(/\[([^\]]*)]/g, '')]
+            const f = (memo || {})[key.replace(/\[([^\]]*)]/g, '')]
+            if (typeof f !== 'function') return undefined
             return f(...argsArray)
           }
         }
-        return memo[key]
+        return (memo || {})[key]
       },
       $data,
     )
