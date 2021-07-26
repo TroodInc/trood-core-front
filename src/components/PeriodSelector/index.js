@@ -87,7 +87,7 @@ class PeriodSelector extends PureComponent {
             dataAttributes,
             className: style.filterInput,
             maxRows: 8,
-            values: [periodType || periods[0]],
+            value: periodType || periods[0],
             labelNodes: [{
               type: 'div',
               props: {
@@ -100,11 +100,11 @@ class PeriodSelector extends PureComponent {
               value: key,
               label: PERIOD_TYPES[key],
             })),
-            onChange: values => {
+            onChange: value => {
               if (resetFieldsArray) {
                 (resetFieldsArray || []).map(m => resetField(m))
               }
-              const period = values[0]
+              const period = value
               onSubmit({
                 periodType: period,
                 ...getPeriodSelector(period),

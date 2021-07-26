@@ -61,14 +61,12 @@
                             "$action": "$page.openModal[$arg0,$arg1]",
                             "$arg0": "editClient",
                             "$arg1": {
-                              "form": {
-                                "$data": "{{$store.forms.getForm[$arg0]}}",
-                                "$arg0": {
-                                  "apiName": "custodian",
-                                  "modelName": "client",
-                                  "values": {
-                                    "client_active_status": 1
-                                  }
+                              "$data": "{{$store.forms.getForm[$arg0]}}",
+                              "$arg0": {
+                                "apiName": "custodian",
+                                "modelName": "client",
+                                "values": {
+                                  "client_active_status": 1
                                 }
                               }
                             }
@@ -185,14 +183,12 @@
                                       "$action": "$page.openModal[$arg0,$arg1]",
                                       "$arg0": "editClient",
                                       "$arg1": {
-                                        "form": {
-                                          "$data": "{{$store.forms.getForm[$arg0]}}",
-                                          "$arg0": {
-                                            "apiName": "custodian",
-                                            "modelName": "client",
-                                            "modelPk": {
-                                              "$data": "{{$context.id}}"
-                                            }
+                                        "$data": "{{$store.forms.getForm[$arg0]}}",
+                                        "$arg0": {
+                                          "apiName": "custodian",
+                                          "modelName": "client",
+                                          "modelPk": {
+                                            "$data": "{{$context.id}}"
                                           }
                                         }
                                       }
@@ -214,14 +210,7 @@
             "type": "Modal",
             "props": {
               "type": "right",
-              "isOpen": {
-                "$data": "{{$page.isModalOpen[$arg0]}}",
-                "$arg0": "editClient"
-              },
-              "close": {
-                "$action": "$page.closeModal[$arg0]",
-                "$arg0": "editClient"
-              }
+              "modalName": "editClient"
             },
             "nodes": [
               {
@@ -238,230 +227,215 @@
                 "size": 16
               },
               {
-                "type": "Context",
+                "type": "Input",
                 "props": {
-                  "context": {
-                    "$data": "{{$page.getContext[$arg0]}}",
-                    "$arg0": "editClient"
+                  "label": "Name",
+                  "value": {
+                    "$data": "{{$context.data.name}}"
+                  },
+                  "onChange": {
+                    "$action": "$context.changeFields[$arg0]",
+                    "$arg0": {
+                      "name": {
+                        "$data": "{{$event}}"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "type": "Spacer",
+                "size": 8
+              },
+              {
+                "type": "Select",
+                "props": {
+                  "label": "Type",
+                  "value": {
+                    "$data": "{{$context.data.client_type}}"
+                  },
+                  "items": {
+                    "$data": "{{$store.apis.custodian.client_type.getPage[$arg0,$arg1]}}",
+                    "$arg0": 0,
+                    "$arg1": 10
+                  },
+                  "valuePath": "id",
+                  "labelNodes": [
+                    {
+                      "type": "div",
+                      "props": {
+                        "children": {
+                          "$data": "{{$context.name}}"
+                        }
+                      }
+                    }
+                  ],
+                  "onChange": {
+                    "$action": "$context.changeFields[$arg0]",
+                    "$arg0": {
+                      "client_type": {
+                        "$data": "{{$event}}"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "type": "Spacer",
+                "size": 8
+              },
+              {
+                "type": "Select",
+                "props": {
+                  "label": "Responsible",
+                  "value": {
+                    "$data": "{{$context.data.responsible}}"
+                  },
+                  "items": {
+                    "$data": "{{$store.apis.custodian.employee.getPage[$arg0,$arg1]}}",
+                    "$arg0": 0,
+                    "$arg1": 10
+                  },
+                  "valuePath": "id",
+                  "labelNodes": [
+                    {
+                      "type": "div",
+                      "props": {
+                        "children": {
+                          "$data": "{{$context.name}}"
+                        }
+                      }
+                    }
+                  ],
+                  "onChange": {
+                    "$action": "$context.changeFields[$arg0]",
+                    "$arg0": {
+                      "responsible": {
+                        "$data": "{{$event}}"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "type": "Spacer",
+                "size": 800
+              },
+              {
+                "type": "Container",
+                "props": {
+                  "style": {
+                    "flexDirection": "row",
+                    "marginTop": "auto"
                   }
                 },
                 "nodes": [
                   {
-                    "type": "Input",
+                    "type": "Container",
                     "props": {
-                      "label": "Name",
-                      "value": {
-                        "$data": "{{$context.form.data.name}}"
-                      },
-                      "onChange": {
-                        "$action": "$context.form.changeFields[$arg0]",
-                        "$arg0": {
-                          "name": {
-                            "$data": "{{$event}}"
+                      "style": {
+                        "flexDirection": "column"
+                      }
+                    },
+                    "nodes": [
+                      {
+                        "type": "Button",
+                        "props": {
+                          "label": "Close",
+                          "type": "text",
+                          "onClick": {
+                            "$action": "$page.closeModal[$arg0]",
+                            "$arg0": "editClient"
                           }
+                        }
+                      },
+                      {
+                        "type": "Conditional",
+                        "props": {
+                          "condition": {
+                            "$expression": "data('$context.data.id')"
+                          },
+                          "ifTrue": [
+                            {
+                              "type": "Button",
+                              "props": {
+                                "label": "Delete",
+                                "color": "red",
+                                "type": "text",
+                                "onClick": {
+                                  "$arg0": "editClient",
+                                  "$arg1": "isLoading",
+                                  "$arg2": true,
+                                  "$arg3": {
+                                    "$data": "{{$context.data.id}}"
+                                  },
+                                  "$arg4": "editClient",
+                                  "$arg5": "editClient",
+                                  "$arg6": "isLoading",
+                                  "$arg7": false,
+                                  "$action": [
+                                    "$page.modifyContext[$arg0,$arg1,$arg2]",
+                                    {
+                                      "action": "$store.apis.custodian.client.deleteByPk[$arg3]",
+                                      "then": [
+                                        "$page.closeModal[$arg4]",
+                                        "$page.modifyContext[$arg5,$arg6,$arg7]"
+                                      ]
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          ]
                         }
                       }
-                    }
-                  },
-                  {
-                    "type": "Spacer",
-                    "size": 8
-                  },
-                  {
-                    "type": "Select",
-                    "props": {
-                      "label": "Type",
-                      "values": {
-                        "$expression": "[(data('$context.form.data.client_type'))]"
-                      },
-                      "items": {
-                        "$data": "{{$store.apis.custodian.client_type.getPage[$arg0,$arg1]}}",
-                        "$arg0": 0,
-                        "$arg1": 10
-                      },
-                      "valuePath": "id",
-                      "labelNodes": [
-                        {
-                          "type": "div",
-                          "props": {
-                            "children": {
-                              "$data": "{{$context.name}}"
-                            }
-                          }
-                        }
-                      ],
-                      "onChange": {
-                        "$action": "$context.form.changeFields[$arg0]",
-                        "$arg0": {
-                          "path": {
-                            "client_type": {
-                              "$expression": "(data('$event'))[0]"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  },
-                  {
-                    "type": "Spacer",
-                    "size": 8
-                  },
-                  {
-                    "type": "Select",
-                    "props": {
-                      "label": "Responsible",
-                      "values": {
-                        "$expression": "[(data('$context.form.data.responsible'))]"
-                      },
-                      "items": {
-                        "$data": "{{$store.apis.custodian.employee.getPage[$arg0,$arg1]}}",
-                        "$arg0": 0,
-                        "$arg1": 10
-                      },
-                      "valuePath": "id",
-                      "labelNodes": [
-                        {
-                          "type": "div",
-                          "props": {
-                            "children": {
-                              "$data": "{{$context.name}}"
-                            }
-                          }
-                        }
-                      ],
-                      "onChange": {
-                        "$action": "$context.form.changeFields[$arg0]",
-                        "$arg0": {
-                          "path": {
-                            "responsible": {
-                              "$data": "{{$event.0}}"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  },
-                  {
-                    "type": "Spacer",
-                    "size": 800
+                    ]
                   },
                   {
                     "type": "Container",
                     "props": {
                       "style": {
-                        "flexDirection": "row",
-                        "marginTop": "auto"
+                        "flexDirection": "column"
                       }
                     },
                     "nodes": [
                       {
-                        "type": "Container",
+                        "type": "Conditional",
                         "props": {
-                          "style": {
-                            "flexDirection": "column"
-                          }
-                        },
-                        "nodes": [
-                          {
-                            "type": "Button",
-                            "props": {
-                              "label": "Close",
-                              "type": "text",
-                              "onClick": {
-                                "$action": "$page.closeModal[$arg0]",
-                                "$arg0": "editClient"
-                              }
-                            }
+                          "condition": {
+                            "$data": "{{$context.isLoading}}"
                           },
-                          {
-                            "type": "Conditional",
-                            "props": {
-                              "condition": {
-                                "$expression": "data('$context.form.data.id')"
-                              },
-                              "ifTrue": [
-                                {
-                                  "type": "Button",
-                                  "props": {
-                                    "label": "Delete",
-                                    "color": "red",
-                                    "type": "text",
-                                    "onClick": {
-                                      "$arg0": "editClient",
-                                      "$arg1": "isLoading",
-                                      "$arg2": true,
-                                      "$arg3": {
-                                        "$data": "{{$context.form.data.id}}"
-                                      },
-                                      "$arg4": "editClient",
-                                      "$arg5": "editClient",
-                                      "$arg6": "isLoading",
-                                      "$arg7": false,
-                                      "$action": [
-                                        "$page.modifyContext[$arg0,$arg1,$arg2]",
-                                        {
-                                          "action": "$store.apis.custodian.client.deleteByPk[$arg3]",
-                                          "then": [
-                                            "$page.closeModal[$arg4]",
-                                            "$page.modifyContext[$arg5,$arg6,$arg7]"
-                                          ]
-                                        }
-                                      ]
-                                    }
-                                  }
-                                }
-                              ]
+                          "ifTrue": [
+                            {
+                              "type": "LoadingIndicator"
                             }
-                          }
-                        ]
+                          ]
+                        }
                       },
                       {
-                        "type": "Container",
+                        "type": "Button",
                         "props": {
-                          "style": {
-                            "flexDirection": "column"
-                          }
-                        },
-                        "nodes": [
-                          {
-                            "type": "Conditional",
-                            "props": {
-                              "condition": {
-                                "$data": "{{$context.isLoading}}"
-                              },
-                              "ifTrue": [
-                                {
-                                  "type": "LoadingIndicator"
-                                }
-                              ]
-                            }
-                          },
-                          {
-                            "type": "Button",
-                            "props": {
-                              "label": "Save",
-                              "onClick": {
-                                "$arg0": "editClient",
-                                "$arg1": "isLoading",
-                                "$arg2": true,
-                                "$arg3": "editClient",
-                                "$arg4": "editClient",
-                                "$arg5": "isLoading",
-                                "$arg6": false,
-                                "$action": [
-                                  "$page.modifyContext[$arg0,$arg1,$arg2]",
-                                  {
-                                    "action": "$context.form.submit[]",
-                                    "then": [
-                                      "$page.closeModal[$arg3]",
-                                      "$page.modifyContext[$arg4,$arg5,$arg6]"
-                                    ]
-                                  }
+                          "label": "Save",
+                          "onClick": {
+                            "$arg0": "editClient",
+                            "$arg1": "isLoading",
+                            "$arg2": true,
+                            "$arg3": "editClient",
+                            "$arg4": "editClient",
+                            "$arg5": "isLoading",
+                            "$arg6": false,
+                            "$action": [
+                              "$page.modifyContext[$arg0,$arg1,$arg2]",
+                              {
+                                "action": "$context.submit[]",
+                                "then": [
+                                  "$page.closeModal[$arg3]",
+                                  "$page.modifyContext[$arg4,$arg5,$arg6]"
                                 ]
                               }
-                            }
+                            ]
                           }
-                        ]
+                        }
                       }
                     ]
                   }

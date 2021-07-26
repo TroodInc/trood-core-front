@@ -72,7 +72,7 @@ const getSelect = craft => {
       /** label text */
       label: PropTypes.node,
       /** select values */
-      values: PropTypes.arrayOf(valueTypes),
+      value: PropTypes.oneOfType([PropTypes.arrayOf(valueTypes), valueTypes]),
       /** clearable or not */
       clearable: PropTypes.bool,
       /** disabled or not */
@@ -147,8 +147,6 @@ const getSelect = craft => {
       /** children node. For select with type "List" */
       onScrollToEnd: PropTypes.func,
 
-      /** rating value. For select with type "Rating" */
-      value: PropTypes.number,
       /** max rating value. For select with type "Rating" */
       maxRating: PropTypes.number,
       /** icon settings. For select with type "Rating" */
@@ -169,7 +167,7 @@ const getSelect = craft => {
     static defaultProps = {
       valuePath: 'value',
       type: SELECT_TYPES.dropdown,
-      values: [],
+      value: [],
       items: [],
 
       errors: [],
@@ -197,12 +195,12 @@ const getSelect = craft => {
     }
 
     componentDidMount() {
-      this.handleValidate(this.props.values)
+      this.handleValidate(this.props.value)
     }
 
     componentDidUpdate(prevProps) {
-      if (!deepEqual(prevProps.values, this.props.values) || !deepEqual(prevProps.validate, this.props.validate)) {
-        this.handleValidate(this.props.values)
+      if (!deepEqual(prevProps.value, this.props.value) || !deepEqual(prevProps.validate, this.props.validate)) {
+        this.handleValidate(this.props.value)
       }
     }
 
@@ -222,12 +220,17 @@ const getSelect = craft => {
         items,
         valuePath,
         labelNodes,
+        value,
       } = this.props
 
       const labelStore = Component.create({ nodes: labelNodes })
+      const values = Array.isArray(value) ? value : [value]
+      const onChange = v => this.props.onChange(multi ? v : v[0])
 
       const generalProps = {
         ...this.props,
+        values,
+        onChange,
         items: items.map((item, i) => ({
           label: (
             <Context key={i} context={item}>
@@ -286,7 +289,7 @@ const getSelect = craft => {
       }
     }
 
-    handleValidate(values) {
+    handleValidate(value) {
       const {
         validate: {
           required,
@@ -296,6 +299,7 @@ const getSelect = craft => {
         onValid,
         onInvalid,
       } = this.props
+      const values = Array.isArray(value) ? value : [value]
 
       if (!disabled) {
         const newErrors = required && !values.length ? ['Value is required'] : [] // TODO i18n

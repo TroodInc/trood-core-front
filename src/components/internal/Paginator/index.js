@@ -192,9 +192,9 @@ class Paginator extends PureComponent {
             },
           }],
           items: pageSizes.map(value => ({ value, label: value })),
-          values: [pageSize],
+          value: pageSize,
           openUp: bottom,
-          onChange: values => this.goToPage(0, values[0]),
+          onChange: value => this.goToPage(0, value),
         }} />
       </div>
     )

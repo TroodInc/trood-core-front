@@ -38,6 +38,7 @@ const CraftSelect = props => {
         },
       }],
       items: [{ value: 1, label: 'Item' }],
+      value: [],
       onValid: () => {},
       onInvalid: () => {},
       onChange: () => {},
