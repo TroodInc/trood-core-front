@@ -22,7 +22,7 @@ const Settings = ({ openDataSelector, openEventConstructor }) => {
     <>
       <TButton.default
         type={TButton.BUTTON_TYPES.text}
-        specialType={TButton.BUTTON_SPECIAL_TYPES.data}
+        specialType={TButton.BUTTON_SPECIAL_TYPES.action}
         label="On Change"
         onClick={() => openEventConstructor(id, {
           values: props.onChange,
