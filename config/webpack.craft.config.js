@@ -36,6 +36,7 @@ module.exports = function ({
       ...externals,
       'core/BaseComponent': 'core/BaseComponent',
       'core/pageStore': 'core/pageStore',
+      'core/PageStoreContext': 'core/PageStoreContext',
       'react-contenteditable': 'react-contenteditable',
       '@craftjs/core': '@craftjs/core',
       '$trood/components': '$trood/components',

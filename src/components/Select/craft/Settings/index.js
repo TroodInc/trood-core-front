@@ -1,13 +1,12 @@
 /* eslint-disable jsx-a11y/no-onchange */
 import React, { useState } from 'react'
 import { useNode } from '@craftjs/core'
-import { TCheckbox, JsonEditor, TSelect, TInput, TButton } from '$trood/components'
+import { TCheckbox, JsonEditor, TInput, TButton } from '$trood/components'
 
 import styles from './index.module.css'
-import { INPUT_TYPES } from '../../../Input'
 
 
-const Settings = ({ openDataSelector }) => {
+const Settings = ({ openDataSelector, openEventConstructor }) => {
   const {
     id,
     actions: { setProp },
@@ -21,6 +20,19 @@ const Settings = ({ openDataSelector }) => {
 
   return (
     <>
+      <TButton.default
+        type={TButton.BUTTON_TYPES.text}
+        specialType={TButton.BUTTON_SPECIAL_TYPES.action}
+        label="On Change"
+        onClick={() => openEventConstructor(id, {
+          values: props.onChange,
+          onSubmit: value => {
+            setProp((props) => {
+              props.onChange = value
+            })
+          },
+        })}
+      />
       <div>
         <div className={styles.tabs}>
           <div
@@ -85,13 +97,13 @@ const Settings = ({ openDataSelector }) => {
         <TButton.default
           type={TButton.BUTTON_TYPES.text}
           specialType={TButton.BUTTON_SPECIAL_TYPES.data}
-          label="Select Values"
+          label="Select Value"
           onClick={() => openDataSelector(id, {
-            id: props.values?.$data,
-            values: props.values,
+            id: props.value?.$data,
+            value: props.value,
             onSubmit: value => {
               setProp((props) => {
-                props.values = value
+                props.value = value
               })
             },
           })}

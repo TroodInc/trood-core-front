@@ -157,9 +157,9 @@ export const Page = types
       model.contexts.set(name, {})
       model.contexts.get(name).setContext(context)
     },
-    openModal(name, context) {
+    openModal(name, form) {
       model.modals.set(name, { isOpen: true })
-      model.setContext(name, context)
+      model.setContext(name, { form })
     },
     closeModal(name) {
       model.modals.set(name, { isOpen: false })

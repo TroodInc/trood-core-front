@@ -1,13 +1,13 @@
 /* eslint-disable jsx-a11y/no-onchange */
 import React from 'react'
 import { useNode } from '@craftjs/core'
-import { TCheckbox, TSelect, TInput } from '$trood/components'
+import { TCheckbox, TSelect, TInput, TButton } from '$trood/components'
 
 import { BUTTON_TYPES, BUTTON_SPECIAL_TYPES, BUTTON_COLORS } from '../../constants'
 
 
-const Settings = () => {
-  const { actions: { setProp }, props } = useNode((node) => ({ props: node.data.props }))
+const Settings = ({ openEventConstructor }) => {
+  const { id, actions: { setProp }, props } = useNode((node) => ({ props: node.data.props }))
 
   const selectProps = ({ label, key, items }) => ({
     label,
@@ -31,6 +31,19 @@ const Settings = () => {
 
   return (
     <>
+      <TButton.default
+        type={TButton.BUTTON_TYPES.text}
+        specialType={TButton.BUTTON_SPECIAL_TYPES.action}
+        label="On Click"
+        onClick={() => openEventConstructor(id, {
+          values: props.onClick,
+          onSubmit: value => {
+            setProp((props) => {
+              props.onClick = value
+            })
+          },
+        })}
+      />
       <TInput.default {...{
         ...inputProps({
           label: 'Label',

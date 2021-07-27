@@ -9,6 +9,7 @@ import { useHistory, useLocation, useParams } from 'react-router-dom'
 import { Parser } from 'expr-eval'
 
 import LoadingIndicator from 'components/LoadingIndicator'
+import { isDefAndNotNull } from 'helpers/def'
 
 import loadable from '@loadable/component'
 
@@ -80,23 +81,22 @@ const getAction = (actionProp, $data) => {
     .map(action => typeof action === 'object' ? action : { action })
   return ($event) => {
     let $result
-    actions.forEach(async action => {
+    actions.map(async action => {
       try {
-        $result = await execAction(action.action, actionProp, { ...$data, $event })
+        $result = await execAction(action.action, actionProp, { ...$data, $event, $result })
         if (action.then) {
           const thens = Array.isArray(action.then) ? action.then : [action.then]
           thens.forEach(async then => {
             $result = await execAction(then, actionProp, { ...$data, $event, $result })
           })
         }
-      }
-      catch ($resultError) {
+      } catch ($resultError) {
         console.error($resultError)
-        if (action.catch) await execAction(action.catch, actionProp, { ...$data, $event, $resultError })
+        if (action.catch) $result = await execAction(action.catch, actionProp, { ...$data, $event, $resultError })
+      } finally {
+        if (action.finally) $result = await execAction(action.catch, actionProp, { ...$data, $event, $result })
       }
-      finally {
-        if (action.finally) await execAction(action.catch, actionProp, { ...$data, $event, $result })
-      }
+      return $result
     })
   }
 }
@@ -117,9 +117,9 @@ const parseProp = (prop, $data, deep) => {
     return prop.map(value => parseProp(value, $data))
   }
   if (typeof prop === 'object') {
-    if (prop.$data) return getData(prop, $data)
-    if (prop.$action) return getAction(prop, $data)
-    if (prop.$expression) return getExpression(prop, $data)
+    if (isDefAndNotNull(prop.$data)) return getData(prop, $data)
+    if (isDefAndNotNull(prop.$action)) return getAction(prop, $data)
+    if (isDefAndNotNull(prop.$expression)) return getExpression(prop, $data)
     if (deep) {
       return Object.entries(prop).reduce((memo, [key, value]) => ({
         ...memo,

@@ -2,13 +2,13 @@
 import React from 'react'
 import { useNode } from '@craftjs/core'
 import { get, set } from 'lodash'
-import { TCheckbox, TSelect, TInput, TDateTimePicker } from '$trood/components'
+import { TCheckbox, TSelect, TInput, TDateTimePicker, TButton } from '$trood/components'
 
 import { PICKER_TYPES, CALENDAR_POSITIONS } from '../../constants'
 
 
-const Settings = () => {
-  const { actions: { setProp }, props } = useNode((node) => ({ props: node.data.props }))
+const Settings = ({ openEventConstructor, openDataSelector }) => {
+  const { id, actions: { setProp }, props } = useNode((node) => ({ props: node.data.props }))
 
   const selectProps = ({ label, key, items }) => ({
     label,
@@ -40,6 +40,33 @@ const Settings = () => {
 
   return (
     <>
+      <TButton.default
+        type={TButton.BUTTON_TYPES.text}
+        specialType={TButton.BUTTON_SPECIAL_TYPES.action}
+        label="On Change"
+        onClick={() => openEventConstructor(id, {
+          values: props.onChange,
+          onSubmit: value => {
+            setProp((props) => {
+              props.onChange = value
+            })
+          },
+        })}
+      />
+      <TButton.default
+        type={TButton.BUTTON_TYPES.text}
+        specialType={TButton.BUTTON_SPECIAL_TYPES.data}
+        label="Select Value"
+        onClick={() => openDataSelector(id, {
+          id: props.value?.$data,
+          value: props.value,
+          onSubmit: value => {
+            setProp((props) => {
+              props.value = value
+            })
+          },
+        })}
+      />
       <TSelect.default {...{
         ...selectProps({
           label: 'Picker type',

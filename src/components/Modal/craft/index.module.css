@@ -2,3 +2,12 @@
   padding: 20px;
   background-color: rgba(125, 228, 216, 0.3);
 }
+
+.visualHelp > div {
+  position: relative !important;
+  padding: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  background: transparent !important;
+  z-index: 1 !important;
+}
