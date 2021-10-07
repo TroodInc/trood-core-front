@@ -8,7 +8,7 @@ const normalizeApiPath = (path) => {
   return `${host}${host.endsWith('/') ? '' : '/'}${path.startsWith('/') ? path.slice(1) : path}`
 }
 
-const convertObject = (cur, data) => {
+const convertObject = (cur, data, skipTransform) => {
   let { type } = cur
   if (!type || (typeof type === 'object' && !components[type.resolvedName])) {
     const error = !type || (typeof type === 'object' && !type.resolvedName) ?
@@ -34,8 +34,9 @@ const convertObject = (cur, data) => {
 
   type = type.resolvedName || type
 
-  if (components[type]?.transformFunctions?.loadTransform) {
-    return components[type].transformFunctions.loadTransform(cur, data, node => convertObject(node, data))
+  if (!skipTransform && components[type]?.transformFunctions?.loadTransform) {
+    return components[type].transformFunctions
+      .loadTransform(cur, data, (node, skip) => convertObject(node, data, skip))
   }
 
   const component = {
@@ -157,12 +158,16 @@ export const Page = types
       model.contexts.set(name, {})
       model.contexts.get(name).setContext(context)
     },
-    openModal(name, form) {
+    openModalForm(baseUrl, pk, editValues) {
+      model.openModal(baseUrl)
+      model.setContext(baseUrl, { pk, editValues })
+    },
+    openModal(name) {
       model.modals.set(name, { isOpen: true })
-      model.setContext(name, { form })
     },
     closeModal(name) {
       model.modals.set(name, { isOpen: false })
+      model.setContext(name, {})
     },
     openPopup(name, timeout = 3000) {
       model.popups.set(name, { isOpen: true })

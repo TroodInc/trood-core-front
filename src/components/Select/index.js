@@ -225,7 +225,9 @@ const getSelect = craft => {
 
       const labelStore = Component.create({ nodes: labelNodes })
       const values = Array.isArray(value) ? value : [value]
-      const onChange = v => this.props.onChange(multi ? v : v[0])
+      const onChange = v => {
+        this.props.onChange(multi ? v : v[0])
+      }
 
       const generalProps = {
         ...this.props,

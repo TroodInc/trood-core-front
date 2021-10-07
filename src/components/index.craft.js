@@ -34,6 +34,7 @@ import RadioButton from './RadioButton/craft'
 import DateTimePicker from './DateTimePicker/craft'
 
 import Fragment from './Fragment/craft'
+import Form from './Form/craft'
 
 
 const components = {
@@ -58,6 +59,7 @@ const components = {
   DateTimePicker,
   Fragment,
   Select,
+  Form,
 }
 
 export default Object.keys(components).reduce((memo, key) => {

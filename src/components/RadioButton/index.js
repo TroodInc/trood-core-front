@@ -18,7 +18,16 @@ class RadioButton extends PureComponent {
     /** disabled or not */
     disabled: PropTypes.bool,
     /** value true or false */
-    value: PropTypes.bool,
+    value: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+      PropTypes.bool,
+    ]),
+    radioButtonValue: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+      PropTypes.bool,
+    ]),
     /** type is one of RADIO_COLORS.blue, RADIO_COLORS.orange */
     color: PropTypes.oneOf(Object.values(RADIO_COLORS)),
     /** type is one of RADIO_SIZES.normal, RADIO_SIZES.thin, RADIO_SIZES.large */
@@ -63,7 +72,6 @@ class RadioButton extends PureComponent {
 
   static defaultProps = {
     disabled: false,
-    value: false,
     labelPosition: LABEL_POSITION_TYPES.right,
     color: RADIO_COLORS.blue,
     size: RADIO_SIZES.normal,
@@ -73,11 +81,15 @@ class RadioButton extends PureComponent {
     const {
       disabled,
       value,
+      radioButtonValue,
       color,
       size,
+      onChange,
 
       ...other
     } = this.props
+
+    const switched = !!value && value === radioButtonValue
 
     const radioComp = (
       <div key="radio" className={classNames(
@@ -85,7 +97,7 @@ class RadioButton extends PureComponent {
         style[color],
         style[size],
         disabled && style.disabled,
-        value && style.checked,
+        switched && style.checked,
       )}>
         <div className={style.innerRoot} />
       </div>
@@ -94,9 +106,12 @@ class RadioButton extends PureComponent {
     return (
       <EnchancedSwitch {...{
         disabled,
-        switched: value,
+        switched,
         switchedComponent: radioComp,
         type: INNER_INPUT_TYPES.radio,
+        onChange: v => {
+          onChange(v ? radioButtonValue : undefined)
+        },
         ...other,
       }} />
     )

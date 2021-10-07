@@ -35,6 +35,7 @@ import Table from './Table'
 import Typography from './Typography'
 import Image from './Image'
 import Fragment from './Fragment'
+import Form from './Form'
 
 const components = {
   Context,
@@ -68,6 +69,7 @@ const components = {
   Typography,
   Image,
   Fragment,
+  Form,
 }
 
 export default Object.keys(components).reduce((memo, key) => {

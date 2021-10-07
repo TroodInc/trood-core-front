@@ -13,20 +13,20 @@ export const getAuthStore = apiStore => {
       error: types.optional(types.frozen({}), {}),
     })
     .views(() => ({
-      getLoginForm() {
-        return apiStore.forms.getForm({ formName: 'LoginForm' })
+      getLoginForm(formName = 'LoginForm') {
+        return apiStore.forms.getForm({ formName })
       },
-      getVerifyForm() {
-        return apiStore.forms.getForm({ formName: 'VerifyForm' })
+      getVerifyForm(formName = 'VerifyForm') {
+        return apiStore.forms.getForm({ formName })
       },
-      getLogoutForm() {
-        return apiStore.forms.getForm({ formName: 'LogoutForm' })
+      getLogoutForm(formName = 'LogoutForm') {
+        return apiStore.forms.getForm({ formName })
       },
     }))
     .actions(self => ({
-      login(endpoint, tokenPrefix = 'Token '){
+      login(endpoint, formName, tokenPrefix = 'Token '){
         const options = { method: 'post', endpoint }
-        return self.getLoginForm().submit(options, true)
+        return self.getLoginForm(formName).submit(options, true)
           .then(res => {
             self.setAuthData(res, tokenPrefix)
             return res
@@ -36,20 +36,20 @@ export const getAuthStore = apiStore => {
             return Promise.reject(res)
           })
       },
-      verifyToken(endpoint, tokenPrefix = 'Token ') {
+      verifyToken(endpoint, formName, tokenPrefix = 'Token ') {
         if (getToken()) {
           const options = { method: 'post', endpoint }
-          return self.getVerifyForm().submit(options, true)
+          return self.getVerifyForm(formName).submit(options, true)
             .then(res => {
               self.setAuthData(res, tokenPrefix, true)
               return res
             })
         }
       },
-      logout(endpoint) {
+      logout(endpoint, formName) {
         if (endpoint && getToken()) {
           const options = { method: 'post', endpoint }
-          self.getLogoutForm().submit(options, true)
+          self.getLogoutForm(formName).submit(options, true)
             .finally(self.clearAuthData)
         } else {
           self.clearAuthData()
@@ -71,7 +71,7 @@ export const getAuthStore = apiStore => {
           self.error = error
         } else {
           const { token, abac, ...account } = data
-          if (!verify) {
+          if (!verify && token) {
             const formattedToken = token ? `${tokenPrefix}${token}` : null
             setToken(formattedToken)
             self.token = formattedToken
