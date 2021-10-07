@@ -1,13 +1,22 @@
 /* eslint-disable jsx-a11y/no-onchange */
 import React from 'react'
-import { useNode } from '@craftjs/core'
+import { useNode, useEditor } from '@craftjs/core'
 import { TCheckbox, TSelect, TInput, TButton } from '$trood/components'
 
 import { BUTTON_TYPES, BUTTON_SPECIAL_TYPES, BUTTON_COLORS } from '../../constants'
 
+import { getIsNodeInNode } from '../../../helpers'
+
+import { ACTIONS_TYPE } from '../../../Form/constants'
+
+
+const getIsFormComponent = (id, helper) => getIsNodeInNode(id, helper, ['Form'])
 
 const Settings = ({ openEventConstructor }) => {
   const { id, actions: { setProp }, props } = useNode((node) => ({ props: node.data.props }))
+  const { query: { node: helper } } = useEditor()
+
+  const isFormComponent = getIsFormComponent(id, helper)
 
   const selectProps = ({ label, key, items }) => ({
     label,
@@ -31,19 +40,32 @@ const Settings = ({ openEventConstructor }) => {
 
   return (
     <>
-      <TButton.default
-        type={TButton.BUTTON_TYPES.text}
-        specialType={TButton.BUTTON_SPECIAL_TYPES.action}
-        label="On Click"
-        onClick={() => openEventConstructor(id, {
-          values: props.onClick,
-          onSubmit: value => {
-            setProp((props) => {
-              props.onClick = value
-            })
-          },
-        })}
-      />
+      {isFormComponent && (
+        <TSelect.default {...{
+          label: 'Action Type',
+          placeholder: 'Not Set',
+          items: ACTIONS_TYPE,
+          values: props.onClick?.$action ? [props.onClick.$action] : [],
+          onChange: vals => setProp((props) => props.onClick = {
+            $action: vals[0],
+          }),
+        }} />
+      )}
+      {!isFormComponent && (
+        <TButton.default
+          type={TButton.BUTTON_TYPES.text}
+          specialType={TButton.BUTTON_SPECIAL_TYPES.action}
+          label="On Click"
+          onClick={() => openEventConstructor(id, {
+            values: props.onClick,
+            onSubmit: value => {
+              setProp((props) => {
+                props.onClick = value
+              })
+            },
+          })}
+        />
+      )}
       <TInput.default {...{
         ...inputProps({
           label: 'Label',
@@ -92,13 +114,15 @@ const Settings = ({ openEventConstructor }) => {
           key: 'tabIndex',
         }),
       }} />
-      <TInput.default {...{
-        ...inputProps({
-          label: 'Link address',
-          type: 'url',
-          key: 'link',
-        }),
-      }} />
+      {!isFormComponent && (
+        <TInput.default {...{
+          ...inputProps({
+            label: 'Link address',
+            type: 'url',
+            key: 'link',
+          }),
+        }} />
+      )}
       <TInput.default {...{
         ...inputProps({
           label: 'Tooltip',

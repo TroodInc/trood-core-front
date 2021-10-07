@@ -1,10 +1,23 @@
 /* eslint-disable jsx-a11y/no-onchange */
 import React, { useState } from 'react'
-import { useNode } from '@craftjs/core'
+import { useNode, useEditor } from '@craftjs/core'
 import { TCheckbox, JsonEditor, TInput, TButton } from '$trood/components'
 
 import styles from './index.module.css'
 
+import { getIsNodeInNode } from '../../../helpers'
+
+
+const getIsFormComponent = (id, helper) => getIsNodeInNode(id, helper, ['Form'])
+
+const getValue = (objValue) => {
+  if (typeof objValue === 'object') {
+    const testStr = objValue?.$data || ''
+    const matches = testStr.match(/{{\$form\.data\.(.*)}}/) || []
+    return matches[1]
+  }
+  return objValue
+}
 
 const Settings = ({ openDataSelector, openEventConstructor }) => {
   const {
@@ -14,25 +27,70 @@ const Settings = ({ openDataSelector, openEventConstructor }) => {
   } = useNode((node) => ({
     props: node.data.props,
   }))
+  const { query: { node: helper } } = useEditor()
+
+  const isFormComponent = getIsFormComponent(id, helper)
 
   const defaultType = Array.isArray(props.items) ? 'static' : 'data'
   const [type, setType] = useState(defaultType)
 
   return (
     <>
-      <TButton.default
-        type={TButton.BUTTON_TYPES.text}
-        specialType={TButton.BUTTON_SPECIAL_TYPES.action}
-        label="On Change"
-        onClick={() => openEventConstructor(id, {
-          values: props.onChange,
-          onSubmit: value => {
-            setProp((props) => {
-              props.onChange = value
-            })
-          },
-        })}
-      />
+      {isFormComponent && (
+        <TInput.default {...{
+          label: 'Field Name',
+          value: getValue(props.value),
+          onChange: value => setProp((props) => {
+            if (value !== undefined) {
+              props.value = { $data: `{{$form.data.${value}}}` }
+              props.errors = { $data: `{{$form.errors.${value}}}` }
+              props.onChange = {
+                $action: '$form.changeFields[$arg0]',
+                $arg0: {
+                  [value]: {
+                    $data: '{{$event}}',
+                  },
+                },
+              }
+              props.onValid = {
+                $action: '$form.changeFieldsErrors[$arg0]',
+                $arg0: {
+                  [value]: false,
+                },
+              }
+              props.onInvalid = {
+                $action: '$form.changeFieldsErrors[$arg0]',
+                $arg0: {
+                  [value]: {
+                    $data: '{{$event}}',
+                  },
+                },
+              }
+            } else {
+              props.value = undefined
+              props.errors = undefined
+              props.onChange = undefined
+              props.onValid = undefined
+              props.onInvalid = undefined
+            }
+          }),
+        }} />
+      )}
+      {!isFormComponent && (
+        <TButton.default
+          type={TButton.BUTTON_TYPES.text}
+          specialType={TButton.BUTTON_SPECIAL_TYPES.action}
+          label="On Change"
+          onClick={() => openEventConstructor(id, {
+            values: props.onChange,
+            onSubmit: value => {
+              setProp((props) => {
+                props.onChange = value
+              })
+            },
+          })}
+        />
+      )}
       <div>
         <div className={styles.tabs}>
           <div
@@ -93,38 +151,42 @@ const Settings = ({ openDataSelector, openEventConstructor }) => {
         value: props.placeHolder,
         onChange: value => setProp((props) => props.placeHolder = value),
       }} />
-      <div>
-        <TButton.default
-          type={TButton.BUTTON_TYPES.text}
-          specialType={TButton.BUTTON_SPECIAL_TYPES.data}
-          label="Select Value"
-          onClick={() => openDataSelector(id, {
-            id: props.value?.$data,
-            value: props.value,
-            onSubmit: value => {
-              setProp((props) => {
-                props.value = value
-              })
-            },
-          })}
-        />
-      </div>
-      <div>
-        <TButton.default
-          type={TButton.BUTTON_TYPES.text}
-          specialType={TButton.BUTTON_SPECIAL_TYPES.data}
-          label="Select Errors"
-          onClick={() => openDataSelector(id, {
-            id: props.errors?.$data,
-            values: props.errors,
-            onSubmit: value => {
-              setProp((props) => {
-                props.errors = value
-              })
-            },
-          })}
-        />
-      </div>
+      {!isFormComponent && (
+        <>
+          <div>
+            <TButton.default
+              type={TButton.BUTTON_TYPES.text}
+              specialType={TButton.BUTTON_SPECIAL_TYPES.data}
+              label="Select Value"
+              onClick={() => openDataSelector(id, {
+                id: props.value?.$data,
+                value: props.value,
+                onSubmit: value => {
+                  setProp((props) => {
+                    props.value = value
+                  })
+                },
+              })}
+            />
+          </div>
+          <div>
+            <TButton.default
+              type={TButton.BUTTON_TYPES.text}
+              specialType={TButton.BUTTON_SPECIAL_TYPES.data}
+              label="Select Errors"
+              onClick={() => openDataSelector(id, {
+                id: props.errors?.$data,
+                values: props.errors,
+                onSubmit: value => {
+                  setProp((props) => {
+                    props.errors = value
+                  })
+                },
+              })}
+            />
+          </div>
+        </>
+      )}
       <TCheckbox.default {...{
         label: 'Multi Select',
         value: props.multi,

@@ -4,6 +4,7 @@ import StoreContext from 'core/StoreContext'
 import PageStoreContext from 'core/PageStoreContext'
 import AuthStoreContext from 'core/AuthStoreContext'
 import ContextContext from 'core/ContextContext'
+import FormContext from 'core/FormContext'
 import { useObserver } from 'mobx-react-lite'
 import { useHistory, useLocation, useParams } from 'react-router-dom'
 import { Parser } from 'expr-eval'
@@ -113,6 +114,7 @@ const getExpression = (expressionProp, $data) => {
 }
 
 const parseProp = (prop, $data, deep) => {
+  if (!prop) return prop
   if (Array.isArray(prop)) {
     return prop.map(value => parseProp(value, $data))
   }
@@ -160,6 +162,7 @@ const BaseComponent = Wrapper(({ component, coreComponents }) => {
   const $page = React.useContext(PageStoreContext)
   const $auth = React.useContext(AuthStoreContext)
   const $context = React.useContext(ContextContext)
+  const $form = React.useContext(FormContext)
 
   React.useEffect(() => {
     if (component) component.loadChunk()
@@ -177,6 +180,7 @@ const BaseComponent = Wrapper(({ component, coreComponents }) => {
     $store,
     $route: { history, params, location, searchParams },
     $context,
+    $form,
     $page,
     $auth,
     $global: {

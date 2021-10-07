@@ -17,6 +17,8 @@ const CraftInput = props => {
     <Input {...{
       innerRef: onlyRender ? undefined : ref => connect(drag(ref)),
       ...rest,
+      value: typeof rest.value === 'object' ? '' : rest.value,
+      errors: [],
       onChange: () => {},
       onValid: () => {},
       onInvalid: () => {},

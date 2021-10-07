@@ -5,16 +5,17 @@ import { useObserver } from 'mobx-react-lite'
 
 import PageStoreContext from 'core/PageStoreContext'
 import Block from '../Block'
-import Context from '../Context'
 import { MODAL_TYPES } from './constants'
 
 import styles from './index.module.css'
+import { cssMeasurementUnits } from '../../constants'
 
 
 const Modal = ({
   innerRef,
   className,
   width,
+  widthUnits,
   type,
   modalName,
   closeOnOverlayClick,
@@ -24,7 +25,6 @@ const Modal = ({
   const context = useContext(PageStoreContext)
   const overlayRef = useRef()
   return useObserver(() => {
-    const { form = { data: {} } } = context.getContext(modalName) || {}
     const isOpen = other.isOpen === undefined ? context.isModalOpen(modalName) : other.isOpen
     const close = other.close === undefined ? () => context.closeModal(modalName) : other.close
 
@@ -34,17 +34,15 @@ const Modal = ({
     }
 
     const style = {
-      width: type === MODAL_TYPES.full ? '100%' : width,
+      width: type === MODAL_TYPES.full ? '100%' : `${width}${widthUnits}`,
       height: type === MODAL_TYPES.full ? '100%' : undefined,
     }
 
     return (
       <div className={classNames(styles.overlay, styles[type])} onClick={onOverlayClick} ref={overlayRef}>
-        <Context context={form}>
-          <Block innerRef={innerRef} style={style} className={classNames(styles.modal, className, styles[type])}>
-            {children}
-          </Block>
-        </Context>
+        <Block innerRef={innerRef} style={style} className={classNames(styles.modal, className, styles[type])}>
+          {children}
+        </Block>
       </div>
     )
   })
@@ -53,6 +51,7 @@ const Modal = ({
 Modal.propTypes = {
   className: PropTypes.string,
   width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  widthUnits: PropTypes.oneOf(cssMeasurementUnits),
   type: PropTypes.oneOf(Object.values(MODAL_TYPES)),
   isOpen: PropTypes.bool,
   close: PropTypes.func,
@@ -62,6 +61,7 @@ Modal.propTypes = {
 
 Modal.defaultProps = {
   width: 320,
+  widthUnits: cssMeasurementUnits[0],
   type: MODAL_TYPES.center,
   close: () => {},
   closeOnOverlayClick: true,
