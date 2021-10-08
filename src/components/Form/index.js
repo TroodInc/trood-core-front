@@ -57,13 +57,13 @@ const Form = ({
 
     if (formType === FORM_TYPES.modal) {
       const isModalOpen = $data?.$page?.isModalOpen(baseUrl)
-      const closeModal = () => $data?.$page?.closeModal(baseUrl)
+      const closeModalForm = () => $data?.$page?.closeModalForm(baseUrl)
 
       if (!isModalOpen) return null
 
       const cancel = () => {
         form?.remove && form.remove()
-        closeModal()
+        closeModalForm()
       }
 
       const onOverlayClick = (event) => {
@@ -82,14 +82,14 @@ const Form = ({
           form.submit({
             endpoint: form.name,
             method: pk ? 'PATCH' : 'POST',
-          }, true).then(closeModal)
+          }, true).then(closeModalForm)
         },
         cancel,
         remove: () => {
           form.submit({
             endpoint: form.name,
             method: 'DELETE',
-          }, true).then(closeModal)
+          }, true).then(closeModalForm)
         },
       }
 
