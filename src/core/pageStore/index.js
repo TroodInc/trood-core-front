@@ -158,15 +158,18 @@ export const Page = types
       model.contexts.set(name, {})
       model.contexts.get(name).setContext(context)
     },
+    openModal(name) {
+      model.modals.set(name, { isOpen: true })
+    },
     openModalForm(baseUrl, pk, editValues) {
       model.openModal(baseUrl)
       model.setContext(baseUrl, { pk, editValues })
     },
-    openModal(name) {
-      model.modals.set(name, { isOpen: true })
-    },
     closeModal(name) {
       model.modals.set(name, { isOpen: false })
+    },
+    closeModalForm(name) {
+      model.closeModal(name)
       model.setContext(name, {})
     },
     openPopup(name, timeout = 3000) {
