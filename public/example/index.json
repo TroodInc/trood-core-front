@@ -1,388 +1,322 @@
 {
   "ROOT": {
     "type": "div",
-    "isCanvas": true,
-    "props": {
-      "style": {
-        "minHeight": "100%",
-        "minWidth": "100%"
-      }
-    },
-    "displayName": "pe",
-    "custom": {
-      "displayName": "Root"
-    },
-    "hidden": false,
     "nodes": [
-      "-FXmAGL2Gz",
-      "lui2IibZwO"
-    ],
-    "linkedNodes": {}
-  },
-  "-FXmAGL2Gz": {
-    "type": {
-      "resolvedName": "Form"
-    },
-    "isCanvas": true,
-    "props": {
-      "formType": "modal",
-      "modalWidth": 320,
-      "modalWidthUnits": "px",
-      "modalType": "center",
-      "modalCloseOnOverlayClick": true,
-      "widthUnits": "px",
-      "baseUrl": "/test"
-    },
-    "displayName": "Form",
-    "custom": {},
-    "parent": "ROOT",
-    "hidden": false,
-    "nodes": [
-      "6pxKG0hqJc",
-      "SROe1rIRke",
-      "KSWggMOcC2",
-      "Nin7UNjLm9",
-      "F23hJZO3NI",
-      "wZnaSJgmVU"
-    ],
-    "linkedNodes": {}
-  },
-  "wZnaSJgmVU": {
-    "type": {
-      "resolvedName": "Button"
-    },
-    "isCanvas": true,
-    "props": {
-      "type": "fill",
-      "color": "blue",
-      "disabled": false,
-      "thin": false,
-      "className": "",
-      "onClick": {
-        "$action": "$form.submit[]"
-      },
-      "label": "Button"
-    },
-    "displayName": "Button",
-    "custom": {},
-    "parent": "-FXmAGL2Gz",
-    "hidden": false,
-    "nodes": [],
-    "linkedNodes": {}
-  },
-  "lui2IibZwO": {
-    "type": {
-      "resolvedName": "Button"
-    },
-    "isCanvas": true,
-    "props": {
-      "type": "fill",
-      "color": "blue",
-      "disabled": false,
-      "thin": false,
-      "className": "",
-      "onClick": {
-        "$action": [
-          "$page.openModalForm[$arg0]"
-        ],
-        "$arg0": "/test"
-      },
-      "label": "Button"
-    },
-    "displayName": "Button",
-    "custom": {},
-    "parent": "ROOT",
-    "hidden": false,
-    "nodes": [],
-    "linkedNodes": {}
-  },
-  "6pxKG0hqJc": {
-    "type": {
-      "resolvedName": "Input"
-    },
-    "isCanvas": true,
-    "props": {
-      "type": "text",
-      "validate": {
-        "required": true,
-        "checkOnBlur": true,
-        "maxLen": 10
-      },
-      "label": "Test",
-      "placeholder": "test",
-      "autofocus": true,
-      "value": {
-        "$data": "{{$form.data.test}}"
-      },
-      "errors": {
-        "$data": "{{$form.errors.test}}"
-      },
-      "onChange": {
-        "$action": "$form.changeFields[$arg0]",
-        "$arg0": {
-          "test": {
-            "$data": "{{$event}}"
+      {
+        "type": "Container",
+        "props": {
+          "style": {
+            "flexDirection": "column"
           }
-        }
-      },
-      "onValid": {
-        "$action": "$form.changeFieldsErrors[$arg0]",
-        "$arg0": {
-          "test": null
-        }
-      },
-      "onInvalid": {
-        "$action": "$form.changeFieldsErrors[$arg0]",
-        "$arg0": {
-          "test": {
-            "$data": "{{$event}}"
-          }
-        }
-      }
-    },
-    "displayName": "Input",
-    "custom": {},
-    "parent": "-FXmAGL2Gz",
-    "hidden": false,
-    "nodes": [],
-    "linkedNodes": {}
-  },
-  "SROe1rIRke": {
-    "type": {
-      "resolvedName": "Select"
-    },
-    "isCanvas": true,
-    "props": {
-      "valuePath": "value",
-      "type": "dropdown",
-      "value": {
-        "$data": "{{$form.data.test2}}"
-      },
-      "items": [
-        {
-          "value": "test1"
         },
-        {
-          "value": "test2"
-        }
-      ],
-      "errors": {
-        "$data": "{{$form.errors.test2}}"
-      },
-      "validate": {},
-      "showTextErrors": true,
-      "onValid": {
-        "$action": "$form.changeFieldsErrors[$arg0]",
-        "$arg0": {
-          "test2": false
-        }
-      },
-      "onInvalid": {
-        "$action": "$form.changeFieldsErrors[$arg0]",
-        "$arg0": {
-          "test2": {
-            "$data": "{{$event}}"
+        "nodes": [
+          {
+            "type": "Container",
+            "props": {
+              "style": {
+                "flexDirection": "row",
+                "height": "100vh",
+                "backgroundColor": "#f0f0f5"
+              }
+            },
+            "nodes": [
+              {
+                "type": "Container",
+                "props": {
+                  "style": {
+                    "flexDirection": "column",
+                    "zIndex": 1
+                  }
+                },
+                "nodes": [
+                  {
+                    "type": "div",
+                    "props": {
+                      "style": {
+                        "display": "flex",
+                        "flexFlow": "column nowrap",
+                        "height": "100%",
+                        "boxShadow": "0 0 15px #c0c0c040",
+                        "backgroundColor": "#fff"
+                      }
+                    },
+                    "nodes": [
+                      {
+                        "type": "Menu",
+                        "props": {
+                          "itemActiveStyle": {
+                            "color": "#00b807"
+                          },
+                          "items": [
+                            {
+                              "path": "/",
+                              "title": {
+                                "type": "img",
+                                "props": {
+                                  "src": "/images/logo.svg"
+                                }
+                              },
+                              "redirectTo": "/components"
+                            },
+                            {
+                              "path": "/clients",
+                              "title": "Clients",
+                              "redirectTo": "/clients/list"
+                            },
+                            {
+                              "path": "/matters",
+                              "title": "Matters",
+                              "redirectTo": "/matters/list",
+                              "items": [
+                                {
+                                  "path": "/list",
+                                  "title": "List"
+                                },
+                                {
+                                  "path": "/table",
+                                  "title": "Table"
+                                }
+                              ]
+                            },
+                            {
+                              "path": "/remote",
+                              "title": "Remote"
+                            },
+                            {
+                              "path": "/components",
+                              "children": {
+                                "$expression": "data(\"$route.location.pathname\") == \"/components\" ? \"Components*\" : \"Components\""
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "type": "Button",
+                        "props": {
+                          "style": {
+                            "margin": "auto 0 16px 0"
+                          },
+                          "type": "text",
+                          "label": "Login",
+                          "onClick": {
+                            "$action": "$page.openModal[$arg0, $arg1]",
+                            "$arg0": "LoginModal",
+                            "$arg1": {
+                              "$data": "{{$auth.getLoginForm[]}}"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "type": "Modal",
+                        "props": {
+                          "type": "center",
+                          "modalName": "LoginModal"
+                        },
+                        "nodes": [
+                          {
+                            "type": "Typography",
+                            "props": {
+                              "type": "h1",
+                              "value": "Login"
+                            }
+                          },
+                          {
+                            "type": "Spacer",
+                            "size": 16
+                          },
+                          {
+                            "type": "Input",
+                            "props": {
+                              "label": "Login",
+                              "value": {
+                                "$data": "{{$context.form.data.login}}"
+                              },
+                              "onChange": {
+                                "$action": "$context.changeFields[$arg0]",
+                                "$arg0": {
+                                  "login": {
+                                    "$data": "{{$event}}"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "type": "Spacer",
+                            "size": 16
+                          },
+                          {
+                            "type": "Input",
+                            "props": {
+                              "label": "Password",
+                              "value": {
+                                "$data": "{{$context.form.data.password}}"
+                              },
+                              "onChange": {
+                                "$action": "$context.changeFields[$arg0]",
+                                "$arg0": {
+                                  "password": {
+                                    "$data": "{{$event}}"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "type": "Spacer",
+                            "size": 16
+                          },
+                          {
+                            "type": "Container",
+                            "props": {
+                              "style": {
+                                "flexDirection": "row"
+                              }
+                            },
+                            "nodes": [
+                              {
+                                "type": "Container",
+                                "props": {
+                                  "style": {
+                                    "flexDirection": "column"
+                                  }
+                                },
+                                "nodes": [
+                                  {
+                                    "type": "Button",
+                                    "props": {
+                                      "label": "Close",
+                                      "type": "text",
+                                      "onClick": {
+                                        "$action": "$page.closeModal[$arg0]",
+                                        "$arg0": "LoginModal"
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "Container",
+                                "props": {
+                                  "style": {
+                                    "flexDirection": "column"
+                                  }
+                                },
+                                "nodes": [
+                                  {
+                                    "type": "Button",
+                                    "props": {
+                                      "label": "Save",
+                                      "onClick": {
+                                        "$action": {
+                                          "action": "$auth.login[$arg0]",
+                                          "then": "$page.closeModal[$arg1]"
+                                        },
+                                        "$arg0": "https://legal.dev.trood.ru/authorization/api/v1.0/login/",
+                                        "$arg1": "LoginModal"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Container",
+                "props": {
+                  "style": {
+                    "flexDirection": "column",
+                    "overflowX": "hidden",
+                    "overflowY": "auto",
+                    "height": "100%",
+                    "flexGrow": 1
+                  },
+                  "id": "MAIN_SCROLL_CONTAINER"
+                },
+                "nodes": [
+                  {
+                    "type": "Container",
+                    "props": {
+                      "style": {
+                        "flexDirection": "row",
+                        "backgroundColor": "#fff"
+                      }
+                    },
+                    "nodes": [
+                      {
+                        "type": "Container",
+                        "props": {
+                          "style": {
+                            "flexDirection": "column"
+                          },
+                          "children": "back"
+                        }
+                      },
+                      {
+                        "type": "Container",
+                        "props": {
+                          "style": {
+                            "flexDirection": "column"
+                          },
+                          "children": "tabs"
+                        }
+                      },
+                      {
+                        "type": "Container",
+                        "props": {
+                          "style": {
+                            "flexDirection": "column"
+                          },
+                          "children": "avatar"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Container",
+                    "props": {
+                      "style": {
+                        "flexDirection": "column"
+                      }
+                    },
+                    "nodes": [
+                      {
+                        "type": "Container",
+                        "props": {
+                          "style": {
+                            "flexDirection": "column",
+                            "padding": 16,
+                            "alignItems": "flex-start"
+                          }
+                        },
+                        "nodes": [
+                          {
+                            "type": "Switch",
+                            "nodes": [
+                              {
+                                "type": "LoadingIndicator"
+                              }
+                            ],
+                            "chunk": "example/pages.json"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
           }
-        }
-      },
-      "onChange": {
-        "$action": "$form.changeFields[$arg0]",
-        "$arg0": {
-          "test2": {
-            "$data": "{{$event}}"
-          }
-        }
-      },
-      "label": "test2"
-    },
-    "displayName": "Select",
-    "custom": {},
-    "parent": "-FXmAGL2Gz",
-    "hidden": false,
-    "nodes": [],
-    "linkedNodes": {
-      "itemView": "WaqoGSqyMG"
-    }
-  },
-  "WaqoGSqyMG": {
-    "type": "div",
-    "isCanvas": true,
-    "props": {
-      "style": {
-        "minHeight": 16
+        ]
       }
-    },
-    "displayName": "div",
-    "custom": {
-      "displayName": "View"
-    },
-    "parent": "SROe1rIRke",
-    "hidden": false,
-    "nodes": [
-      "cJFgXCt50G"
-    ],
-    "linkedNodes": {}
-  },
-  "cJFgXCt50G": {
-    "type": {
-      "resolvedName": "Typography"
-    },
-    "isCanvas": true,
-    "props": {
-      "type": "body",
-      "value": {
-        "$data": "{{$context.value}}"
-      }
-    },
-    "displayName": "Typography",
-    "custom": {},
-    "parent": "WaqoGSqyMG",
-    "hidden": false,
-    "nodes": [],
-    "linkedNodes": {}
-  },
-  "KSWggMOcC2": {
-    "type": {
-      "resolvedName": "RadioButton"
-    },
-    "isCanvas": true,
-    "props": {
-      "disabled": false,
-      "labelPosition": "right",
-      "color": "blue",
-      "size": "normal",
-      "value": {
-        "$data": "{{$form.data.test3}}"
-      },
-      "errors": {
-        "$data": "{{$form.errors.test3}}"
-      },
-      "onChange": {
-        "$action": "$form.changeFields[$arg0]",
-        "$arg0": {
-          "test3": {
-            "$data": "{{$event}}"
-          }
-        }
-      },
-      "onValid": {
-        "$action": "$form.changeFieldsErrors[$arg0]",
-        "$arg0": {
-          "test3": false
-        }
-      },
-      "onInvalid": {
-        "$action": "$form.changeFieldsErrors[$arg0]",
-        "$arg0": {
-          "test3": {
-            "$data": "{{$event}}"
-          }
-        }
-      },
-      "radioButtonValue": "1",
-      "label": "1"
-    },
-    "displayName": "Radio Button",
-    "custom": {},
-    "parent": "-FXmAGL2Gz",
-    "hidden": false,
-    "nodes": [],
-    "linkedNodes": {}
-  },
-  "Nin7UNjLm9": {
-    "type": {
-      "resolvedName": "RadioButton"
-    },
-    "isCanvas": true,
-    "props": {
-      "disabled": false,
-      "labelPosition": "right",
-      "color": "blue",
-      "size": "normal",
-      "label": "2",
-      "value": {
-        "$data": "{{$form.data.test3}}"
-      },
-      "errors": {
-        "$data": "{{$form.errors.test3}}"
-      },
-      "onChange": {
-        "$action": "$form.changeFields[$arg0]",
-        "$arg0": {
-          "test3": {
-            "$data": "{{$event}}"
-          }
-        }
-      },
-      "onValid": {
-        "$action": "$form.changeFieldsErrors[$arg0]",
-        "$arg0": {
-          "test3": false
-        }
-      },
-      "onInvalid": {
-        "$action": "$form.changeFieldsErrors[$arg0]",
-        "$arg0": {
-          "test3": {
-            "$data": "{{$event}}"
-          }
-        }
-      },
-      "radioButtonValue": "2"
-    },
-    "displayName": "Radio Button",
-    "custom": {},
-    "parent": "-FXmAGL2Gz",
-    "hidden": false,
-    "nodes": [],
-    "linkedNodes": {}
-  },
-  "F23hJZO3NI": {
-    "type": {
-      "resolvedName": "RadioButton"
-    },
-    "isCanvas": true,
-    "props": {
-      "disabled": false,
-      "labelPosition": "right",
-      "color": "blue",
-      "size": "normal",
-      "value": {
-        "$data": "{{$form.data.test3}}"
-      },
-      "errors": {
-        "$data": "{{$form.errors.test3}}"
-      },
-      "onChange": {
-        "$action": "$form.changeFields[$arg0]",
-        "$arg0": {
-          "test3": {
-            "$data": "{{$event}}"
-          }
-        }
-      },
-      "onValid": {
-        "$action": "$form.changeFieldsErrors[$arg0]",
-        "$arg0": {
-          "test3": false
-        }
-      },
-      "onInvalid": {
-        "$action": "$form.changeFieldsErrors[$arg0]",
-        "$arg0": {
-          "test3": {
-            "$data": "{{$event}}"
-          }
-        }
-      },
-      "radioButtonValue": "3",
-      "label": "3"
-    },
-    "displayName": "Radio Button",
-    "custom": {},
-    "parent": "-FXmAGL2Gz",
-    "hidden": false,
-    "nodes": [],
-    "linkedNodes": {}
+    ]
   }
 }

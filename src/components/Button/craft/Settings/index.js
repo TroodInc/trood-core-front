@@ -43,7 +43,7 @@ const Settings = ({ openEventConstructor }) => {
       {isFormComponent && (
         <TSelect.default {...{
           label: 'Action Type',
-          placeholder: 'Not Set',
+          placeHolder: 'Not Set',
           items: ACTIONS_TYPE,
           values: props.onClick?.$action ? [props.onClick.$action] : [],
           onChange: vals => setProp((props) => props.onClick = {
