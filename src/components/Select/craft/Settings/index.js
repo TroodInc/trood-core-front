@@ -5,6 +5,8 @@ import { TCheckbox, JsonEditor, TInput, TButton } from '$trood/components'
 
 import styles from './index.module.css'
 
+import { SELECT_TYPES } from '../../constants'
+
 import { getIsNodeInNode } from '../../../helpers'
 
 
@@ -36,6 +38,15 @@ const Settings = ({ openDataSelector, openEventConstructor }) => {
 
   return (
     <>
+      <TCheckbox.default {...{
+        label: 'Enable Search',
+        value: props.type === SELECT_TYPES.filterDropdown,
+        onChange: value => {
+          setProp((props) => {
+            props.type = value ? SELECT_TYPES.filterDropdown : SELECT_TYPES.dropdown
+          })
+        },
+      }} />
       {isFormComponent && (
         <TInput.default {...{
           label: 'Field Name',

@@ -54,6 +54,7 @@ const getList = craft => {
       items: PropTypes.arrayOf(PropTypes.shape({
         value: valueTypes,
         label: PropTypes.node,
+        hidden: PropTypes.bool,
       })),
       values: PropTypes.arrayOf(valueTypes),
       clearable: PropTypes.bool,
@@ -93,6 +94,7 @@ const getList = craft => {
       this.scrollToFirstSelected = this.scrollToFirstSelected.bind(this)
       this.handleScroll = this.handleScroll.bind(this)
       this.handleSelect = this.handleSelect.bind(this)
+      this.getSimpleItems = this.getSimpleItems.bind(this)
     }
 
     componentDidMount() {
@@ -118,7 +120,8 @@ const getList = craft => {
     calcMaxHeight() {
       const { maxRows } = this.props
       if (maxRows && this.list) {
-        const maxHeight = this.list.firstChild.offsetHeight * maxRows
+        const firstChild = (Array.from(this.list.childNodes) || []).find(n => n.offsetHeight) || {}
+        const maxHeight = firstChild.offsetHeight * maxRows
         if (!Number.isNaN(maxHeight)) this.setState({ maxHeight })
       }
     }
@@ -167,6 +170,14 @@ const getList = craft => {
       onBlur()
     }
 
+    getSimpleItems() {
+      const { items } = this.props
+      return items.map(({ value }) => ({
+        value,
+        label: this[`option${value}`].innerText,
+      }))
+    }
+
     render() {
       const {
         dataAttributes,
@@ -202,6 +213,7 @@ const getList = craft => {
               className: type === LIST_TYPES.tile ? style.tileItemWrapper : style.itemWrapper,
               key: item.value || `${item.value}`,
               'data-cy': item.label || item.value,
+              style: item.hidden ? { display: 'none' } : undefined,
               ref: (node) => {
                 this[`option${item.value}`] = node
               },
