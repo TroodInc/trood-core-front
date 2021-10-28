@@ -102,7 +102,14 @@ const getDropDown = craft => {
       const { items, onSearch } = this.props
       const { innerSearch } = this.state
       if (innerSearch && !onSearch) {
-        return defaultFilterFunction(innerSearch, items)
+        const simpleItems = defaultFilterFunction(innerSearch, this.list.getSimpleItems())
+        return items.map(item => {
+          const hidden = !simpleItems.find(fi => fi.value === item.value)
+          return {
+            ...item,
+            hidden,
+          }
+        })
       }
       return items
     }
@@ -294,6 +301,9 @@ const getDropDown = craft => {
             <div className={classNames(style.optionsContainer, openUp && style.openUp, !open && style.hide)}>
               <List {...{
                 ...this.props,
+                ref: (node) => {
+                  this.list = node
+                },
                 dataAttributes: undefined,
                 focusedItem,
                 show: open,
