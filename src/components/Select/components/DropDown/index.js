@@ -104,21 +104,14 @@ const getDropDown = craft => {
       const { items, onSearch } = this.props
       const { innerSearch, pagSize } = this.state
       if (innerSearch && !onSearch) {
-        const simpleItems = defaultFilterFunction(innerSearch, this.list.getSimpleItems())
-        return items.map(item => {
-          const hidden = !simpleItems.find(fi => fi.value === item.value)
-          return {
-            ...item,
-            hidden,
-          }
-        })
+        return defaultFilterFunction(innerSearch, items)
           .slice(0, pagSize)
       }
       return items.slice(0, pagSize)
     }
 
     handleChangeSearchValue(value) {
-      this.setState({ innerSearch: value })
+      this.setState({ innerSearch: value, pagSize: PAGINATION_STEP })
     }
 
     handleSearch(value) {
@@ -318,9 +311,6 @@ const getDropDown = craft => {
               <List {...{
                 ...this.props,
                 onScrollToEnd: this.handleScrollToEnd,
-                ref: (node) => {
-                  this.list = node
-                },
                 dataAttributes: undefined,
                 focusedItem,
                 show: open,

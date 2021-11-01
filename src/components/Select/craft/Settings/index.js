@@ -38,15 +38,6 @@ const Settings = ({ openDataSelector, openEventConstructor }) => {
 
   return (
     <>
-      <TCheckbox.default {...{
-        label: 'Enable Search',
-        value: props.type === SELECT_TYPES.filterDropdown,
-        onChange: value => {
-          setProp((props) => {
-            props.type = value ? SELECT_TYPES.filterDropdown : SELECT_TYPES.dropdown
-          })
-        },
-      }} />
       {isFormComponent && (
         <TInput.default {...{
           label: 'Field Name',
@@ -152,6 +143,22 @@ const Settings = ({ openDataSelector, openEventConstructor }) => {
         value: props.valuePath,
         onChange: value => setProp((props) => props.valuePath = value),
       }} />
+      <TCheckbox.default {...{
+        label: 'Enable Search',
+        value: props.type === SELECT_TYPES.filterDropdown,
+        onChange: value => {
+          setProp((props) => {
+            props.type = value ? SELECT_TYPES.filterDropdown : SELECT_TYPES.dropdown
+          })
+        },
+      }} />
+      {props.type === SELECT_TYPES.filterDropdown && (
+        <TInput.default {...{
+          label: 'Item Search Path',
+          value: props.searchPath,
+          onChange: value => setProp((props) => props.searchPath = value),
+        }} />
+      )}
       <TInput.default {...{
         label: 'Label',
         value: props.label,

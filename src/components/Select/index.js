@@ -43,6 +43,7 @@ const getSelect = craft => {
   class Select extends PureComponent {
     static propTypes = {
       valuePath: PropTypes.string,
+      searchPath: PropTypes.string,
       labelNodes: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.shape({
@@ -166,6 +167,7 @@ const getSelect = craft => {
 
     static defaultProps = {
       valuePath: 'value',
+      searchPath: 'value',
       type: SELECT_TYPES.dropdown,
       value: [],
       items: [],
@@ -219,6 +221,7 @@ const getSelect = craft => {
         listType,
         items,
         valuePath,
+        searchPath,
         labelNodes,
         value,
       } = this.props
@@ -242,6 +245,14 @@ const getSelect = craft => {
           value: parseProp(
             {
               $data: `{{$context.${valuePath}}}`,
+            },
+            {
+              $context: item,
+            },
+          ),
+          search: parseProp(
+            {
+              $data: `{{$context.${searchPath}}}`,
             },
             {
               $context: item,
