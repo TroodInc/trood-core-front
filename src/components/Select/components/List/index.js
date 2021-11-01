@@ -158,8 +158,8 @@ const getList = craft => {
       if (this.list) {
         const scrollFromBottom = this.list.scrollHeight - this.list.scrollTop - this.list.clientHeight
         if (!this.scrollToEndFired && scrollFromBottom < SCROLL_THRESHOLD) {
-          this.props.onScrollToEnd()
           this.scrollToEndFired = true
+          this.props.onScrollToEnd()
         }
       }
     }
