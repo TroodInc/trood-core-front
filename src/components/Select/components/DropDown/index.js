@@ -11,7 +11,7 @@ import Input from '../../../Input'
 import getList, { LIST_TYPES } from '../List'
 
 import { KEY_CODES } from '../../../internal/constants'
-import { DEFAULT_MAX_ROWS, defaultFilterFunction } from './constants'
+import { DEFAULT_MAX_ROWS, PAGINATION_STEP, defaultFilterFunction } from './constants'
 import { selectValue } from '../../constants'
 
 import style from './index.module.css'
@@ -87,6 +87,7 @@ const getDropDown = craft => {
         open: this.props.defaultOpen,
         innerSearch: undefined,
         focusedItem: undefined,
+        pagSize: 0,
       }
 
       this.renderDisplayValue = this.renderDisplayValue.bind(this)
@@ -96,26 +97,21 @@ const getDropDown = craft => {
       this.handleSearch = this.handleSearch.bind(this)
       this.handleKeyDown = this.handleKeyDown.bind(this)
       this.getItems = this.getItems.bind(this)
+      this.handleScrollToEnd = this.handleScrollToEnd.bind(this)
     }
 
     getItems() {
       const { items, onSearch } = this.props
-      const { innerSearch } = this.state
+      const { innerSearch, pagSize } = this.state
       if (innerSearch && !onSearch) {
-        const simpleItems = defaultFilterFunction(innerSearch, this.list.getSimpleItems())
-        return items.map(item => {
-          const hidden = !simpleItems.find(fi => fi.value === item.value)
-          return {
-            ...item,
-            hidden,
-          }
-        })
+        return defaultFilterFunction(innerSearch, items)
+          .slice(0, pagSize)
       }
-      return items
+      return items.slice(0, pagSize)
     }
 
     handleChangeSearchValue(value) {
-      this.setState({ innerSearch: value })
+      this.setState({ innerSearch: value, pagSize: PAGINATION_STEP })
     }
 
     handleSearch(value) {
@@ -129,15 +125,18 @@ const getDropDown = craft => {
       const { disabled, onBlur, onFocus } = this.props
       if (!disabled) {
         const open = value === undefined ? !this.state.open : value
+        let { pagSize } = this.state
         if (this.state.open !== open) {
           if (open) {
+            pagSize = PAGINATION_STEP
             onFocus()
           } else {
+            pagSize = 0
             onBlur()
             this.handleSearch()
           }
         }
-        this.setState({ open, innerSearch: undefined, focusedItem })
+        this.setState({ open, pagSize, innerSearch: undefined, focusedItem })
       }
     }
 
@@ -218,6 +217,16 @@ const getDropDown = craft => {
         return item.selectedLabel || item.label || missingValueResolver(values[0])
       }
       return values.length
+    }
+
+    handleScrollToEnd() {
+      const { items, onScrollToEnd } = this.props
+      const { pagSize } = this.state
+      if (onScrollToEnd) {
+        return onScrollToEnd()
+      } else if (items.length > pagSize) {
+        this.setState({ pagSize: pagSize + PAGINATION_STEP })
+      }
     }
 
     render() {
@@ -301,9 +310,7 @@ const getDropDown = craft => {
             <div className={classNames(style.optionsContainer, openUp && style.openUp, !open && style.hide)}>
               <List {...{
                 ...this.props,
-                ref: (node) => {
-                  this.list = node
-                },
+                onScrollToEnd: this.handleScrollToEnd,
                 dataAttributes: undefined,
                 focusedItem,
                 show: open,

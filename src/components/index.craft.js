@@ -35,6 +35,7 @@ import DateTimePicker from './DateTimePicker/craft'
 
 import Fragment from './Fragment/craft'
 import Form from './Form/craft'
+import Remote from './Remote/craft'
 
 
 const components = {
@@ -60,6 +61,7 @@ const components = {
   Fragment,
   Select,
   Form,
+  Remote,
 }
 
 export default Object.keys(components).reduce((memo, key) => {

@@ -31,6 +31,7 @@ const ModalForm = ({
 
   useEffect(() => {
     if (isModalOpen === false) onClose()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isModalOpen])
 
   const { login } = $data?.$auth || {}

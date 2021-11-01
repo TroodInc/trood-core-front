@@ -107,6 +107,7 @@ const getList = craft => {
       this.calcMaxHeight()
       if (!deepEqual(prevProps.items, this.props.items)) {
         this.scrollToEndFired = false
+        this.list.scrollTop = 0
       }
       if (this.props.show && !prevProps.show) {
         this.scrollToFirstSelected()
@@ -158,8 +159,8 @@ const getList = craft => {
       if (this.list) {
         const scrollFromBottom = this.list.scrollHeight - this.list.scrollTop - this.list.clientHeight
         if (!this.scrollToEndFired && scrollFromBottom < SCROLL_THRESHOLD) {
-          this.props.onScrollToEnd()
           this.scrollToEndFired = true
+          this.props.onScrollToEnd()
         }
       }
     }

@@ -9,20 +9,22 @@ const requires = createRequires(resolve)
 const useRemoteComponent = createUseRemoteComponent({ requires })
 
 const Remote = ({
-  innerRef,
+  url,
   ...props
 }) => {
-  const [loading, err, Component] = useRemoteComponent(props.url)
+  const [loading, err, Component] = useRemoteComponent(url)
+
+  if (!url) return null
 
   if (loading) {
     return <LoadingIndicator />
   }
 
   if (err != null) {
-    return <div>Unknown Error: {err.toString()}</div>
+    return <div>Error: {err.toString()}</div>
   }
 
-  return <Component ref={innerRef} {...props} />
+  return <Component {...props} />
 }
 
 export default Remote
