@@ -41,7 +41,8 @@ const CraftTable = (props) => {
       {...rest}
       innerRef={onlyRender ? undefined : ref => connect(drag(ref))}
       className={classNames(className, visualHelp && styles.visualHelp)}
-      entity={entityIsApi ? apiEntity : []}
+      controlsClassName={styles.disableEvents}
+      entity={entityIsApi ? apiEntity : Array(100)}
     >
       {() => {
         if (onlyRender) {

@@ -3,7 +3,11 @@
   background-color: rgba(0, 0, 255, 0.1);
 }
 
-.visualHelp > div {
+.itemVisualHelp {
   padding: 10px;
   background-color: rgba(255, 255, 255, 0.35);
+}
+
+.disableEvents {
+  pointer-events: none;
 }
