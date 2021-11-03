@@ -3,6 +3,10 @@
   background-color: rgba(0, 0, 255, 0.1);
 }
 
+.disableEvents {
+  pointer-events: none;
+}
+
 .visualHelp table {
   table-layout: fixed;
 }

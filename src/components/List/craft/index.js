@@ -40,12 +40,21 @@ const CraftList = (props) => {
       {...rest}
       innerRef={onlyRender ? undefined : ref => connect(drag(ref))}
       className={classNames(className, visualHelp && styles.visualHelp)}
-      entity={entityIsApi ? apiEntity : []}
+      controlsClassName={styles.disableEvents}
+      entity={entityIsApi ? apiEntity : Array(100)}
     >
       {/* TODO <Context> after dataSelector */}
       {() => {
         if (onlyRender) return rest.nodes
-        return <Element id="listRow" is="div" canvas custom={{ displayName: 'List Item' }} />
+        return (
+          <Element
+            id="listRow"
+            is="div"
+            className={visualHelp && styles.itemVisualHelp}
+            canvas
+            custom={{ displayName: 'List Item' }}
+          />
+        )
       }}
     </Paginator>
   )
