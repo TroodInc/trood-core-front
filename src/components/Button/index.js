@@ -159,6 +159,8 @@ class Button extends PureComponent {
       </div>
     )
 
+    const isOuterLink = /^https?:\/\//.test(link || '')
+
     return (
       <div {...dataAttributes} ref={innerRef} className={classNames(
         style.root,
@@ -169,25 +171,41 @@ class Button extends PureComponent {
         thin && style.thin,
         disabled && style.disabled,
       )}>
-        {!link &&
-          <button {...{
-            'data-cy': this.props.label,
-            className: style.button,
-            disabled,
-            onClick: () => onClick(),
-            tabIndex,
-          }} >
-          </button>
-        }
-        {link &&
+        {!link && (
+          <>
+            <button {...{
+              'data-cy': this.props.label,
+              className: style.button,
+              disabled,
+              onClick: () => onClick(),
+              tabIndex,
+            }} >
+            </button>
+            {label}
+          </>
+        )}
+        {link && !isOuterLink && (
           <Link {...{
             'data-cy': this.props.label,
             to: link,
             className: style.link,
             onClick: () => onClick(),
-          }} />
-        }
-        {label}
+          }}>
+            {label}
+          </Link>
+        )}
+        {link && isOuterLink && (
+          <a {...{
+            'data-cy': this.props.label,
+            href: link,
+            className: style.link,
+            target: '_blank',
+            rel: 'noopener noreferrer',
+            onClick: () => onClick(),
+          }}>
+            {label}
+          </a>
+        )}
       </div>
     )
   }
