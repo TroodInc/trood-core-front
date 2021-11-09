@@ -31,7 +31,6 @@ const CraftForm = (props) => {
       }}>
         <Form {...{
           ...rest,
-          baseUrl: 'test',
           width: `${modalWidth}${modalWidthUnits}`,
           close: () => {},
         }} />
@@ -42,7 +41,6 @@ const CraftForm = (props) => {
   return (
     <Form {...{
       ...rest,
-      baseUrl: 'test',
       className: classNames(className, visualHelp && styles.visualHelp),
       innerRef: ref => onlyRender ? undefined : connect(drag(ref)),
       width: `${modalWidth}${modalWidthUnits}`,
