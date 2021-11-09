@@ -63,7 +63,6 @@ Modal.defaultProps = {
   width: 320,
   widthUnits: cssMeasurementUnits[0],
   type: MODAL_TYPES.center,
-  close: () => {},
   closeOnOverlayClick: true,
 }
 
