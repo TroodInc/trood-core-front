@@ -158,8 +158,9 @@ export const Page = types
       model.contexts.set(name, {})
       model.contexts.get(name).setContext(context)
     },
-    openModal(name) {
+    openModal(name, context) {
       model.modals.set(name, { isOpen: true })
+      model.setContext(name, context)
     },
     openModalForm(baseUrl, pk, editValues) {
       model.openModal(baseUrl)
@@ -167,6 +168,7 @@ export const Page = types
     },
     closeModal(name) {
       model.modals.set(name, { isOpen: false })
+      model.setContext(name, undefined)
     },
     closeModalForm(name) {
       model.closeModal(name)

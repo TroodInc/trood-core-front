@@ -5,6 +5,7 @@ import { useObserver } from 'mobx-react-lite'
 
 import PageStoreContext from 'core/PageStoreContext'
 import Block from '../Block'
+import Context from '../Context'
 import { MODAL_TYPES } from './constants'
 
 import styles from './index.module.css'
@@ -22,11 +23,12 @@ const Modal = ({
   children,
   ...other
 }) => {
-  const context = useContext(PageStoreContext)
+  const pageContext = useContext(PageStoreContext)
   const overlayRef = useRef()
   return useObserver(() => {
-    const isOpen = other.isOpen === undefined ? context.isModalOpen(modalName) : other.isOpen
-    const close = other.close === undefined ? () => context.closeModal(modalName) : other.close
+    const context = pageContext.getContext(modalName)
+    const isOpen = other.isOpen === undefined ? pageContext.isModalOpen(modalName) : other.isOpen
+    const close = other.close === undefined ? () => pageContext.closeModal(modalName) : other.close
 
     if (!isOpen) return null
     const onOverlayClick = (event) => {
@@ -40,9 +42,11 @@ const Modal = ({
 
     return (
       <div className={classNames(styles.overlay, styles[type])} onClick={onOverlayClick} ref={overlayRef}>
-        <Block innerRef={innerRef} style={style} className={classNames(styles.modal, className, styles[type])}>
-          {children}
-        </Block>
+        <Context context={context}>
+          <Block innerRef={innerRef} style={style} className={classNames(styles.modal, className, styles[type])}>
+            {children}
+          </Block>
+        </Context>
       </div>
     )
   })
@@ -63,7 +67,6 @@ Modal.defaultProps = {
   width: 320,
   widthUnits: cssMeasurementUnits[0],
   type: MODAL_TYPES.center,
-  close: () => {},
   closeOnOverlayClick: true,
 }
 

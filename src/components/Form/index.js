@@ -13,6 +13,8 @@ import { MODAL_TYPES } from '../Modal/constants'
 
 import { cssMeasurementUnits } from '../../constants'
 
+import style from './index.module.css'
+
 
 const Form = ({
   className,
@@ -41,7 +43,11 @@ const Form = ({
   const modalOverlay = useRef()
 
   return useObserver(() => {
-    if (!form) return null
+    if (!form) return (
+      <div className={style.error}>
+        You have to specify Base URL prop for form content to be visible
+      </div>
+    )
 
     const baseFormContext = {
       $apiName: form.$apiName,
