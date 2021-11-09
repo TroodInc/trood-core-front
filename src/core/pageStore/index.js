@@ -168,6 +168,7 @@ export const Page = types
     },
     closeModal(name) {
       model.modals.set(name, { isOpen: false })
+      model.setContext(name, undefined)
     },
     closeModalForm(name) {
       model.closeModal(name)
