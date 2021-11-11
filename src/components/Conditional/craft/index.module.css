@@ -1,0 +1,16 @@
+.root {
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 10px;
+  background-color: rgba(0, 0, 140, 0.1);
+}
+
+.itemTrue {
+  padding: 10px;
+  background-color: rgba(0, 240, 100, 0.35);
+}
+
+.itemFalse {
+  padding: 10px;
+  background-color: rgba(255, 0, 80, 0.35);
+}

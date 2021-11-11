@@ -3,18 +3,20 @@ import { useObserver } from 'mobx-react-lite'
 import BaseComponent from 'core/BaseComponent'
 import { Component } from 'core/pageStore'
 
+import transform from './transform'
+
 // TODO conditional is loosing context
 const Conditional = ({
-  condition,
-  ifTrue,
-  ifFalse,
-  ...props
+  value,
+  trueComponent,
+  falseComponent,
 }) => {
-  const nodesIfTrue = Component.create({ nodes: ifTrue })
-  const nodesIfFalse = Component.create({ nodes: ifFalse })
+  const TrueNodes = Component.create({ nodes: trueComponent })
+  const FalseNodes = Component.create({ nodes: falseComponent })
   
-  return useObserver(() =>  <BaseComponent component={condition ? nodesIfTrue : nodesIfFalse } {...props} /> )
-  
+  return useObserver(() => <BaseComponent component={value ? TrueNodes : FalseNodes } />)
 }
+
+Conditional.transformFunctions = transform
 
 export default Conditional
