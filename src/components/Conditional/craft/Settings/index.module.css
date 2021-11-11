@@ -1,0 +1,7 @@
+.info {
+  color: var(--trood-text-gray);
+}
+
+.info b {
+  font-weight: 500;
+}
