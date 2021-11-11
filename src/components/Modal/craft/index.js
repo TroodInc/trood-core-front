@@ -38,6 +38,9 @@ const CraftModal = props => {
 }
 
 CraftModal.craft = {
+  custom: {
+    getStyleSettings: () => false,
+  },
   displayName: 'Modal',
   props: {
     ...Modal.defaultProps,

@@ -33,7 +33,7 @@ const CraftList = (props) => {
       entityIsApi = entityApiMatch[1] !== 'default' && entityApiMatch[2] !== 'default'
     }
   }
-  
+
   return (
     <Paginator
       {...pagination}
@@ -67,6 +67,7 @@ CraftList.craft = {
   },
   custom: {
     ...List.transformFunctions,
+    getStyleSettings: () => false,
   },
   related: {
     settings: Settings,

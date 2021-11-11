@@ -34,7 +34,7 @@ const CraftTable = (props) => {
       entityIsApi = entityApiMatch[1] !== 'default' && entityApiMatch[2] !== 'default'
     }
   }
-  
+
   return (
     <Paginator
       {...pagination}
@@ -102,6 +102,7 @@ CraftTable.craft = {
   },
   custom: {
     ...Table.transformFunctions,
+    getStyleSettings: () => false,
   },
   related: {
     settings: Settings,

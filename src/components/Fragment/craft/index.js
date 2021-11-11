@@ -86,6 +86,16 @@ const CraftFragment = (props) => {
 }
 
 CraftFragment.craft = {
+  custom: {
+    getStyleSettings: () => ({
+      size: false,
+      textAlign: false,
+      color: false,
+      bg: false,
+      radius: false,
+      shadow: false,
+    }),
+  },
   displayName: 'Fragment',
   related: {
     settings: Settings,

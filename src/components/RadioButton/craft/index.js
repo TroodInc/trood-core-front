@@ -26,6 +26,16 @@ const CraftRadioButton = props => {
 }
 
 CraftRadioButton.craft = {
+  custom: {
+    getStyleSettings: () => ({
+      size: false,
+      textAlign: false,
+      color: false,
+      bg: false,
+      radius: false,
+      shadow: false,
+    }),
+  },
   group: COMPONENT_GROUPS.inputControls,
   displayName: 'Radio Button',
   related: {

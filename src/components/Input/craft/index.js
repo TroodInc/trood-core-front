@@ -31,6 +31,11 @@ const CraftInput = props => {
 }
 
 CraftInput.craft = {
+  custom: {
+    getStyleSettings: () => ({
+      textAlign: false,
+    }),
+  },
   group: COMPONENT_GROUPS.inputControls,
   displayName: 'Input',
   props: {
