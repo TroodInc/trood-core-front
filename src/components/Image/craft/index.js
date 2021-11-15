@@ -28,6 +28,12 @@ const CraftImage = props => {
 }
 
 CraftImage.craft = {
+  custom: {
+    getStyleSettings: () => ({
+      textAlign: false,
+      color: false,
+    }),
+  },
   displayName: 'Image',
   props: Image.defaultProps,
   related: {

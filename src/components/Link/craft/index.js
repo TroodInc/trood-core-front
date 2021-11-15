@@ -29,6 +29,11 @@ const CraftLink = props => {
 }
 
 CraftLink.craft = {
+  custom: {
+    getStyleSettings: () => ({
+      textAlign: false,
+    }),
+  },
   group: COMPONENT_GROUPS.navControls,
   displayName: 'Link',
   related: {

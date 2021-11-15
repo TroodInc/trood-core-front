@@ -3,8 +3,6 @@ import { useNode } from '@craftjs/core'
 
 import Settings from './Settings'
 
-import { COMPONENT_GROUPS } from '../../../constants'
-
 import Remote from '../index'
 
 
@@ -35,6 +33,9 @@ const CraftRemote = props => {
 }
 
 CraftRemote.craft = {
+  custom: {
+    getStyleSettings: () => false,
+  },
   displayName: 'Remote',
   related: {
     settings: Settings,

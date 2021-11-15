@@ -31,6 +31,11 @@ const CraftContainer = props => {
 }
 
 CraftContainer.craft = {
+  custom: {
+    getStyleSettings: () => ({
+      textAlign: false,
+    }),
+  },
   displayName: 'Container',
   props: {
     ...Container.defaultProps,

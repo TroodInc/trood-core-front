@@ -24,6 +24,9 @@ const CraftContext = props => {
 }
 
 CraftContext.craft = {
+  custom: {
+    getStyleSettings: () => false,
+  },
   displayName: 'Context',
   related: {
     settings: Settings,
