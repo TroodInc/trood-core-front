@@ -83,36 +83,6 @@ const Settings = ({ openDataSelector }) => {
           />
         )}
       </div>
-      <div className={styles.fieldContainer}>
-        <TInput.default {...{
-          ...inputProps({
-            label: 'Width',
-            key: 'width',
-            type: 'int',
-          }),
-        }} />
-        <TSelect.default {...{
-          ...selectProps({
-            key: 'widthUnits',
-            items: cssMeasurementUnits.map(value => ({ value })),
-          }),
-        }} />
-      </div>
-      <div className={styles.fieldContainer}>
-        <TInput.default {...{
-          ...inputProps({
-            label: 'Height',
-            key: 'height',
-            type: 'int',
-          }),
-        }} />
-        <TSelect.default {...{
-          ...selectProps({
-            key: 'heightUnits',
-            items: cssMeasurementUnits.map(value => ({ value })),
-          }),
-        }} />
-      </div>
       <TSelect.default {...{
         ...selectProps({
           label: 'Image fit',

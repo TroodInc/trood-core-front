@@ -21,6 +21,11 @@ const CraftButton = props => {
 }
 
 CraftButton.craft = {
+  custom: {
+    getStyleSettings: () => ({
+      textAlign: false,
+    }),
+  },
   displayName: 'Button',
   related: {
     settings: Settings,
