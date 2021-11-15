@@ -36,6 +36,7 @@ import Typography from './Typography'
 import Image from './Image'
 import Fragment from './Fragment'
 import Form from './Form'
+import FileInput from './FileInput'
 
 const components = {
   Context,
@@ -70,6 +71,7 @@ const components = {
   Image,
   Fragment,
   Form,
+  FileInput,
 }
 
 export default Object.keys(components).reduce((memo, key) => {

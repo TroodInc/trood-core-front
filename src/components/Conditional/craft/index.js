@@ -42,6 +42,7 @@ CraftConditional.craft = {
   },
   custom: {
     ...Conditional.transformFunctions,
+    getStyleSettings: () => false,
   },
   related: {
     settings: Settings,

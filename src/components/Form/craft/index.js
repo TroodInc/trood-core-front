@@ -23,6 +23,14 @@ const CraftForm = (props) => {
     ...rest
   } = props
 
+  if (!props.baseUrl) {
+    return (
+      <div className={styles.error} ref={onlyRender ? undefined : ref => connect(drag(ref))}>
+        You have to specify Base URL prop for form content to be visible
+      </div>
+    )
+  }
+
   if (props.formType === FORM_TYPES.modal) {
     return (
       <div {...{
