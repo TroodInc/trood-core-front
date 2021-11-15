@@ -31,9 +31,7 @@ const CraftLink = props => {
 CraftLink.craft = {
   custom: {
     getStyleSettings: () => ({
-      bg: false,
-      radius: false,
-      shadow: false,
+      textAlign: false,
     }),
   },
   group: COMPONENT_GROUPS.navControls,

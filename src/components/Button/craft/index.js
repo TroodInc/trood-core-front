@@ -23,12 +23,7 @@ const CraftButton = props => {
 CraftButton.craft = {
   custom: {
     getStyleSettings: () => ({
-      size: false,
       textAlign: false,
-      color: false,
-      bg: false,
-      radius: false,
-      shadow: false,
     }),
   },
   displayName: 'Button',

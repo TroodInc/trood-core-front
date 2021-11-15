@@ -32,8 +32,6 @@ CraftImage.craft = {
     getStyleSettings: () => ({
       textAlign: false,
       color: false,
-      bg: false,
-      shadow: false,
     }),
   },
   displayName: 'Image',

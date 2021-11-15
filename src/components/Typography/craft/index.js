@@ -47,13 +47,6 @@ const CraftTypography = props => {
 }
 
 CraftTypography.craft = {
-  custom: {
-    getStyleSettings: () => ({
-      bg: false,
-      radius: false,
-      shadow: false,
-    }),
-  },
   displayName: 'Typography',
   related: {
     settings: Settings,

@@ -67,7 +67,9 @@ CraftList.craft = {
   },
   custom: {
     ...List.transformFunctions,
-    getStyleSettings: () => false,
+    getStyleSettings: () => ({
+      textAlign: false,
+    }),
   },
   related: {
     settings: Settings,

@@ -12,7 +12,7 @@ const CraftConditional = (props) => {
     connectors: { connect, drag },
   } = useNode()
   const { onlyRender, components } = props
-  
+
   return (
     <div className={styles.root} ref={onlyRender ? undefined : ref => connect(drag(ref))}>
       <Label label="Display on value equal true" />
@@ -42,6 +42,7 @@ CraftConditional.craft = {
   },
   custom: {
     ...Conditional.transformFunctions,
+    getStyleSettings: () => false,
   },
   related: {
     settings: Settings,

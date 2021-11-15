@@ -50,16 +50,6 @@ const CraftForm = (props) => {
 }
 
 CraftForm.craft = {
-  custom: {
-    getStyleSettings: () => ({
-      size: false,
-      textAlign: false,
-      color: false,
-      bg: false,
-      radius: false,
-      shadow: false,
-    }),
-  },
   displayName: 'Form',
   props: {
     ...Form.defaultProps,

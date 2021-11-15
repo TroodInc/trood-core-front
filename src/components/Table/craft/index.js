@@ -102,7 +102,9 @@ CraftTable.craft = {
   },
   custom: {
     ...Table.transformFunctions,
-    getStyleSettings: () => false,
+    getStyleSettings: () => ({
+      textAlign: false,
+    }),
   },
   related: {
     settings: Settings,

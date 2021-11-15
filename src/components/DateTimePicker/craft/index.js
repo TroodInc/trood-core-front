@@ -27,12 +27,13 @@ const CraftDateTimePicker = props => {
 CraftDateTimePicker.craft = {
   custom: {
     getStyleSettings: () => ({
-      size: false,
+      height: false,
       textAlign: false,
       color: false,
       bg: false,
       radius: false,
       shadow: false,
+      padding: false,
     }),
   },
   group: COMPONENT_GROUPS.inputControls,

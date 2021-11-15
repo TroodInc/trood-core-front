@@ -29,10 +29,9 @@ CraftCheckbox.craft = {
     getStyleSettings: () => ({
       size: false,
       textAlign: false,
-      color: false,
       bg: false,
       radius: false,
-      shadow: false,
+      padding: false,
     }),
   },
   group: COMPONENT_GROUPS.inputControls,
