@@ -129,7 +129,6 @@ class Button extends PureComponent {
     disabled: false,
     thin: false,
     className: '',
-    onClick: () => {},
   }
 
   render() {
@@ -171,16 +170,25 @@ class Button extends PureComponent {
         thin && style.thin,
         disabled && style.disabled,
       )}>
-        {!link && (
+        {!link && onClick && (
           <>
             <button {...{
               'data-cy': this.props.label,
               className: style.button,
               disabled,
-              onClick: () => onClick(),
+              onClick,
               tabIndex,
-            }} >
-            </button>
+            }} />
+            {label}
+          </>
+        )}
+        {!link && !onClick && (
+          <>
+            <span {...{
+              'data-cy': this.props.label,
+              className: style.button,
+              tabIndex,
+            }} />
             {label}
           </>
         )}

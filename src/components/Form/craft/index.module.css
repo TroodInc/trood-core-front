@@ -12,3 +12,9 @@
   background: transparent !important;
   z-index: 1 !important;
 }
+
+.error {
+  color: var(--trood-red);
+  font-size: 14px;
+}
+

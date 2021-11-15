@@ -11,12 +11,14 @@ import { ACTIONS_TYPE } from '../../../Form/constants'
 
 
 const getIsFormComponent = (id, helper) => getIsNodeInNode(id, helper, ['Form'])
+const getIsFileInputComponent = (id, helper) => getIsNodeInNode(id, helper, ['FileInput'])
 
 const Settings = ({ openEventConstructor }) => {
   const { id, actions: { setProp }, props } = useNode((node) => ({ props: node.data.props }))
   const { query: { node: helper } } = useEditor()
 
   const isFormComponent = getIsFormComponent(id, helper)
+  const isFileInputComponent = getIsFileInputComponent(id, helper)
 
   const selectProps = ({ label, key, items }) => ({
     label,
@@ -51,7 +53,7 @@ const Settings = ({ openEventConstructor }) => {
           }),
         }} />
       )}
-      {!isFormComponent && (
+      {!isFormComponent && !isFileInputComponent && (
         <TButton.default
           type={TButton.BUTTON_TYPES.text}
           specialType={TButton.BUTTON_SPECIAL_TYPES.action}

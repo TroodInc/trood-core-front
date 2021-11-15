@@ -1,0 +1,16 @@
+.root {
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 10px;
+  background-color: rgba(0, 0, 140, 0.1);
+}
+
+.label {
+  padding: 10px;
+  background-color: rgba(0, 100, 240, 0.3);
+}
+
+.value {
+  padding: 10px;
+  background-color: rgba(0, 200, 80, 0.3);
+}

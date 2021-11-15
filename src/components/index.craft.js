@@ -37,6 +37,7 @@ import Fragment from './Fragment/craft'
 import Form from './Form/craft'
 import Remote from './Remote/craft'
 import Conditional from './Conditional/craft'
+import FileInput from './FileInput/craft'
 
 
 const components = {
@@ -64,6 +65,7 @@ const components = {
   Form,
   Remote,
   Conditional,
+  FileInput,
 }
 
 export default Object.keys(components).reduce((memo, key) => {
