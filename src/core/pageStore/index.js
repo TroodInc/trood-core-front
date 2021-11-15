@@ -2,6 +2,7 @@ import { types, flow } from 'mobx-state-tree'
 import { nanoid } from 'nanoid'
 import components from 'components'
 
+const loadedChunks = {}
 
 const normalizeApiPath = (path) => {
   const host = process.env.REACT_APP_COMPONENTS_API_HOST || '/'
@@ -83,8 +84,17 @@ export const Component = types
     loadChunk: flow(function* ajax() {
       if (!model.chunk) return
       try {
-        model.isLoading = true
-        const nodes = yield fetch(normalizeApiPath(model.chunk)).then((res) => res.json())
+        let nodes
+        if (loadedChunks[model.chunk]?.ROOT) {
+          nodes = loadedChunks[model.chunk]
+        } else {
+          model.isLoading = true
+          if (!loadedChunks[model.chunk]) {
+            loadedChunks[model.chunk] = fetch(normalizeApiPath(model.chunk))
+          }
+          nodes = yield loadedChunks[model.chunk].then((res) => res.clone().json())
+          loadedChunks[model.chunk] = nodes
+        }
         const converted = convertObject(nodes.ROOT, nodes)
         model.nodes = converted.nodes
       } catch (err) {
