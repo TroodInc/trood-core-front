@@ -23,6 +23,7 @@
   color: var(--trood-white);
   font-weight: 500;
   visibility: visible;
+  white-space: pre-wrap;
 }
 
 .info {
