@@ -190,8 +190,8 @@ const BaseComponent = Wrapper(({ component, coreComponents }) => {
   }
 
   return useObserver(() => {
-    if (!component || !component.nodes) return null
-    return component.nodes.map((childComponent) => {
+    if (!component || !(component.nodes || component.staticNodes)) return null
+    return [...component.nodes, ...component.staticNodes].map((childComponent) => {
       if (!childComponent) return null
       const Component = coreComponents[childComponent.type] || childComponent.type
       const childBaseComponent = <BaseComponent key="Base" component={childComponent} />

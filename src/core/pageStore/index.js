@@ -61,17 +61,20 @@ const convertObject = (cur, data, skipTransform) => {
   return component
 }
 
+const nodeType = types.union(
+  types.string,
+  types.number,
+  types.null,
+  types.undefined,
+  types.late(() => Component),
+)
+
 export const Component = types
   .model('Component', {
     id: types.optional(types.string, () => nanoid()),
     type: types.optional(types.string, ''),
-    nodes: types.array(types.union(
-      types.string,
-      types.number,
-      types.null,
-      types.undefined,
-      types.late(() => Component),
-    )),
+    nodes: types.array(nodeType),
+    staticNodes: types.optional(types.array(nodeType), []),
     props: types.optional(types.frozen({}), {}),
     chunk: types.maybeNull(types.string),
     isLoading: types.optional(types.boolean, false),
@@ -169,12 +172,12 @@ export const Page = types
       model.contexts.get(name).setContext(context)
     },
     openModal(name, context) {
-      model.modals.set(name, { isOpen: true })
       model.setContext(name, context)
+      model.modals.set(name, { isOpen: true })
     },
     openModalForm(baseUrl, pk, editValues) {
-      model.openModal(baseUrl)
       model.setContext(baseUrl, { pk, editValues })
+      model.openModal(baseUrl)
     },
     closeModal(name) {
       model.modals.set(name, { isOpen: false })
@@ -184,12 +187,32 @@ export const Page = types
       model.closeModal(name)
       model.setContext(name, {})
     },
-    openPopup(name, timeout = 3000) {
+    openPopup(name, timeout = 3000, context) {
+      model.setContext(name, context)
       model.popups.set(name, { isOpen: true })
       setTimeout(() => model.closePopup(name), timeout)
     },
+    showInfoMessage(message, timeout) {
+      model.openPopup('SYSTEM_MESSAGE_POPUP', timeout, {
+        type: 'info',
+        message,
+      })
+    },
+    showSuccessMessage(message, timeout) {
+      model.openPopup('SYSTEM_MESSAGE_POPUP', timeout, {
+        type: 'success',
+        message,
+      })
+    },
+    showErrorMessage(message, timeout) {
+      model.openPopup('SYSTEM_MESSAGE_POPUP', timeout, {
+        type: 'error',
+        message,
+      })
+    },
     closePopup(name) {
       model.popups.set(name, { isOpen: false })
+      model.setContext(name, undefined)
     },
     modifyContext(name, prop, value) {
       model.contexts.get(name).modifyProp(prop, value)

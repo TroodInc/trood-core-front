@@ -7,12 +7,22 @@ import 'styles/variables.css'
 import { pageEntryFullUrl } from './constants'
 
 
-const componentsStore = Component.create({ chunk: pageEntryFullUrl })
+const componentsStore = Component.create({
+  chunk: pageEntryFullUrl,
+  staticNodes: [
+    {
+      'type': 'Popup',
+      'props': {
+        'popupName': 'SYSTEM_MESSAGE_POPUP',
+      },
+    },
+  ],
+})
 
 
 function App() {
   return useObserver(() => {
-    return <BaseComponent component={componentsStore}/>
+    return <BaseComponent component={componentsStore} />
   })
 }
 

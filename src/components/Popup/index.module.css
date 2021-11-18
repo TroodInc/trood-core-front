@@ -23,22 +23,23 @@
   color: var(--trood-white);
   font-weight: 500;
   visibility: visible;
+  white-space: pre-wrap;
 }
 
 .info {
-  background-color: #0180e2dd;
+  background-color: #0180e2bb;
 }
 
 .success {
-  background-color: #00a807dd;
+  background-color: #00a807bb;
 }
 
 .error {
-  background-color: #e95c5cdd;
+  background-color: #e95c5cbb;
 }
 
 .warning {
-  background-color: #ff6633dd;
+  background-color: #ff6633bb;
 }
 
 @media (min-width: 768px) {
