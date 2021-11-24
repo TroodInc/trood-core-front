@@ -54,6 +54,7 @@ const Modal = ({
 
 Modal.propTypes = {
   className: PropTypes.string,
+  modalName: PropTypes.string,
   width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   widthUnits: PropTypes.oneOf(cssMeasurementUnits),
   type: PropTypes.oneOf(Object.values(MODAL_TYPES)),
