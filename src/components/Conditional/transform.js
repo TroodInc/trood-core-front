@@ -6,7 +6,7 @@ const transformFunctions = {
       props: {
         ...node.props,
         trueComponent: [standardTransform(nodes[node.linkedNodes.true])],
-        falseComponent: [standardTransform(nodes[node.linkedNodes.true])],
+        falseComponent: [standardTransform(nodes[node.linkedNodes.false])],
       },
       nodes: [],
     }
