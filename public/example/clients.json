@@ -375,13 +375,9 @@
                                   "$arg7": false,
                                   "$action": [
                                     "$page.modifyContext[$arg0,$arg1,$arg2]",
-                                    {
-                                      "action": "$store.apis.custodian.client.deleteByPk[$arg3]",
-                                      "then": [
-                                        "$page.closeModal[$arg4]",
-                                        "$page.modifyContext[$arg5,$arg6,$arg7]"
-                                      ]
-                                    }
+                                    "$store.apis.custodian.client.deleteByPk[$arg3]",
+                                    "$page.closeModal[$arg4]",
+                                    "$page.modifyContext[$arg5,$arg6,$arg7]"
                                   ]
                                 }
                               }
@@ -426,13 +422,9 @@
                             "$arg6": false,
                             "$action": [
                               "$page.modifyContext[$arg0,$arg1,$arg2]",
-                              {
-                                "action": "$context.submit[]",
-                                "then": [
-                                  "$page.closeModal[$arg3]",
-                                  "$page.modifyContext[$arg4,$arg5,$arg6]"
-                                ]
-                              }
+                              "$context.submit[]",
+                              "$page.closeModal[$arg3]",
+                              "$page.modifyContext[$arg4,$arg5,$arg6]"
                             ]
                           }
                         }

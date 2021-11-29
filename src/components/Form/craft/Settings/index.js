@@ -10,16 +10,6 @@ import { cssMeasurementUnits } from '../../../../constants'
 import styles from './index.module.css'
 
 
-const afterActions = [
-  {
-    label: 'Go to link',
-    value: '$route.history.push[$arg0]',
-    args: {
-      $arg0: 'Link',
-    },
-  },
-]
-
 const Settings = ({ openDataSelector }) => {
   const { id, actions: { setProp }, props } = useNode((node) => ({ props: node.data.props }))
 
@@ -41,8 +31,6 @@ const Settings = ({ openDataSelector }) => {
   })
 
   const isModal = props.formType === FORM_TYPES.modal
-
-  const afterCreateArgs = afterActions.find(a => a.value === props.afterCreate?.$action)?.args || {}
 
   return (
     <>
@@ -107,35 +95,6 @@ const Settings = ({ openDataSelector }) => {
             />
           )}
         </div>
-      )}
-      {!props.pk && (
-        <>
-          <TLabel.default label="After Create" />
-          <TSelect.default {...{
-            placeHolder: 'Not Set',
-            label: 'Action',
-            items: afterActions,
-            values: props.afterCreate?.$action ? [props.afterCreate.$action] : [],
-            onChange: vals => setProp((props) => {
-              if (vals && vals[0]) {
-                props.afterCreate = {
-                  $action: vals[0],
-                }
-              } else {
-                props.afterCreate = undefined
-              }
-            }),
-            clearable: true,
-          }} />
-          {Object.keys(afterCreateArgs).map(key => (
-            <TInput.default {...{
-              key,
-              label: afterCreateArgs[key],
-              value: props.afterCreate[key],
-              onChange: value => setProp((props) => props.afterCreate[key] = value),
-            }} />
-          ))}
-        </>
       )}
       {!isModal && (
         <TButton.default

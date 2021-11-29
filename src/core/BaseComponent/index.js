@@ -81,24 +81,16 @@ const getAction = (actionProp, $data) => {
   const actions = (Array.isArray(actionProp.$action) ? actionProp.$action : [actionProp.$action])
     .map(action => typeof action === 'object' ? action : { action })
   return ($event) => {
-    let $result
-    actions.map(async action => {
-      try {
-        $result = await execAction(action.action, actionProp, { ...$data, $event, $result })
-        if (action.then) {
-          const thens = Array.isArray(action.then) ? action.then : [action.then]
-          thens.forEach(async then => {
-            $result = await execAction(then, actionProp, { ...$data, $event, $result })
-          })
-        }
-      } catch ($resultError) {
-        console.error($resultError)
-        if (action.catch) $result = await execAction(action.catch, actionProp, { ...$data, $event, $resultError })
-      } finally {
-        if (action.finally) $result = await execAction(action.catch, actionProp, { ...$data, $event, $result })
+    actions.reduce((promise, action) => {
+      let result = promise.then($result => execAction(action.action, actionProp, { ...$data, $event, $result }))
+      if (action.catch) {
+        result = result.catch($resultError => execAction(action.catch, actionProp, { ...$data, $event, $resultError }))
       }
-      return $result
-    })
+      if (action.finally) {
+        result = result.catch($result => execAction(action.catch, actionProp, { ...$data, $event, $result }))
+      }
+      return result
+    }, Promise.resolve())
   }
 }
 

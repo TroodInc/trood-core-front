@@ -210,10 +210,10 @@
                                     "props": {
                                       "label": "Save",
                                       "onClick": {
-                                        "$action": {
-                                          "action": "$auth.login[$arg0]",
-                                          "then": "$page.closeModal[$arg1]"
-                                        },
+                                        "$action": [
+                                          "$auth.login[$arg0]",
+                                          "$page.closeModal[$arg1]"
+                                        ],
                                         "$arg0": "https://legal.dev.trood.ru/authorization/api/v1.0/login/",
                                         "$arg1": "LoginModal"
                                       }
