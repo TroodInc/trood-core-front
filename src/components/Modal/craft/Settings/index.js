@@ -28,6 +28,13 @@ const Settings = () => {
 
   return (
     <>
+      <TInput.default {...{
+        ...inputProps({
+          label: 'Modal name',
+          key: 'modalName',
+          type: 'text',
+        }),
+      }} />
       <TSelect.default {...{
         ...selectProps({
           label: 'Type',

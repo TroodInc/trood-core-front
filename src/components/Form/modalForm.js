@@ -24,7 +24,6 @@ const ModalForm = ({
   modalOverlay,
   baseFormContext,
   onClose,
-  afterCreate,
 }) => {
   const isModalOpen = $data?.$page?.isModalOpen(baseUrl)
   const closeModalForm = () => $data?.$page?.closeModalForm(baseUrl)
@@ -55,14 +54,13 @@ const ModalForm = ({
       method: pk ? 'PATCH' : 'POST',
     }, false)
       .then(res => {
-        if (!pk) afterCreate()
-        return res
-      })
-      .then(res => {
         closeModalForm()
         return res
       }),
-    cancel: closeModalForm,
+    cancel: () => {
+      closeModalForm()
+      return Promise.resolve()
+    },
     remove: () => form.submit({
       endpoint: form.name,
       method: 'DELETE',

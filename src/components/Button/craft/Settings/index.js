@@ -7,7 +7,7 @@ import { BUTTON_TYPES, BUTTON_SPECIAL_TYPES, BUTTON_COLORS } from '../../constan
 
 import { getIsNodeInNode } from '../../../helpers'
 
-import { ACTIONS_TYPE } from '../../../Form/constants'
+import { ACTIONS_TYPE, AFTER_ACTIONS } from '../../../Form/constants'
 
 
 const getIsFormComponent = (id, helper) => getIsNodeInNode(id, helper, ['Form'])
@@ -40,6 +40,12 @@ const Settings = ({ openEventConstructor }) => {
     onChange: value => setProp((props) => props[key] = value),
   })
 
+  const actionType = (props.onClick?.$action || [])[0]
+  const afterActions = AFTER_ACTIONS[actionType] || []
+  const afterAction = (props.onClick?.$action || [])[1]
+  const afterActionObj = afterActions.find(a => a.value === afterAction)
+  const afterActionArgs = (afterActionObj || {}).args || {}
+
   return (
     <>
       {isFormComponent && (
@@ -47,11 +53,39 @@ const Settings = ({ openEventConstructor }) => {
           label: 'Action Type',
           placeHolder: 'Not Set',
           items: ACTIONS_TYPE,
-          values: props.onClick?.$action ? [props.onClick.$action] : [],
+          values: [actionType],
           onChange: vals => setProp((props) => props.onClick = {
-            $action: vals[0],
+            $action: vals,
           }),
         }} />
+      )}
+      {isFormComponent && afterActions.length && (
+        <TSelect.default {...{
+          label: 'After Action',
+          placeHolder: 'Not Set',
+          items: afterActions,
+          values: [afterAction],
+          onChange: vals => setProp((props) => props.onClick = {
+            $action: [actionType, vals[0]],
+          }),
+        }} />
+      )}
+      {isFormComponent && Object.keys(afterActionArgs) && (
+        <>
+          {Object.keys(afterActionArgs).map((item, i) => (
+            <TInput.default {...{
+              key: `${afterAction}${i}`,
+              label: afterActionArgs[item],
+              value: props.onClick[item]?.$data,
+              onChange: val => setProp((props) => props.onClick = {
+                ...props.onClick,
+                [item]: {
+                  $data: val,
+                },
+              }),
+            }} />
+          ))}
+        </>
       )}
       {!isFormComponent && !isFileInputComponent && (
         <TButton.default

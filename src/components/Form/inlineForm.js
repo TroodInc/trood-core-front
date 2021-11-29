@@ -12,7 +12,6 @@ const InlineForm = ({
   form,
   baseFormContext,
   onClose,
-  afterCreate,
 }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => onClose, [])
@@ -27,16 +26,21 @@ const InlineForm = ({
       method: pk ? 'PATCH' : 'POST',
     }, false)
       .then(res => {
-        if (!pk) afterCreate()
+        form.clearForm()
         return res
       }),
     cancel: () => {
-      form.remove()
+      form.clearForm()
+      return Promise.resolve()
     },
     remove: () => form.submit({
       endpoint: form.name,
       method: 'DELETE',
-    }, false),
+    }, false)
+      .then(res => {
+        form.clearForm()
+        return res
+      }),
   }
 
   return (
