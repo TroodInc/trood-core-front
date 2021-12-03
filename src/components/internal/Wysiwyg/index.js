@@ -92,7 +92,7 @@ class WysiwygEditor extends PureComponent {
   }
 
   render() {
-    const { className, placeholder, onFocus } = this.props
+    const { className, style: contentStyle, placeholder, onFocus } = this.props
 
     const { editorState } = this.state
 
@@ -106,13 +106,15 @@ class WysiwygEditor extends PureComponent {
           editorState,
           onToggle: this.toggleInlineStyle,
         }} />
-        <Editor {...{
-          customStyleMap: this.customStyleMap,
-          editorState,
-          onChange: this.onChange,
-          placeholder,
-          onFocus,
-        }} />
+        <div style={contentStyle}>
+          <Editor {...{
+            customStyleMap: this.customStyleMap,
+            editorState,
+            onChange: this.onChange,
+            placeholder,
+            onFocus,
+          }} />
+        </div>
       </div>
     )
   }
