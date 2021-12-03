@@ -4,6 +4,8 @@ import Typography from '../../index'
 import { useNode } from '@craftjs/core'
 import { TCheckbox, TSelect, TButton, TInput } from '$trood/components'
 
+import { fontList } from 'fonts'
+
 
 const setStyle = (field, value) => props => {
   let val = value
@@ -48,6 +50,16 @@ const Settings = ({ openDataSelector }) => {
         values: props.type ? [props.type] : [],
         onChange: vals => setProp((props) => {
           props.type = vals[0]
+        }),
+      }} />
+      <TSelect.default {...{
+        type: TSelect.SELECT_TYPES.filterDropdown,
+        label: 'Font',
+        items: fontList.map(value => ({ value })),
+        values: props.font ? [props.font] : [],
+        placeHolder: 'inherit',
+        onChange: vals => setProp((props) => {
+          props.font = vals[0]
         }),
       }} />
       <TInput.default {...{

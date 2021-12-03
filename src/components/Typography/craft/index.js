@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNode } from '@craftjs/core'
 import classNames from 'classnames'
+
+import { fontDict } from 'fonts'
 
 import Settings from './Settings'
 import Typography from '../index'
@@ -11,6 +13,24 @@ import styles from '../index.module.css'
 
 
 const CraftTypography = props => {
+  const fontObj = fontDict[props.font]
+
+  useEffect(() => {
+    if (fontObj) {
+      const fontStyleLink = fontObj.link
+      const hasFont = Array.from(document.head.getElementsByTagName('link'))
+        .reduce((memo, curr) => memo || curr.href === fontStyleLink, false)
+
+      if (!hasFont) {
+        const linkElement = document.createElement('link')
+        linkElement.setAttribute('rel', 'stylesheet')
+        linkElement.setAttribute('type', 'text/css')
+        linkElement.setAttribute('href', fontStyleLink)
+        document.head.appendChild(linkElement)
+      }
+    }
+  }, [fontObj])
+
   const {
     connectors: { connect, drag },
     actions: { setProp },
@@ -39,7 +59,10 @@ const CraftTypography = props => {
       text: value,
       tagName: Typography.knownTypes[props.type],
       className: classNames(styles[props.type], props.bold && styles.bold, props.className),
-      style: props.style,
+      style: {
+        ...props.style,
+        fontFamily: fontObj?.fontFamily || props.font,
+      },
     }}>
       <Typography { ...rest } />
     </EditWrapper>
