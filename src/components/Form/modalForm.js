@@ -33,7 +33,7 @@ const ModalForm = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isModalOpen])
 
-  const { login } = $data?.$auth || {}
+  const { login, logout } = $data?.$auth || {}
 
   if (!isModalOpen) return null
 
@@ -49,6 +49,7 @@ const ModalForm = ({
   const formContext = {
     ...baseFormContext,
     login: () => login(form.name, form.name),
+    logout: () => logout(form.name, form.name),
     submit: () => form.submit({
       endpoint: form.name,
       method: pk ? 'PATCH' : 'POST',

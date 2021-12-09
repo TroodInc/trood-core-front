@@ -49,10 +49,10 @@ export const getAuthStore = apiStore => {
       logout(endpoint, formName) {
         if (endpoint && getToken()) {
           const options = { method: 'post', endpoint }
-          self.getLogoutForm(formName).submit(options, true)
+          return self.getLogoutForm(formName).submit(options, true)
             .finally(self.clearAuthData)
         } else {
-          self.clearAuthData()
+          return self.clearAuthData()
         }
       },
       clearAuthData() {
@@ -61,6 +61,7 @@ export const getAuthStore = apiStore => {
         self.account = {}
         self.abac = {}
         self.error = {}
+        return Promise.resolve()
       },
       setAuthData({ data: { data = {} } = {}, error }, tokenPrefix, verify = false) {
         if (error) {

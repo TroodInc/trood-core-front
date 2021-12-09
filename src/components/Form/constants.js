@@ -5,10 +5,6 @@ export const FORM_TYPES = {
 
 export const ACTIONS_TYPE = [
   {
-    label: 'Login',
-    value: '$form.login[]',
-  },
-  {
     label: 'Submit',
     value: '$form.submit[]',
   },
@@ -19,6 +15,14 @@ export const ACTIONS_TYPE = [
   {
     label: 'Delete',
     value: '$form.remove[]',
+  },
+  {
+    label: 'Login',
+    value: '$form.login[]',
+  },
+  {
+    label: 'Logout',
+    value: '$form.logout[]',
   },
 ]
 
@@ -40,6 +44,7 @@ const message = {
 
 export const AFTER_ACTIONS = {
   '$form.login[]': [link],
+  '$form.logout[]': [link],
   '$form.submit[]': [link, message],
   '$form.cancel[]': [link, message],
   '$form.remove[]': [link, message],
