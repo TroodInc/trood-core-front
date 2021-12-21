@@ -59,7 +59,7 @@ const Settings = ({ openEventConstructor }) => {
           }),
         }} />
       )}
-      {isFormComponent && afterActions.length && (
+      {isFormComponent && !!afterActions.length && (
         <TSelect.default {...{
           label: 'After Action',
           placeHolder: 'Not Set',

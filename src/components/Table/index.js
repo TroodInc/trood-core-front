@@ -46,7 +46,7 @@ const Table = ({
           </thead>
           <tbody>
             {items.map((item, i) => (
-              <Context key={i} context={item}>
+              <Context key={i} context={{ ...item, $index: i }}>
                 <tr>
                   <BaseComponent component={bodyComponentsStore} />
                 </tr>

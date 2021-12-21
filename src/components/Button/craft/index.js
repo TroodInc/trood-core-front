@@ -15,6 +15,7 @@ const CraftButton = props => {
     <Button {...{
       innerRef: onlyRender ? undefined : ref => connect(drag(ref)),
       ...rest,
+      disabled: undefined,
       onClick: () => {},
     }} />
   )

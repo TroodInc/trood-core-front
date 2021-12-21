@@ -238,7 +238,7 @@ const getSelect = craft => {
         onChange,
         items: items.map((item, i) => ({
           label: (
-            <Context key={i} context={item}>
+            <Context key={i} context={{ ...item, $index: i }}>
               <BaseComponent component={labelStore} />
             </Context>
           ),
