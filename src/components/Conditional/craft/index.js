@@ -20,7 +20,6 @@ const CraftConditional = (props) => {
         id="true"
         is={components.Container}
         className={styles.itemTrue}
-        canvas
         custom={{ displayName: 'True Component' }}
       />
       <Label label="Display on value equal false" />
@@ -28,7 +27,6 @@ const CraftConditional = (props) => {
         id="false"
         is={components.Container}
         className={styles.itemFalse}
-        canvas
         custom={{ displayName: 'False Component' }}
       />
     </div>

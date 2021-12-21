@@ -51,7 +51,6 @@ const CraftList = (props) => {
             id="listRow"
             is="div"
             className={visualHelp && styles.itemVisualHelp}
-            canvas
             custom={{ displayName: 'List Item' }}
           />
         )

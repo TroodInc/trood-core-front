@@ -70,7 +70,7 @@ const CraftTable = (props) => {
             <thead>
               <tr>
                 {Array(columns).fill(0).map((item, i) => (
-                  <Element key={i} id={`th${i}`} is="th" canvas custom={{ displayName: 'Cell Header' }}>
+                  <Element key={i} id={`th${i}`} is="th" custom={{ displayName: 'Cell Header' }}>
                   </Element>
                 ))}
               </tr>
@@ -79,7 +79,7 @@ const CraftTable = (props) => {
               {/* TODO <Context> after dataSelector */}
               <tr>
                 {Array(columns).fill(0).map((item, i) => (
-                  <Element key={i} id={`td${i}`} is="td" canvas custom={{ displayName: 'Cell Value' }}>
+                  <Element key={i} id={`td${i}`} is="td" custom={{ displayName: 'Cell Value' }}>
                   </Element>
                 ))}
               </tr>
