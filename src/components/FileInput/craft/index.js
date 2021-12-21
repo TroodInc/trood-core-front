@@ -19,12 +19,14 @@ const CraftFileInput = props => {
         id="label"
         is={components.Container}
         className={styles.label}
+        canvas
         custom={{ displayName: 'Label Component' }}
       />
       <Element
         id="value"
         is={components.Container}
         className={styles.value}
+        canvas
         custom={{ displayName: 'Value Component' }}
       />
     </div>

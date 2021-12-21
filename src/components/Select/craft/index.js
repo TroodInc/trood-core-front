@@ -12,6 +12,7 @@ const Select = getSelect({
     <Element
       id="itemView"
       is="div"
+      canvas
       custom={{ displayName: 'View' }}
       style={{ minHeight: 16 }}
     />
