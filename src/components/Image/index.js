@@ -5,7 +5,6 @@ import classNames from 'classnames'
 import styles from './index.module.css'
 
 import { IMAGE_FIT } from './constants'
-import { cssMeasurementUnits } from '../../constants'
 
 
 const Image = (props) => {
@@ -19,6 +18,7 @@ const Image = (props) => {
     alt,
     fit,
     innerRef,
+    style,
     ...other
   } = props
 
@@ -27,7 +27,7 @@ const Image = (props) => {
       {...other}
       ref={innerRef}
       className={classNames(styles.root, className)}
-      style={{ width: `${width}${widthUnits}`, height: `${height}${heightUnits}` }}
+      style={style}
     >
       <img src={imageUrl} alt={imageUrl || alt} style={{ objectFit: fit }} className={styles.image} />
     </div>
@@ -36,20 +36,16 @@ const Image = (props) => {
 
 Image.propTypes = {
   className: PropTypes.string,
-  width: PropTypes.number,
-  widthUnits: PropTypes.oneOf(cssMeasurementUnits),
-  height: PropTypes.number,
-  heightUnits: PropTypes.oneOf(cssMeasurementUnits),
   imageUrl: PropTypes.string,
   fit: PropTypes.oneOf(Object.values(IMAGE_FIT)),
 }
 
 Image.defaultProps = {
-  width: 200,
-  height: 200,
+  style: {
+    width: 200,
+    height: 200,
+  },
   fit: IMAGE_FIT.fill,
-  widthUnits: cssMeasurementUnits[0],
-  heightUnits: cssMeasurementUnits[0],
 }
 
 export default Image
