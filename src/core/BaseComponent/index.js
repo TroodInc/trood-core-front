@@ -94,14 +94,36 @@ const getAction = (actionProp, $data) => {
   }
 }
 
-const getExpression = (expressionProp, $data) => {
-  const parser = new Parser()
-  parser.functions.data = function (path) {
-    const dataProp = {
-      $data: `{{${path}}}`,
+const parser = new Parser()
+
+parser.functions.arrayPush = (arr = [], ...items) => {
+  return [...arr, ...items]
+}
+
+parser.functions.arrayRemove = (arr = [], ...indexes) => {
+  return arr.filter((_, i) => !indexes.includes(i))
+}
+
+parser.functions.arrayReplace = (arr = [], ...data) => {
+  const indexes = data.filter((_, i) => i % 2 === 0)
+  return arr.map((item, i) => {
+    if (indexes.includes(i)) {
+      const id = indexes.indexOf(i)
+      return data[id + 1]
     }
-    return getData(dataProp, $data)
+    return item
+  })
+}
+
+const getDataFunc = ($data) => (path) => {
+  const dataProp = {
+    $data: `{{${path}}}`,
   }
+  return getData(dataProp, $data)
+}
+
+const getExpression = (expressionProp, $data) => {
+  parser.functions.data = getDataFunc($data)
   return parser.evaluate(expressionProp.$expression)
 }
 
