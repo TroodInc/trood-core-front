@@ -1,4 +1,5 @@
 import React, { Component as ReactComponent } from 'react'
+import { Observer } from 'mobx-react-lite'
 import BaseComponent from 'core/BaseComponent'
 import { Component } from 'core/pageStore'
 
@@ -20,7 +21,11 @@ class Conditional extends ReactComponent {
     const TrueNodes = Component.create({ nodes: trueComponent })
     const FalseNodes = Component.create({ nodes: falseComponent })
 
-    return <BaseComponent component={value ? TrueNodes : FalseNodes } />
+    return (
+      <Observer>
+        {() => <BaseComponent component={value ? TrueNodes : FalseNodes } />}
+      </Observer>
+    )
   }
 }
 
