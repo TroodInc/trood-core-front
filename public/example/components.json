@@ -73,6 +73,29 @@
         },
         "nodes": [
           {
+            "type": "Currency",
+            "props": {
+              "value": 1234,
+              "currency": "RUB"
+            }
+          }
+        ]
+      },
+      {
+        "type": "Spacer",
+        "props": {
+          "size": 16
+        }
+      },
+      {
+        "type": "Container",
+        "props": {
+          "style": {
+            "flexDirection": "column"
+          }
+        },
+        "nodes": [
+          {
             "type": "Icon",
             "props": {
               "label": "Icon",

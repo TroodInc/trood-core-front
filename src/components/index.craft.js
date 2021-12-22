@@ -22,6 +22,7 @@ import SvgTags from './Tags/SvgTags/craft'
 
 import Button from './Button/craft'
 import Typography from './Typography/craft'
+import Currency from './Currency/craft'
 import Image from './Image/craft'
 import Select from './Select/craft'
 
@@ -53,6 +54,7 @@ const components = {
   SvgTags,
   Button,
   Typography,
+  Currency,
   Image,
   Table,
   List,

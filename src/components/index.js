@@ -37,6 +37,7 @@ import Image from './Image'
 import Fragment from './Fragment'
 import Form from './Form'
 import FileInput from './FileInput'
+import Currency from './Currency'
 
 const components = {
   Context,
@@ -72,6 +73,7 @@ const components = {
   Fragment,
   Form,
   FileInput,
+  Currency,
 }
 
 export default Object.keys(components).reduce((memo, key) => {
