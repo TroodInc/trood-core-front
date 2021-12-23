@@ -38,7 +38,7 @@ class DatePicker extends PureComponent {
     onBlur: PropTypes.func,
     placeholder: PropTypes.node,
     disabled: PropTypes.bool,
-    errors: PropTypes.arrayOf(PropTypes.string),
+    errors: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   }
 
   static defaultProps = {

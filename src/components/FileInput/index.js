@@ -16,7 +16,7 @@ class FileInput extends PureComponent {
   static propTypes = {
     className: PropTypes.string,
     disabled: PropTypes.bool,
-    errors: PropTypes.arrayOf(PropTypes.string),
+    errors: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
     accept: PropTypes.string,
 
     onUpload: PropTypes.func,

@@ -49,7 +49,7 @@ const getDropDown = craft => {
       maxRows: PropTypes.number,
       autoScroll: PropTypes.bool,
       disabled: PropTypes.bool,
-      errors: PropTypes.arrayOf(PropTypes.string),
+      errors: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
 
       onChange: PropTypes.func,
       onBlur: PropTypes.func,
