@@ -41,7 +41,7 @@ class Input extends PureComponent {
     placeholder: PropTypes.string,
     autoFocus: PropTypes.bool,
     disabled: PropTypes.bool,
-    errors: PropTypes.arrayOf(PropTypes.string),
+    errors: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
     showTextErrors: PropTypes.bool,
     children: PropTypes.node,
 

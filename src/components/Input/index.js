@@ -77,7 +77,7 @@ class Input extends PureComponent {
     /** disabled or not */
     disabled: PropTypes.bool,
     /** text errors */
-    errors: PropTypes.arrayOf(PropTypes.string),
+    errors: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
     /** show text errors or not */
     showTextErrors: PropTypes.bool,
     /** children node */

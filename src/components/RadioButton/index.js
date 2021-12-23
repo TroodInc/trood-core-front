@@ -52,7 +52,7 @@ class RadioButton extends PureComponent {
     /** second label position is one of LABEL_POSITION_TYPES.right, LABEL_POSITION_TYPES.left */
     secondLabelPosition: PropTypes.oneOf(Object.values(LABEL_POSITION_TYPES)),
     /** errors text */
-    errors: PropTypes.arrayOf(PropTypes.node),
+    errors: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
     /** show text errors or not */
     showTextErrors: PropTypes.bool,
     /** validate settings */

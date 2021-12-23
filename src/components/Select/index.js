@@ -79,7 +79,7 @@ const getSelect = craft => {
       /** disabled or not */
       disabled: PropTypes.bool,
       /** list errors */
-      errors: PropTypes.arrayOf(PropTypes.string),
+      errors: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
       /** validate settings */
       validate: PropTypes.shape({
         /** check on blur or not */
