@@ -47,6 +47,7 @@ const CraftFragment = (props) => {
   }))
 
   const {
+    onlyRender,
     visualHelp,
     emApplicationFragmentEntities,
     applicationCurrentFragment,
@@ -73,9 +74,17 @@ const CraftFragment = (props) => {
     }
   }, [currentApplicationId, applicationCurrentFragment, fragmentAlias])
 
+  if (onlyRender) {
+    return (
+      <div className={classNames({ [styles.visualHelp]: visualHelp })}>
+        Fragment: {fragmentAlias}
+      </div>
+    )
+  }
+
   return (
     <div
-      ref={ref => connect(drag(ref))}
+      ref={onlyRender ? undefined : ref => connect(drag(ref))}
       className={classNames({ [styles.visualHelp]: visualHelp })}
     >
       <ComponentsWrapper>
