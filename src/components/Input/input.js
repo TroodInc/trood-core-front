@@ -160,8 +160,8 @@ class Input extends PureComponent {
     this.handleFocus = this.handleFocus.bind(this)
     this.handleBlur = this.handleBlur.bind(this)
 
-    this.throttledOnChangeEvent = throttle(this.props.onChange, DISPATCH_DEBOUNCE)
-    this.debouncedOnSearchEvent = debounce(this.props.onSearch, SEARCH_DEBOUNCE)
+    this.throttledOnChangeEvent = throttle((...args) => this.props.onChange(...args), DISPATCH_DEBOUNCE)
+    this.debouncedOnSearchEvent = debounce((...args) => this.props.onSearch(...args), SEARCH_DEBOUNCE)
   }
 
   componentDidMount() {
