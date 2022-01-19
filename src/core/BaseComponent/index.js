@@ -115,15 +115,16 @@ parser.functions.arrayReplace = (arr = [], ...data) => {
   })
 }
 
-const getDataFunc = ($data) => (path) => {
+const getDataFunc = (expressionProp, $data) => (path) => {
   const dataProp = {
+    ...expressionProp,
     $data: `{{${path}}}`,
   }
   return getData(dataProp, $data)
 }
 
 const getExpression = (expressionProp, $data) => {
-  parser.functions.data = getDataFunc($data)
+  parser.functions.data = getDataFunc(expressionProp, $data)
   return parser.evaluate(expressionProp.$expression)
 }
 
