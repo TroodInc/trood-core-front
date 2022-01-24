@@ -12,6 +12,7 @@ const InlineForm = ({
   form,
   baseFormContext,
   onClose,
+  onError,
 }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => onClose, [])
@@ -20,8 +21,10 @@ const InlineForm = ({
 
   const formContext = {
     ...baseFormContext,
-    login: () => login(form.name, form.name),
-    logout: () => logout(form.name, form.name),
+    login: () => login(form.name, form.name)
+      .catch(onError),
+    logout: () => logout(form.name, form.name)
+      .catch(onError),
     submit: () => form.submit({
       endpoint: form.name,
       method: pk ? 'PATCH' : 'POST',
@@ -29,7 +32,8 @@ const InlineForm = ({
       .then(res => {
         form.clearForm()
         return res
-      }),
+      })
+      .catch(onError),
     cancel: () => {
       form.clearForm()
       return Promise.resolve()
@@ -41,7 +45,8 @@ const InlineForm = ({
       .then(res => {
         form.clearForm()
         return res
-      }),
+      })
+      .catch(onError),
   }
 
   return (
