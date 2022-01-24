@@ -24,6 +24,7 @@ const ModalForm = ({
   modalOverlay,
   baseFormContext,
   onClose,
+  onError,
 }) => {
   const isModalOpen = $data?.$page?.isModalOpen(baseUrl)
   const closeModalForm = () => $data?.$page?.closeModalForm(baseUrl)
@@ -48,8 +49,10 @@ const ModalForm = ({
 
   const formContext = {
     ...baseFormContext,
-    login: () => login(form.name, form.name),
-    logout: () => logout(form.name, form.name),
+    login: () => login(form.name, form.name)
+      .catch(onError),
+    logout: () => logout(form.name, form.name)
+      .catch(onError),
     submit: () => form.submit({
       endpoint: form.name,
       method: pk ? 'PATCH' : 'POST',
@@ -57,7 +60,8 @@ const ModalForm = ({
       .then(res => {
         closeModalForm()
         return res
-      }),
+      })
+      .catch(onError),
     cancel: () => {
       closeModalForm()
       return Promise.resolve()
@@ -69,7 +73,8 @@ const ModalForm = ({
       .then(res => {
         closeModalForm()
         return res
-      }),
+      })
+      .catch(onError),
   }
 
   return (

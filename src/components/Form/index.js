@@ -13,6 +13,20 @@ import { MODAL_TYPES } from '../Modal/constants'
 
 import { cssMeasurementUnits } from '../../constants'
 
+const errorKeys = ['message', 'error', 'err', 'msg']
+
+const reduceError = (memo, [key, value]) => {
+  if (memo) return memo
+  if (errorKeys.includes(key.toLowerCase())) {
+    if (typeof value === 'string') return value
+    if (Array.isArray(value)) {
+      if (typeof value[0] === 'string') return value
+    } else if (typeof value === 'object') {
+      return Object.entries(value).reduce(reduceError, undefined)
+    }
+  }
+  return memo
+}
 
 const Form = ({
   className,
@@ -39,6 +53,18 @@ const Form = ({
   })
 
   const modalOverlay = useRef()
+
+  const onError = ({
+    error: { error = {} },
+  }) => {
+    const errs = Object.values(error).filter(item => typeof item === 'string')
+    if (errs.length === 1) return $data.$page.showErrorMessage(errs[0])
+
+    const reducedError = Object.entries(error).reduce(reduceError, undefined)
+    if (reducedError) return $data.$page.showErrorMessage(reducedError)
+
+    return Promise.reject(error)
+  }
 
   return useObserver(() => {
     if (!form) return null
@@ -73,6 +99,7 @@ const Form = ({
           baseFormContext,
           onClose: form.remove,
           afterCreate,
+          onError,
         }} />
       )
     }
@@ -88,6 +115,7 @@ const Form = ({
         baseFormContext,
         onClose: form.remove,
         afterCreate,
+        onError,
       }} />
     )
   })
