@@ -4,7 +4,7 @@ FROM nginx:latest
 COPY --from=previous /usr/share/nginx/html/static /usr/share/nginx/html/static
 COPY build/static /usr/share/nginx/html/static
 COPY templates /home/templates
-COPY default.conf /ect/nginx/conf.d
+COPY default.conf /etc/nginx/conf.d
 COPY rollup.sh /home
 COPY fragment.py /home
 RUN chmod +x /home/rollup.sh \
