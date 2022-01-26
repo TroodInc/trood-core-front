@@ -54,9 +54,7 @@ const Form = ({
 
   const modalOverlay = useRef()
 
-  const onError = ({
-    error: { error = {} },
-  }) => {
+  const onError = ({ error }) => {
     const errs = Object.values(error).filter(item => typeof item === 'string')
     if (errs.length === 1) return $data.$page.showErrorMessage(errs[0])
 
