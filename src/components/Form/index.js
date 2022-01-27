@@ -56,10 +56,12 @@ const Form = ({
 
   const onError = ({ error }) => {
     const errs = Object.values(error).filter(item => typeof item === 'string')
-    if (errs.length === 1) return $data.$page.showErrorMessage(errs[0])
-
-    const reducedError = Object.entries(error).reduce(reduceError, undefined)
-    if (reducedError) return $data.$page.showErrorMessage(reducedError)
+    if (errs.length === 1) {
+      $data.$page.showErrorMessage(errs[0])
+    } else {
+      const reducedError = Object.entries(error).reduce(reduceError, undefined)
+      if (reducedError) $data.$page.showErrorMessage(reducedError)
+    }
 
     return Promise.reject(error)
   }
