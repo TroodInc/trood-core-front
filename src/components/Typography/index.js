@@ -71,7 +71,7 @@ Typography.propTypes = {
   className: PropTypes.string,
   font: PropTypes.string,
   type: PropTypes.oneOf(Object.keys(knownTypes)),
-  value: PropTypes.string,
+  value: PropTypes.node,
   children: PropTypes.node,
   bold: PropTypes.bool,
 }

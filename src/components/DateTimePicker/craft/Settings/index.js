@@ -115,7 +115,7 @@ const Settings = ({ openEventConstructor, openDataSelector }) => {
             label="Select Value"
             onClick={() => openDataSelector(id, {
               id: props.value?.$data,
-              value: props.value,
+              values: props.value,
               onSubmit: value => {
                 setProp((props) => {
                   props.value = value

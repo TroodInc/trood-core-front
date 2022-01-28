@@ -76,6 +76,10 @@
   color: var(--trood-white);
 }
 
+.root:not(.checked) .icon {
+  color: transparent;
+}
+
 .iconRoot .icon {
   color: var(--trood-gray-dark);
 }

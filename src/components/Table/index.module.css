@@ -39,3 +39,7 @@
 .table tbody tr:last-child {
   border-bottom: 0;
 }
+
+.table .checkbox {
+  width: 32px;
+}

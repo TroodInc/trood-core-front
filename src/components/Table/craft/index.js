@@ -3,6 +3,7 @@ import classNames from 'classnames'
 import { Element, useNode } from '@craftjs/core'
 
 import Table from '../index'
+import Checkbox from '../../Checkbox'
 import Paginator from '../../internal/Paginator'
 import Settings from './Settings'
 // import Context from '../../Context'
@@ -25,7 +26,7 @@ const CraftTable = (props) => {
   const {
     connectors: { connect, drag },
   } = useNode()
-  const { className, onlyRender, visualHelp, columns, pagination, entity, ...rest } = props
+  const { className, onlyRender, visualHelp, columns, pagination, entity, checked, ...rest } = props
 
   let entityIsApi
   if (entity && entity.path) {
@@ -50,15 +51,30 @@ const CraftTable = (props) => {
             <table className={baseStyles.table}>
               <thead>
                 <tr>
+                  {checked && (
+                    <th className={baseStyles.checkbox}>
+                      <Checkbox/>
+                    </th>
+                  )}
                   {rest.columnComponents.map(item => item.headerCell)}
                 </tr>
               </thead>
               <tbody>
                 {/* TODO <Context> after dataSelector */}
                 <tr>
+                  {checked && (
+                    <td className={baseStyles.checkbox}>
+                      <Checkbox/>
+                    </td>
+                  )}
                   {rest.columnComponents.map(item => item.bodyCell)}
                 </tr>
                 <tr>
+                  {checked && (
+                    <td className={baseStyles.checkbox}>
+                      <Checkbox/>
+                    </td>
+                  )}
                   {rest.columnComponents.map((_, i) => <td key={i}>...</td>)}
                 </tr>
               </tbody>
@@ -69,6 +85,11 @@ const CraftTable = (props) => {
           <table className={baseStyles.table}>
             <thead>
               <tr>
+                {checked && (
+                  <th className={baseStyles.checkbox}>
+                    <Checkbox/>
+                  </th>
+                )}
                 {Array(columns).fill(0).map((item, i) => (
                   <Element key={i} id={`th${i}`} is="th" canvas custom={{ displayName: 'Cell Header' }}>
                   </Element>
@@ -78,12 +99,22 @@ const CraftTable = (props) => {
             <tbody>
               {/* TODO <Context> after dataSelector */}
               <tr>
+                {checked && (
+                  <td className={baseStyles.checkbox}>
+                    <Checkbox/>
+                  </td>
+                )}
                 {Array(columns).fill(0).map((item, i) => (
                   <Element key={i} id={`td${i}`} is="td" canvas custom={{ displayName: 'Cell Value' }}>
                   </Element>
                 ))}
               </tr>
               <tr>
+                {checked && (
+                  <td className={baseStyles.checkbox}>
+                    <Checkbox/>
+                  </td>
+                )}
                 {Array(columns).fill(0).map((item, i) => <td key={i}>...</td>)}
               </tr>
             </tbody>
