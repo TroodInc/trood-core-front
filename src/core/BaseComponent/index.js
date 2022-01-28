@@ -39,7 +39,7 @@ const getData = (dataProp, $data) => {
             ))
             const f = (memo || {})[key.replace(/\[([^\]]*)]/g, '')]
             if (typeof f !== 'function') return undefined
-            return f(...argsArray)
+            return f.bind(memo)(...argsArray)
           }
         }
         return (memo || {})[key]
