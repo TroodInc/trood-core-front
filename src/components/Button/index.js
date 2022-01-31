@@ -16,78 +16,33 @@ import {
 } from './constants'
 
 
-const BUTTON_SPECIAL_ICONS = {
-  [BUTTON_SPECIAL_TYPES.add]: (
-    <Icon {...{
-      type: ICONS_TYPES.plus,
-      className: style.addIcon,
-    }} />
-  ),
-  [BUTTON_SPECIAL_TYPES.addFill]: (
-    <Icon {...{
-      type: ICONS_TYPES.plus,
-      className: style.addIcon,
-    }} />
-  ),
-  [BUTTON_SPECIAL_TYPES.minus]: (
-    <Icon {...{
-      type: ICONS_TYPES.minus,
-      className: style.minusIcon,
-    }} />
-  ),
-  [BUTTON_SPECIAL_TYPES.delete]: (
-    <Icon {...{
-      type: ICONS_TYPES.trashBin,
-      className: style.deleteIcon,
-    }} />
-  ),
-  [BUTTON_SPECIAL_TYPES.text]: (
-    <Icon {...{
-      type: ICONS_TYPES.paragraph,
-      className: style.textIcon,
-    }} />
-  ),
-  [BUTTON_SPECIAL_TYPES.attach]: (
-    <Icon {...{
-      type: ICONS_TYPES.attachment,
-      className: style.textIcon,
-    }} />
-  ),
-  [BUTTON_SPECIAL_TYPES.icon]: null,
-  [BUTTON_SPECIAL_TYPES.arrowLeft]: (
-    <Icon {...{
-      type: ICONS_TYPES.arrow,
-      rotate: 90,
-      size: 20,
-      className: style.textIcon,
-    }} />
-  ),
-  [BUTTON_SPECIAL_TYPES.arrowRight]: (
-    <Icon {...{
-      type: ICONS_TYPES.arrow,
-      rotate: 270,
-      size: 20,
-      className: style.textIcon,
-    }} />
-  ),
-  [BUTTON_SPECIAL_TYPES.edit]: (
-    <Icon {...{
-      type: ICONS_TYPES.edit,
-      className: style.textIcon,
-    }} />
-  ),
-  [BUTTON_SPECIAL_TYPES.download]: (
-    <Icon {...{
-      type: ICONS_TYPES.download,
-      className: style.textIcon,
-    }} />
-  ),
-  [BUTTON_SPECIAL_TYPES.upload]: (
-    <Icon {...{
-      type: ICONS_TYPES.upload,
-      className: style.textIcon,
-    }} />
-  ),
+const getButtonSpecialIcons = (specialType) => {
+  if (!specialType) return undefined
+  switch (specialType) {
+    case BUTTON_SPECIAL_TYPES.arrowLeft:
+      return (
+        <Icon {...{
+          type: ICONS_TYPES.arrow,
+          rotate: 90,
+          className: style.specialLabelIcon,
+        }} />
+      )
+    case BUTTON_SPECIAL_TYPES.arrowRight:
+      return (
+        <Icon {...{
+          type: ICONS_TYPES.arrow,
+          rotate: 270,
+          className: style.specialLabelIcon,
+        }} />
+      )
+    default:
+      return (
+        <Icon {...{
+          type: ICONS_TYPES[specialType],
+          className: style.specialLabelIcon,
+        }} />
+      )
+  }
 }
 
 /**
@@ -146,7 +101,7 @@ class Button extends PureComponent {
       innerRef,
     } = this.props
 
-    const specialLabel = BUTTON_SPECIAL_ICONS[specialType]
+    const specialLabel = getButtonSpecialIcons(specialType)
     const label = (
       <div className={style.labelContainer}>
         {specialLabel}
