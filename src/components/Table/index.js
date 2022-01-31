@@ -90,7 +90,7 @@ class Table extends PureComponent {
   getAllChecked(items) {
     if (!items || !items.length) return false
     const allValues = this.getAllValues(items)
-    return deepEqual(allValues, this.props.checkedValues.sort())
+    return deepEqual(allValues, (this.props.checkedValues || []).sort())
   }
 
   toggleAllValues(items) {
