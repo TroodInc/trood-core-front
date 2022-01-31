@@ -187,7 +187,10 @@ class DateTimePicker extends PureComponent {
         date.set({ [format.substr(0, 1)]: timeValueSplit[i] })
       })
 
-      onChange(date.format(DEFAULT_DATE_TIME_FORMAT))
+      let format = DEFAULT_DATE_TIME_FORMAT
+      if (type === PICKER_TYPES.time) format = TIME_FORMAT
+      if (type === PICKER_TYPES.date) format = DEFAULT_DATE_FORMAT
+      onChange(date.format(format))
     }
   }
 
