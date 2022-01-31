@@ -94,42 +94,13 @@
 }
 
 .specialLabelIcon {
+  width: 20px;
+  height: 20px;
 }
 
 .thin .specialLabelIcon {
   width: 16px;
   height: 16px;
-}
-
-.addIcon {
-  composes: specialLabelIcon;
-  width: 22px;
-  height: 22px;
-  padding: 3px;
-}
-
-.minusIcon {
-  width: 24px;
-  height: 24px;
-  composes: specialLabelIcon;
-  color: var(--trood-black);
-}
-
-.deleteIcon {
-  width: 24px;
-  height: 24px;
-  composes: specialLabelIcon;
-  color: var(--trood-red);
-}
-
-.textIcon {
-  composes: specialLabelIcon;
-  width: 20px;
-  height: 20px;
-}
-
-.orange .addIcon {
-  border: 2px dashed var(--trood-orange);
 }
 
 input.button {
