@@ -104,6 +104,11 @@ parser.functions.arrayRemove = (arr = [], ...indexes) => {
   return arr.filter((_, i) => !indexes.includes(i))
 }
 
+parser.functions.setKeyValue = (key, value, init = {}) => ({
+  ...init,
+  [key]: value,
+})
+
 parser.functions.arrayReplace = (arr = [], ...data) => {
   const indexes = data.filter((_, i) => i % 2 === 0)
   return arr.map((item, i) => {
