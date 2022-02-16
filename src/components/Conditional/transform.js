@@ -5,8 +5,12 @@ const transformFunctions = {
       type,
       props: {
         ...node.props,
-        trueComponent: [standardTransform(nodes[node.linkedNodes.true])],
-        falseComponent: [standardTransform(nodes[node.linkedNodes.false])],
+        trueComponent: {
+          $component: [standardTransform(nodes[node.linkedNodes.true])],
+        },
+        falseComponent: {
+          $component: [standardTransform(nodes[node.linkedNodes.false])],
+        },
       },
       nodes: [],
     }

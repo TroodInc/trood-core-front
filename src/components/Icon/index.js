@@ -87,20 +87,7 @@ Icon.propTypes = {
   /** viewBox size for customSvg */
   svgViewBox: PropTypes.arrayOf(PropTypes.number),
   /** components for customSvg */
-  svgNodes: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.shape({
-      type: PropTypes.string,
-    }),
-    PropTypes.arrayOf(
-      PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.shape({
-          type: PropTypes.string.isRequired,
-        }),
-      ]),
-    ),
-  ]),
+  svgNodes: PropTypes.object,
   /** default type for rotate you can see in constants, or send number in deg */
   rotate: PropTypes.oneOfType([
     PropTypes.oneOf(Object.values(ROTATE_TYPES)),

@@ -1,11 +1,9 @@
-import React, { Component as ReactComponent } from 'react'
-import BaseComponent from 'core/BaseComponent'
-import { Component } from 'core/pageStore'
+import { Component } from 'react'
 
 import transform from './transform'
 
 
-class Conditional extends ReactComponent {
+class Conditional extends Component {
   shouldComponentUpdate(nextProps) {
     return this.props.value !== nextProps.value
   }
@@ -17,10 +15,7 @@ class Conditional extends ReactComponent {
       falseComponent,
     } = this.props
 
-    const TrueNodes = Component.create({ nodes: trueComponent })
-    const FalseNodes = Component.create({ nodes: falseComponent })
-
-    return <BaseComponent component={value ? TrueNodes : FalseNodes } />
+    return value ? trueComponent : falseComponent
   }
 }
 

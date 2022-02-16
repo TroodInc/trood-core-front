@@ -6,7 +6,9 @@ const transformFunctions = {
       type,
       props: {
         ...node.props,
-        nodes: innerNodes.map(n => standardTransform(nodes[n])),
+        nodes: {
+          $component: innerNodes.map(n => standardTransform(nodes[n])),
+        },
       },
       nodes: [],
     }

@@ -29,14 +29,7 @@ const CraftSelect = props => {
     <Select {...{
       innerRef: ref => connect(drag(ref)),
       ...rest,
-      labelNodes: [{
-        type: 'div',
-        props: {
-          children: {
-            '$data': '{{$context.label}}',
-          },
-        },
-      }],
+      labelNodes: <div/>,
       items: [{ value: 1, label: 'Item' }],
       value: [],
       onValid: () => {},

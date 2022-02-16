@@ -6,6 +6,7 @@ import style from './index.module.css'
 
 import withTooltip from '../internal/Tooltip'
 
+import ContextContext from 'core/ContextContext'
 import Label from '../Label'
 import Select from '../Select'
 import Button, { BUTTON_TYPES, BUTTON_COLORS } from '../Button'
@@ -88,14 +89,11 @@ class PeriodSelector extends PureComponent {
             className: style.filterInput,
             maxRows: 8,
             value: periodType || periods[0],
-            labelNodes: [{
-              type: 'div',
-              props: {
-                children: {
-                  '$data': '{{$context.label}}',
-                },
-              },
-            }],
+            labelNodes: (
+              <ContextContext.Consumer>
+                {$context => <div>{$context.label}</div>}
+              </ContextContext.Consumer>
+            ),
             items: periods.map(key => ({
               value: key,
               label: PERIOD_TYPES[key],

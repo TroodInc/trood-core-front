@@ -51,32 +51,14 @@
                             {
                               "path": "/",
                               "title": {
-                                "type": "img",
-                                "props": {
-                                  "src": "/images/logo.svg"
-                                }
+                                "$component": [{
+                                  "type": "img",
+                                  "props": {
+                                    "src": "/images/logo.svg"
+                                  }
+                                }]
                               },
                               "redirectTo": "/components"
-                            },
-                            {
-                              "path": "/clients",
-                              "title": "Clients",
-                              "redirectTo": "/clients/list"
-                            },
-                            {
-                              "path": "/matters",
-                              "title": "Matters",
-                              "redirectTo": "/matters/list",
-                              "items": [
-                                {
-                                  "path": "/list",
-                                  "title": "List"
-                                },
-                                {
-                                  "path": "/table",
-                                  "title": "Table"
-                                }
-                              ]
                             },
                             {
                               "path": "/remote",

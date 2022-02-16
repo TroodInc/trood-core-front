@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 import classNames from 'classnames'
 import deepEqual from 'deep-equal'
+import get from 'lodash/get'
 
 import style from './index.module.css'
 
@@ -11,9 +12,6 @@ import Label from '../Label'
 
 import { SELECT_TYPES } from './constants'
 import transform from './transform'
-
-import BaseComponent, { parseProp } from 'core/BaseComponent'
-import { Component } from 'core/pageStore'
 import Context from '../Context'
 
 import withTooltip from '../internal/Tooltip'
@@ -44,20 +42,7 @@ const getSelect = craft => {
     static propTypes = {
       valuePath: PropTypes.string,
       searchPath: PropTypes.string,
-      labelNodes: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.shape({
-          type: PropTypes.string,
-        }),
-        PropTypes.arrayOf(
-          PropTypes.oneOfType([
-            PropTypes.string,
-            PropTypes.shape({
-              type: PropTypes.string.isRequired,
-            }),
-          ]),
-        ),
-      ]),
+      labelNodes: PropTypes.object,
       /** class name for styling component */
       className: PropTypes.string,
       /** class name for styling label */
@@ -226,7 +211,6 @@ const getSelect = craft => {
         value,
       } = this.props
 
-      const labelStore = Component.create({ nodes: labelNodes })
       const values = Array.isArray(value) ? value : [value]
       const onChange = v => {
         this.props.onChange(multi ? v : v[0])
@@ -236,29 +220,18 @@ const getSelect = craft => {
         ...this.props,
         values,
         onChange,
-        items: items.map((item, i) => ({
-          label: (
-            <Context key={i} context={{ ...item, $index: i }}>
-              <BaseComponent component={labelStore} />
-            </Context>
-          ),
-          value: parseProp(
-            {
-              $data: `{{$context.${valuePath}}}`,
-            },
-            {
-              $context: item,
-            },
-          ),
-          search: parseProp(
-            {
-              $data: `{{$context.${searchPath}}}`,
-            },
-            {
-              $context: item,
-            },
-          ),
-        })),
+        items: items.map((item, i) => {
+          const context = { ...item, $index: i }
+          return {
+            label: (
+              <Context key={i} context={context}>
+                {labelNodes}
+              </Context>
+            ),
+            value: get(context, valuePath),
+            search: get(context, searchPath),
+          }
+        }),
         className: undefined,
         type: listType,
         clearable: clearable === undefined ? multi : clearable,

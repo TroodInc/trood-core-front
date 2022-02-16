@@ -2,8 +2,6 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import deepEqual from 'deep-equal'
 import get from 'lodash/get'
-import BaseComponent from 'core/BaseComponent'
-import { Component } from 'core/pageStore'
 import Context from '../Context'
 
 import Paginator, { PAGINATION_TYPES } from '../internal/Paginator'
@@ -12,18 +10,6 @@ import Checkbox from '../Checkbox'
 import transform from './transform'
 import styles from './index.module.css'
 
-
-const getComponents = (columnComponents, componentKey = 'bodyCell', wrapper = 'td') =>
-  columnComponents.map(c => {
-    let component = c[componentKey]
-    if (!component || component.type !== wrapper) {
-      component = {
-        type: wrapper,
-        nodes: [c[componentKey]],
-      }
-    }
-    return component
-  })
 
 class Table extends PureComponent {
   static defaultProps = {
@@ -52,10 +38,8 @@ class Table extends PureComponent {
       cacheMaxAgeMs: PropTypes.number,
       filters: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     }),
-    columnComponents: PropTypes.arrayOf(PropTypes.shape({
-      headerCell: PropTypes.object,
-      bodyCell: PropTypes.object,
-    })),
+    headerCell: PropTypes.object,
+    bodyCell: PropTypes.object,
     pagination: PropTypes.shape({
       paginationType: PropTypes.oneOf(Object.values(PAGINATION_TYPES)),
       defaultPageSize: PropTypes.number,
@@ -116,18 +100,14 @@ class Table extends PureComponent {
       className,
       entity,
       queryOptions,
-      columnComponents,
+      headerCells,
+      bodyCells,
       pagination,
 
       checked,
       checkedValuePath,
       checkedValues = [],
     } = this.props
-
-    const headerComponents = getComponents(columnComponents, 'headerCell', 'th')
-    const bodyComponents = getComponents(columnComponents)
-    const headerComponentsStore = Component.create({ nodes: headerComponents })
-    const bodyComponentsStore = Component.create({ nodes: bodyComponents })
 
     return (
       <Paginator {...pagination} innerRef={innerRef} className={className} entity={entity} queryOptions={queryOptions}>
@@ -145,7 +125,7 @@ class Table extends PureComponent {
                       />
                     </th>
                   )}
-                  <BaseComponent component={headerComponentsStore} />
+                  {headerCells}
                 </tr>
               </thead>
               <tbody>
@@ -163,7 +143,7 @@ class Table extends PureComponent {
                             />
                           </td>
                         )}
-                        <BaseComponent component={bodyComponentsStore} />
+                        {bodyCells}
                       </tr>
                     </Context>
                   )

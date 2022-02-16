@@ -44,68 +44,6 @@
                   {
                     "type": "Table",
                     "props": {
-                      "pagination": {
-                        "topControls": [
-                          {
-                            "type": "Container",
-                            "props": {
-                              "style": {
-                                "flexDirection": "row"
-                              }
-                            },
-                            "nodes": [
-                              {
-                                "type": "Conditional",
-                                "props": {
-                                  "condition": {
-                                    "$expression": "data('$context.currentPage') > 0"
-                                  },
-                                  "ifTrue": [
-                                    {
-                                      "type": "Button",
-                                      "props": {
-                                        "specialType": "arrowLeft",
-                                        "type": "text",
-                                        "style": "& div:last-child{color:#e95c5c;}",
-                                        "onClick": {
-                                          "$action": "$context.goToPage[$arg0]",
-                                          "$arg0": {
-                                            "$expression": "data('$context.currentPage') - 1"
-                                          }
-                                        }
-                                      }
-                                    }
-                                  ]
-                                }
-                              },
-                              {
-                                "type": "Conditional",
-                                "props": {
-                                  "condition": {
-                                    "$expression": "data('$context.currentPage') < (data('$context.pagesCount') - 1)"
-                                  },
-                                  "ifTrue": [
-                                    {
-                                      "type": "Button",
-                                      "props": {
-                                        "specialType": "arrowRight",
-                                        "type": "text",
-                                        "style": "& div:last-child{color:#e95c5c;}",
-                                        "onClick": {
-                                          "$action": "$context.goToPage[$arg0]",
-                                          "$arg0": {
-                                            "$expression": "data('$context.currentPage') + 1"
-                                          }
-                                        }
-                                      }
-                                    }
-                                  ]
-                                }
-                              }
-                            ]
-                          }
-                        ]
-                      },
                       "entity": {
                         "$data": "{{$store.apis.custodian.client}}"
                       },

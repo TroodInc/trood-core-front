@@ -5,6 +5,7 @@ import PageStoreContext from 'core/PageStoreContext'
 import AuthStoreContext from 'core/AuthStoreContext'
 import ContextContext from 'core/ContextContext'
 import FormContext from 'core/FormContext'
+import { Component } from 'core/pageStore'
 import { useObserver } from 'mobx-react-lite'
 import { useHistory, useLocation, useParams } from 'react-router-dom'
 import { Parser } from 'expr-eval'
@@ -16,6 +17,11 @@ import loadable from '@loadable/component'
 
 
 const ComponentsWrapper = loadable.lib(() => import('components'))
+
+const getComponent = componentProp => {
+  const componentStore = Component.create({ nodes: componentProp.$component })
+  return <BaseComponent component={componentStore} />
+}
 
 const getData = (dataProp, $data) => {
   let value = dataProp.$data
@@ -133,26 +139,25 @@ const getExpression = (expressionProp, $data) => {
   return parser.evaluate(expressionProp.$expression)
 }
 
-const parseProp = (prop, $data, deep) => {
+const parseProp = (prop, $data) => {
   if (!prop) return prop
   if (Array.isArray(prop)) {
     return prop.map(value => parseProp(value, $data))
   }
   if (typeof prop === 'object') {
+    if (isDefAndNotNull(prop.$component)) return getComponent(prop)
     if (isDefAndNotNull(prop.$data)) return getData(prop, $data)
     if (isDefAndNotNull(prop.$action)) return getAction(prop, $data)
     if (isDefAndNotNull(prop.$expression)) return getExpression(prop, $data)
-    if (deep) {
-      return Object.entries(prop).reduce((memo, [key, value]) => ({
-        ...memo,
-        [key]: parseProp(value, $data, deep),
-      }), prop)
-    }
+    return Object.entries(prop).reduce((memo, [key, value]) => ({
+      ...memo,
+      [key]: parseProp(value, $data),
+    }), prop)
   }
   return prop
 }
 
-const connectProps = (props, $data, childBaseComponent) => {
+const connectProps = (props, $data) => {
   if (typeof props !== 'object') return props
   if (!props) return {}
   return Object.keys(props).reduce(
@@ -216,7 +221,7 @@ const BaseComponent = Wrapper(({ component, coreComponents }) => {
       const Component = coreComponents[childComponent.type] || childComponent.type
       const childBaseComponent = <BaseComponent key="Base" component={childComponent} />
       const connectedProps = childComponent.props
-        ? connectProps(childComponent.props, $data, childBaseComponent)
+        ? connectProps(childComponent.props, $data)
         : {}
       if (typeof childComponent !== 'object') {
         return childComponent

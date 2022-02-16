@@ -2,8 +2,6 @@ import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 import classNames from 'classnames'
 
-import BaseComponent from 'core/BaseComponent'
-import { Component } from 'core/pageStore'
 import Context from '../Context'
 
 import LoadingIndicator from '../LoadingIndicator'
@@ -75,9 +73,6 @@ class FileInput extends PureComponent {
 
     const { uploading } = this.state
 
-    const labelComponentStore = Component.create({ nodes: [labelComponent] })
-    const valueComponentStore = Component.create({ nodes: [valueComponent] })
-
     return (
       <div {...{
         className: style.root,
@@ -90,9 +85,7 @@ class FileInput extends PureComponent {
             disabled && style.disabled,
           ),
         }}>
-          {!uploading && (
-            <BaseComponent component={labelComponentStore} />
-          )}
+          {!uploading && labelComponent}
           {uploading && <LoadingIndicator size={32} />}
           <input {...{
             className: style.fileInput,
@@ -103,9 +96,9 @@ class FileInput extends PureComponent {
             onChange: this.uploadFile,
           }} />
         </label>
-        {value && valueComponentStore && (
+        {value && valueComponent && (
           <Context context={value}>
-            <BaseComponent component={valueComponentStore} />
+            {valueComponent}
           </Context>
         )}
         {!!errors.length &&
