@@ -23,7 +23,20 @@ const getComponent = componentProp => {
   return <BaseComponent component={componentStore} />
 }
 
-const getData = (dataProp, $data) => {
+const getData = (dataProp, data) => {
+  const transformedDataProp = Object.keys(dataProp).reduce((memo, key) => {
+    if (key === '$data') return memo
+    return {
+      ...memo,
+      [key]: parseProp(dataProp[key], data),
+    }
+  }, {
+    $data: dataProp.$data,
+  })
+  const $data = {
+    ...transformedDataProp,
+    ...data,
+  }
   let value = dataProp.$data
   if (typeof value === 'object') {
     return Object.keys(value).reduce((memo, key) => ({
@@ -40,9 +53,7 @@ const getData = (dataProp, $data) => {
         if (/\[([^\]]*)]/g.test(key)) {
           const argsMatches = key.matchAll(/\[([^\]]*)]/g)
           for (const [, args] of argsMatches) {
-            const argsArray = args.split(',').map(arg => (
-              parseProp(dataProp[arg.trim()], $data, true)
-            ))
+            const argsArray = args.split(',').map(arg => $data[arg.trim()])
             const f = (memo || {})[key.replace(/\[([^\]]*)]/g, '')]
             if (typeof f !== 'function') return undefined
             return f.bind(memo)(...argsArray)
