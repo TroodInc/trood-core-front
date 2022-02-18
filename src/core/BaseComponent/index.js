@@ -73,6 +73,94 @@ const getData = (dataProp, data) => {
   return value
 }
 
+const realOperators = {
+  'endLike': 'like',
+  'startLike': 'like',
+  'isNull': 'is_null',
+}
+
+const getInnerRql = rql => {
+  return Object.keys(rql).reduce((memo, key) => {
+    const match = key.match(/^\$([a-zA-Z]+)\d?$/) || []
+    const rqlOperator = match[1]
+    if (!rql[key]) throw new Error(`Error in ${rqlOperator} operator syntax`)
+    const operator = realOperators[rqlOperator] || rqlOperator
+    let k
+    let v
+    switch (rqlOperator) {
+      case 'and':
+      case 'or':
+      case 'not':
+        const inner = getInnerRql(rql[key])
+        if (inner) return [memo, `${operator}(${inner})`].filter(Boolean).join(',')
+        break
+      case 'eq':
+      case 'lt':
+      case 'le':
+      case 'gt':
+      case 'ge':
+      case 'like':
+      case 'endLike':
+      case 'startLike':
+      case 'in':
+        k = Object.keys(rql[key])[0]
+        if (!k) throw new Error(`Error in ${rqlOperator} operator syntax`)
+
+        v = rql[key][k]
+        if (typeof v === 'boolean') v = +v
+        if (isDefAndNotNull(v)) {
+          switch (rqlOperator) {
+            case 'like':
+              v = `*${v}*`
+              break
+            case 'endLike':
+              v = `*${v}`
+              break
+            case 'startLike':
+              v = `${v}*`
+              break
+            case 'in':
+              if (Array.isArray(v) && v.length) {
+                v = `(${v.filter(Boolean).join(',')})`
+              } else {
+                v = undefined
+              }
+              break
+            default:
+          }
+          if (isDefAndNotNull(v)) return [memo, `${operator}(${k},${v})`].filter(Boolean).join(',')
+        }
+        break
+      case 'isNull':
+        return [memo, `${operator}(${rql[key]},1)`].filter(Boolean).join(',')
+      case 'limit':
+        v = rql[key]
+        if (typeof v.from !== 'number' || typeof v.step !== 'number') {
+          throw new Error(`Error in ${rqlOperator} operator syntax`)
+        }
+        return [memo, `${operator}(${v.from},${v.step})`].filter(Boolean).join(',')
+      case 'sort':
+        return [memo, `${operator}(${rql[key]})`].filter(Boolean).join(',')
+      default:
+        return memo
+    }
+    return memo
+  }, '')
+}
+
+const getRql = (rqlProp, $data) => {
+  const rql = rqlProp.$rql
+  const transformedRql = Object.keys(rql).reduce((memo, key) => {
+    return {
+      ...memo,
+      [key]: parseProp(rql[key], $data),
+    }
+  }, {})
+  const result = getInnerRql(transformedRql)
+  console.log(result)
+  return result
+}
+
 const execAction = (actionPath, actionProp, $data) => {
   return actionPath.split('.').reduce(
     (memo, key) => {
@@ -160,6 +248,7 @@ const parseProp = (prop, $data) => {
     if (isDefAndNotNull(prop.$data)) return getData(prop, $data)
     if (isDefAndNotNull(prop.$action)) return getAction(prop, $data)
     if (isDefAndNotNull(prop.$expression)) return getExpression(prop, $data)
+    if (isDefAndNotNull(prop.$rql)) return getRql(prop, $data)
     return Object.entries(prop).reduce((memo, [key, value]) => ({
       ...memo,
       [key]: parseProp(value, $data),
