@@ -81,7 +81,7 @@ const realOperators = {
 
 const getInnerRql = rql => {
   return Object.keys(rql).reduce((memo, key) => {
-    const match = key.match(/^\$([a-zA-Z]+)\d?$/) || []
+    const match = key.match(/^\$([a-zA-Z]+)\d*$/) || []
     const rqlOperator = match[1]
     if (!rql[key]) throw new Error(`Error in ${rqlOperator} operator syntax`)
     const operator = realOperators[rqlOperator] || rqlOperator
@@ -156,9 +156,7 @@ const getRql = (rqlProp, $data) => {
       [key]: parseProp(rql[key], $data),
     }
   }, {})
-  const result = getInnerRql(transformedRql)
-  console.log(result)
-  return result
+  return getInnerRql(transformedRql)
 }
 
 const execAction = (actionPath, actionProp, $data) => {
@@ -233,9 +231,116 @@ const getDataFunc = (expressionProp, $data) => (path) => {
   return getData(dataProp, $data)
 }
 
+const exprIndexRegexp = /^\$(\d*)\D+.*$/
+const getExprIndex = exprKey => +((exprKey.match(exprIndexRegexp) || [])[1] || 0)
+const exprOperatorRegexp = /^\$\d*(\D+.*)$/
+const getExprOperator = exprKey => (exprKey.match(exprOperatorRegexp) || [])[1]
+
+const getInnerExpression = (expr) => {
+  if (Array.isArray(expr)) {
+    return expr.map(item => getInnerExpression(item))
+  }
+  if (typeof expr === 'object') {
+    return Object.keys(expr)
+      .sort((a, b) => {
+        const indexA = getExprIndex(a)
+        const indexB = getExprIndex(b)
+        return indexA - indexB
+      })
+      .map(key => {
+        const operator = getExprOperator(key)
+        switch (operator) {
+          case 'parsed':
+            return expr[key]
+          case '=':
+            return `${expr[key].name}=${getInnerExpression(expr[key].value)};`
+          case '+':
+          case '-':
+          case '*':
+          case '/':
+          case '%':
+          case '^':
+          case 'and':
+          case 'or':
+          case '==':
+          case '!=':
+          case '>=':
+          case '<=':
+          case '>':
+          case '<':
+            return `(${getInnerExpression(expr[key].x)} ${operator} ${getInnerExpression(expr[key].y)})`
+          case '()':
+            return `(${getInnerExpression(expr[key])})`
+          case '!':
+            return `(${getInnerExpression(expr[key])}!)`
+          case 'concat':
+            return `(${getInnerExpression(expr[key].x)} || ${getInnerExpression(expr[key].y)})`
+          case 'in':
+            return `(${getInnerExpression(expr[key].x)} ${operator} [${getInnerExpression(expr[key].y)}])`
+          case 'ternary':
+            return `(${
+              getInnerExpression(expr[key].value)
+            }?${getInnerExpression(expr[key].true)}:${getInnerExpression(expr[key].false)})`
+          case 'str':
+            return `'${getInnerExpression(expr[key])}'`
+          case 'abs':
+          case 'acos':
+          case 'acosh':
+          case 'asin':
+          case 'asinh':
+          case 'atan':
+          case 'atanh':
+          case 'cbrt':
+          case 'ceil':
+          case 'cos':
+          case 'cosh':
+          case 'exp':
+          case 'expm1':
+          case 'floor':
+          case 'length':
+          case 'ln':
+          case 'log':
+          case 'log10':
+          case 'log2':
+          case 'log1p':
+          case 'not':
+          case 'round':
+          case 'sign':
+          case 'sin':
+          case 'sinh':
+          case 'sqrt':
+          case 'tan':
+          case 'tanh':
+          case 'trunc':
+          case 'random':
+          case 'fac':
+            return `${operator}(${getInnerExpression(expr[key])})`
+          default:
+            return expr[key]
+        }
+      })
+      .join(' ')
+  }
+  return expr
+}
+
 const getExpression = (expressionProp, $data) => {
   parser.functions.data = getDataFunc(expressionProp, $data)
-  return parser.evaluate(expressionProp.$expression)
+
+  const expr = expressionProp.$expression
+  if (typeof expr === 'string') {
+    return parser.evaluate(expr)
+  }
+
+  const transformedExpr = Object.keys(expr).reduce((memo, key) => {
+    return {
+      ...memo,
+      [key]: parseProp(expr[key], $data),
+    }
+  }, {})
+  const innerExpr = getInnerExpression(transformedExpr)
+  console.log(innerExpr)
+  return parser.evaluate(innerExpr)
 }
 
 const parseProp = (prop, $data) => {
