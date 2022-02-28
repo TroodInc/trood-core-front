@@ -4,8 +4,7 @@ import { Observer } from 'mobx-react-lite'
 import classNames from 'classnames'
 import debounce from 'lodash/debounce'
 
-import BaseComponent from 'core/BaseComponent'
-import { Component } from 'core/pageStore'
+import ContextContext from 'core/ContextContext'
 import Context from '../../Context'
 
 import Select from '../../Select'
@@ -160,7 +159,7 @@ class Paginator extends PureComponent {
     }
 
     if ((topControls && !bottom) || (bottomControls && bottom)) {
-      const controlsStore = Component.create({ nodes: (bottom ? bottomControls : topControls) })
+      const controls = bottom ? bottomControls : topControls
       return (
         <Context context={{
           pagesCount,
@@ -168,7 +167,7 @@ class Paginator extends PureComponent {
           currentPage: page,
           goToPage: this.goToPage,
         }}>
-          <BaseComponent component={controlsStore} />
+          {controls}
         </Context>
       )
     }
@@ -213,14 +212,11 @@ class Paginator extends PureComponent {
           controlClassName: styles.selectControl,
           labelClassName: styles.selectLabel,
           label: 'per page',
-          labelNodes: [{
-            type: 'div',
-            props: {
-              children: {
-                '$data': '{{$context.label}}',
-              },
-            },
-          }],
+          labelNodes: (
+            <ContextContext.Consumer>
+              {$context => <div>{$context.label}</div>}
+            </ContextContext.Consumer>
+          ),
           items: pageSizes.map(value => ({ value, label: value })),
           value: pageSize,
           openUp: bottom,
@@ -257,7 +253,6 @@ class Paginator extends PureComponent {
     if (nextPage === undefined) return null
 
     if (infinityControls) {
-      const controlsStore = Component.create({ nodes: infinityControls })
       return (
         <Context context={{
           loadNextPage: () => {
@@ -267,7 +262,7 @@ class Paginator extends PureComponent {
             this.setState({ page: nextPage, pageSize: pageSize })
           },
         }}>
-          <BaseComponent component={controlsStore} />
+          {infinityControls}
         </Context>
       )
     }

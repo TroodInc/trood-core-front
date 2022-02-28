@@ -28,15 +28,22 @@ const transformFunctions = {
   loadTransform: (node, nodes, standardTransform) => {
     const type = typeof node.type === 'string' ? node.type : (node.type || {}).resolvedName
     const columnComponentsLength = Object.keys(node.linkedNodes).length / 2
-    const columnComponents = Array(columnComponentsLength).fill(0).map((_, i) => ({
-      headerCell: standardTransform(nodes[node.linkedNodes[`th${i}`]]),
-      bodyCell: standardTransform(nodes[node.linkedNodes[`td${i}`]]),
-    }))
+    const headerCells = {
+      $component: Array(columnComponentsLength).fill(0).map((_, i) => (
+        standardTransform(nodes[node.linkedNodes[`th${i}`]])
+      )),
+    }
+    const bodyCells = {
+      $component: Array(columnComponentsLength).fill(0).map((_, i) => (
+        standardTransform(nodes[node.linkedNodes[`td${i}`]])
+      )),
+    }
     return {
       type,
       props: {
         ...node.props,
-        columnComponents,
+        headerCells,
+        bodyCells,
       },
       nodes: [],
     }

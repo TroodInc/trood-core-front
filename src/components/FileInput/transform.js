@@ -5,8 +5,12 @@ const transformFunctions = {
       type,
       props: {
         ...node.props,
-        labelComponent: standardTransform(nodes[node.linkedNodes.label]),
-        valueComponent: standardTransform(nodes[node.linkedNodes.value]),
+        labelComponent: {
+          $component: [standardTransform(nodes[node.linkedNodes.label])],
+        },
+        valueComponent: {
+          $component: [standardTransform(nodes[node.linkedNodes.value])],
+        },
       },
       nodes: [],
     }

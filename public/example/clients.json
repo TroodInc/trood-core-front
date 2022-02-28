@@ -114,92 +114,94 @@
                       "entity": {
                         "$data": "{{$store.apis.custodian.client}}"
                       },
-                      "nodes": [
-                        {
-                          "type": "Container",
-                          "props": {
-                            "style": {
-                              "flexDirection": "row"
-                            }
-                          },
-                          "nodes": [
-                            {
-                              "type": "Container",
-                              "props": {
-                                "style": {
-                                  "flexDirection": "column"
-                                },
-                                "children": {
-                                  "$data": "{{$context.id}}"
-                                }
+                      "nodes": {
+                        "$component": [
+                          {
+                            "type": "Container",
+                            "props": {
+                              "style": {
+                                "flexDirection": "row"
                               }
                             },
-                            {
-                              "type": "Container",
-                              "props": {
-                                "style": {
-                                  "flexDirection": "column"
-                                }
-                              },
-                              "nodes": [
-                                {
-                                  "type": "Link",
-                                  "props": {
-                                    "to": {
-                                      "$expression": "\"/client/\" || data(\"$context.id\")"
-                                    },
-                                    "children": {
-                                      "$data": "{{$context.name}}"
-                                    }
+                            "nodes": [
+                              {
+                                "type": "Container",
+                                "props": {
+                                  "style": {
+                                    "flexDirection": "column"
+                                  },
+                                  "children": {
+                                    "$data": "{{$context.id}}"
                                   }
                                 }
-                              ]
-                            },
-                            {
-                              "type": "Container",
-                              "props": {
-                                "style": {
-                                  "flexDirection": "column"
+                              },
+                              {
+                                "type": "Container",
+                                "props": {
+                                  "style": {
+                                    "flexDirection": "column"
+                                  }
                                 },
-                                "children": {
-                                  "$data": "{{$context.client_type.name}}"
-                                }
-                              }
-                            },
-                            {
-                              "type": "Container",
-                              "props": {
-                                "style": {
-                                  "flexDirection": "column"
+                                "nodes": [
+                                  {
+                                    "type": "Link",
+                                    "props": {
+                                      "to": {
+                                        "$expression": "\"/client/\" || data(\"$context.id\")"
+                                      },
+                                      "children": {
+                                        "$data": "{{$context.name}}"
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "Container",
+                                "props": {
+                                  "style": {
+                                    "flexDirection": "column"
+                                  },
+                                  "children": {
+                                    "$data": "{{$context.client_type.name}}"
+                                  }
                                 }
                               },
-                              "nodes": [
-                                {
-                                  "type": "Button",
-                                  "props": {
-                                    "label": "edit",
-                                    "type": "text",
-                                    "onClick": {
-                                      "$action": "$page.openModal[$arg0,$arg1]",
-                                      "$arg0": "editClient",
-                                      "$arg1": {
-                                        "$data": "{{$store.forms.getForm[$arg0]}}",
-                                        "$arg0": {
-                                          "apiName": "custodian",
-                                          "modelName": "client",
-                                          "modelPk": {
-                                            "$data": "{{$context.id}}"
+                              {
+                                "type": "Container",
+                                "props": {
+                                  "style": {
+                                    "flexDirection": "column"
+                                  }
+                                },
+                                "nodes": [
+                                  {
+                                    "type": "Button",
+                                    "props": {
+                                      "label": "edit",
+                                      "type": "text",
+                                      "onClick": {
+                                        "$action": "$page.openModal[$arg0,$arg1]",
+                                        "$arg0": "editClient",
+                                        "$arg1": {
+                                          "$data": "{{$store.forms.getForm[$arg0]}}",
+                                          "$arg0": {
+                                            "apiName": "custodian",
+                                            "modelName": "client",
+                                            "modelPk": {
+                                              "$data": "{{$context.id}}"
+                                            }
                                           }
                                         }
                                       }
                                     }
                                   }
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
                     }
                   }
                 ]

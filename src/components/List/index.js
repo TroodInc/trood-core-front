@@ -1,7 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import BaseComponent from 'core/BaseComponent'
-import { Component } from 'core/pageStore'
 import Context from '../Context'
 
 import Paginator, { PAGINATION_TYPES } from '../internal/Paginator'
@@ -14,19 +12,15 @@ const List = ({
   queryOptions,
   nodes,
   pagination = {},
-}) => {
-  const componentsStore = Component.create({ nodes })
-
-  return (
-    <Paginator innerRef={innerRef} {...pagination} className={className} entity={entity} queryOptions={queryOptions}>
-      {({ items }) => items.map((item, i) => (
-        <Context key={i} context={{ ...item, $index: i }}>
-          <BaseComponent component={componentsStore} />
-        </Context>
-      ))}
-    </Paginator>
-  )
-}
+}) => (
+  <Paginator innerRef={innerRef} {...pagination} className={className} entity={entity} queryOptions={queryOptions}>
+    {({ items }) => items.map((item, i) => (
+      <Context key={i} context={{ ...item, $index: i }}>
+        {nodes}
+      </Context>
+    ))}
+  </Paginator>
+)
 
 List.propTypes = {
   className: PropTypes.string,
@@ -48,7 +42,7 @@ List.propTypes = {
     cacheMaxAgeMs: PropTypes.number,
     filters: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   }),
-  nodes: PropTypes.arrayOf(PropTypes.object),
+  nodes: PropTypes.object,
   pagination: PropTypes.shape({
     paginationType: PropTypes.oneOf(Object.values(PAGINATION_TYPES)),
     defaultPageSize: PropTypes.number,

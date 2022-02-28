@@ -2,23 +2,10 @@ import React from 'react'
 import ReactTooltip from 'react-tooltip'
 import { nanoid } from 'nanoid'
 
-import BaseComponent from 'core/BaseComponent'
-import { Component } from 'core/pageStore'
-
 import { groupDataAndAriaAttributes } from 'helpers/react'
 
 import styles from './index.module.css'
 
-
-const getTooltip = tooltip => {
-  if (typeof tooltip === 'object') {
-    const componentsStore = Component.create({
-      nodes: Array.isArray(tooltip) ? tooltip : [tooltip],
-    })
-    return <BaseComponent component={componentsStore} />
-  }
-  return tooltip
-}
 
 const withTooltip = WrappedComponent => {
   const Component = ({
@@ -46,7 +33,7 @@ const withTooltip = WrappedComponent => {
           backgroundColor="#f8f8f8" // var(--trood-background-light)
           textColor="#7d7d7d" // var(--trood-text-gray)
         >
-          {getTooltip(tooltip)}
+          {tooltip}
         </ReactTooltip>
       </React.Fragment>
     )

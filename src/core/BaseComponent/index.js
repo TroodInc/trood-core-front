@@ -5,6 +5,7 @@ import PageStoreContext from 'core/PageStoreContext'
 import AuthStoreContext from 'core/AuthStoreContext'
 import ContextContext from 'core/ContextContext'
 import FormContext from 'core/FormContext'
+import { Component } from 'core/pageStore'
 import { useObserver } from 'mobx-react-lite'
 import { useHistory, useLocation, useParams } from 'react-router-dom'
 import { Parser } from 'expr-eval'
@@ -17,7 +18,25 @@ import loadable from '@loadable/component'
 
 const ComponentsWrapper = loadable.lib(() => import('components'))
 
-const getData = (dataProp, $data) => {
+const getComponent = componentProp => {
+  const componentStore = Component.create({ nodes: componentProp.$component })
+  return <BaseComponent component={componentStore} />
+}
+
+const getData = (dataProp, data) => {
+  const transformedDataProp = Object.keys(dataProp).reduce((memo, key) => {
+    if (key === '$data') return memo
+    return {
+      ...memo,
+      [key]: parseProp(dataProp[key], data),
+    }
+  }, {
+    $data: dataProp.$data,
+  })
+  const $data = {
+    ...transformedDataProp,
+    ...data,
+  }
   let value = dataProp.$data
   if (typeof value === 'object') {
     return Object.keys(value).reduce((memo, key) => ({
@@ -34,9 +53,7 @@ const getData = (dataProp, $data) => {
         if (/\[([^\]]*)]/g.test(key)) {
           const argsMatches = key.matchAll(/\[([^\]]*)]/g)
           for (const [, args] of argsMatches) {
-            const argsArray = args.split(',').map(arg => (
-              parseProp(dataProp[arg.trim()], $data, true)
-            ))
+            const argsArray = args.split(',').map(arg => $data[arg.trim()])
             const f = (memo || {})[key.replace(/\[([^\]]*)]/g, '')]
             if (typeof f !== 'function') return undefined
             return f.bind(memo)(...argsArray)
@@ -54,6 +71,92 @@ const getData = (dataProp, $data) => {
     }
   }
   return value
+}
+
+const realOperators = {
+  'endLike': 'like',
+  'startLike': 'like',
+  'isNull': 'is_null',
+}
+
+const getInnerRql = rql => {
+  return Object.keys(rql).reduce((memo, key) => {
+    const match = key.match(/^\$([a-zA-Z]+)\d*$/) || []
+    const rqlOperator = match[1]
+    if (!rql[key]) throw new Error(`Error in ${rqlOperator} operator syntax`)
+    const operator = realOperators[rqlOperator] || rqlOperator
+    let k
+    let v
+    switch (rqlOperator) {
+      case 'and':
+      case 'or':
+      case 'not':
+        const inner = getInnerRql(rql[key])
+        if (inner) return [memo, `${operator}(${inner})`].filter(Boolean).join(',')
+        break
+      case 'eq':
+      case 'lt':
+      case 'le':
+      case 'gt':
+      case 'ge':
+      case 'like':
+      case 'endLike':
+      case 'startLike':
+      case 'in':
+        k = Object.keys(rql[key])[0]
+        if (!k) throw new Error(`Error in ${rqlOperator} operator syntax`)
+
+        v = rql[key][k]
+        if (typeof v === 'boolean') v = +v
+        if (isDefAndNotNull(v)) {
+          switch (rqlOperator) {
+            case 'like':
+              v = `*${v}*`
+              break
+            case 'endLike':
+              v = `*${v}`
+              break
+            case 'startLike':
+              v = `${v}*`
+              break
+            case 'in':
+              if (Array.isArray(v) && v.length) {
+                v = `(${v.filter(Boolean).join(',')})`
+              } else {
+                v = undefined
+              }
+              break
+            default:
+          }
+          if (isDefAndNotNull(v)) return [memo, `${operator}(${k},${v})`].filter(Boolean).join(',')
+        }
+        break
+      case 'isNull':
+        return [memo, `${operator}(${rql[key]},1)`].filter(Boolean).join(',')
+      case 'limit':
+        v = rql[key]
+        if (typeof v.from !== 'number' || typeof v.step !== 'number') {
+          throw new Error(`Error in ${rqlOperator} operator syntax`)
+        }
+        return [memo, `${operator}(${v.from},${v.step})`].filter(Boolean).join(',')
+      case 'sort':
+        return [memo, `${operator}(${rql[key]})`].filter(Boolean).join(',')
+      default:
+        return memo
+    }
+    return memo
+  }, '')
+}
+
+const getRql = (rqlProp, $data) => {
+  const rql = rqlProp.$rql
+  const transformedRql = Object.keys(rql).reduce((memo, key) => {
+    return {
+      ...memo,
+      [key]: parseProp(rql[key], $data),
+    }
+  }, {})
+  return getInnerRql(transformedRql)
 }
 
 const execAction = (actionPath, actionProp, $data) => {
@@ -104,11 +207,6 @@ parser.functions.arrayRemove = (arr = [], ...indexes) => {
   return arr.filter((_, i) => !indexes.includes(i))
 }
 
-parser.functions.setKeyValue = (key, value, init = {}) => ({
-  ...init,
-  [key]: value,
-})
-
 parser.functions.arrayReplace = (arr = [], ...data) => {
   const indexes = data.filter((_, i) => i % 2 === 0)
   return arr.map((item, i) => {
@@ -120,6 +218,11 @@ parser.functions.arrayReplace = (arr = [], ...data) => {
   })
 }
 
+parser.functions.setKeyValue = (key, value, init = {}) => ({
+  ...init,
+  [key]: value,
+})
+
 const getDataFunc = (expressionProp, $data) => (path) => {
   const dataProp = {
     ...expressionProp,
@@ -128,31 +231,157 @@ const getDataFunc = (expressionProp, $data) => (path) => {
   return getData(dataProp, $data)
 }
 
-const getExpression = (expressionProp, $data) => {
-  parser.functions.data = getDataFunc(expressionProp, $data)
-  return parser.evaluate(expressionProp.$expression)
+const exprIndexRegexp = /^\$(\d*)\D+.*$/
+const getExprIndex = exprKey => +((exprKey.match(exprIndexRegexp) || [])[1] || 0)
+const exprOperatorRegexp = /^\$\d*(\D+.*)$/
+const getExprOperator = exprKey => (exprKey.match(exprOperatorRegexp) || [])[1]
+
+const getInnerExpression = (expr) => {
+  if (Array.isArray(expr)) {
+    return expr.map(item => getInnerExpression(item))
+  }
+  if (typeof expr === 'object') {
+    return Object.keys(expr)
+      .sort((a, b) => {
+        const indexA = getExprIndex(a)
+        const indexB = getExprIndex(b)
+        return indexA - indexB
+      })
+      .map(key => {
+        const operator = getExprOperator(key)
+        switch (operator) {
+          case 'parsed':
+            return expr[key]
+          case '=':
+            return `${expr[key].name}=${getInnerExpression(expr[key].value)};`
+          case '+':
+          case '-':
+          case '*':
+          case '/':
+          case '%':
+          case '^':
+          case 'and':
+          case 'or':
+          case '==':
+          case '!=':
+          case '>=':
+          case '<=':
+          case '>':
+          case '<':
+            return `(${getInnerExpression(expr[key].x)} ${operator} ${getInnerExpression(expr[key].y)})`
+          case 'group':
+            return `(${getInnerExpression(expr[key])})`
+          case '!':
+            return `(${getInnerExpression(expr[key])}!)`
+          case 'concat':
+            return `(${getInnerExpression(expr[key].x)} || ${getInnerExpression(expr[key].y)})`
+          case 'in':
+            return `(${getInnerExpression(expr[key].x)} ${operator} [${getInnerExpression(expr[key].y)}])`
+          case 'ternary':
+            return `(${
+              getInnerExpression(expr[key].value)
+            }?${getInnerExpression(expr[key].true)}:${getInnerExpression(expr[key].false)})`
+          case 'str':
+            return `'${getInnerExpression(expr[key])}'`
+          case 'abs':
+          case 'acos':
+          case 'acosh':
+          case 'asin':
+          case 'asinh':
+          case 'atan':
+          case 'atanh':
+          case 'cbrt':
+          case 'ceil':
+          case 'cos':
+          case 'cosh':
+          case 'exp':
+          case 'expm1':
+          case 'floor':
+          case 'length':
+          case 'ln':
+          case 'log':
+          case 'log10':
+          case 'log2':
+          case 'log1p':
+          case 'not':
+          case 'round':
+          case 'sign':
+          case 'sin':
+          case 'sinh':
+          case 'sqrt':
+          case 'tan':
+          case 'tanh':
+          case 'trunc':
+          case 'random':
+          case 'fac':
+          case 'data':
+            return `${operator}(${getInnerExpression(expr[key])})`
+          case 'min':
+          case 'max':
+          case 'hypot':
+          case 'pow':
+          case 'atan2':
+          case 'roundTo':
+          case 'map':
+          case 'filter':
+          case 'join':
+          case 'indexOf':
+          case 'arrayPush':
+          case 'arrayRemove':
+          case 'arrayReplace':
+            return `${operator}(${getInnerExpression(expr[key].x)},${getInnerExpression(expr[key].y)})`
+          case 'fold':
+          case 'if':
+          case 'setKeyValue':
+            return `${operator}(${
+              getInnerExpression(expr[key].x)},${getInnerExpression(expr[key].y)},${getInnerExpression(expr[key].z)})`
+          default:
+            return expr[key]
+        }
+      })
+      .join(' ')
+  }
+  return expr
 }
 
-const parseProp = (prop, $data, deep) => {
+const getExpression = (expressionProp, $data) => {
+  parser.functions.data = getDataFunc(expressionProp, $data)
+
+  const expr = expressionProp.$expression
+  if (typeof expr === 'string') {
+    return parser.evaluate(expr)
+  }
+
+  const transformedExpr = Object.keys(expr).reduce((memo, key) => {
+    return {
+      ...memo,
+      [key]: parseProp(expr[key], $data),
+    }
+  }, {})
+  const innerExpr = getInnerExpression(transformedExpr)
+  return parser.evaluate(innerExpr)
+}
+
+const parseProp = (prop, $data) => {
   if (!prop) return prop
   if (Array.isArray(prop)) {
     return prop.map(value => parseProp(value, $data))
   }
   if (typeof prop === 'object') {
+    if (isDefAndNotNull(prop.$component)) return getComponent(prop)
     if (isDefAndNotNull(prop.$data)) return getData(prop, $data)
     if (isDefAndNotNull(prop.$action)) return getAction(prop, $data)
     if (isDefAndNotNull(prop.$expression)) return getExpression(prop, $data)
-    if (deep) {
-      return Object.entries(prop).reduce((memo, [key, value]) => ({
-        ...memo,
-        [key]: parseProp(value, $data, deep),
-      }), prop)
-    }
+    if (isDefAndNotNull(prop.$rql)) return getRql(prop, $data)
+    return Object.entries(prop).reduce((memo, [key, value]) => ({
+      ...memo,
+      [key]: parseProp(value, $data),
+    }), prop)
   }
   return prop
 }
 
-const connectProps = (props, $data, childBaseComponent) => {
+const connectProps = (props, $data) => {
   if (typeof props !== 'object') return props
   if (!props) return {}
   return Object.keys(props).reduce(
@@ -216,7 +445,7 @@ const BaseComponent = Wrapper(({ component, coreComponents }) => {
       const Component = coreComponents[childComponent.type] || childComponent.type
       const childBaseComponent = <BaseComponent key="Base" component={childComponent} />
       const connectedProps = childComponent.props
-        ? connectProps(childComponent.props, $data, childBaseComponent)
+        ? connectProps(childComponent.props, $data)
         : {}
       if (typeof childComponent !== 'object') {
         return childComponent

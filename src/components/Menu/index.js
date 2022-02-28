@@ -2,8 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Redirect, useLocation } from 'react-router'
 import classNames from 'classnames'
-import BaseComponent from 'core/BaseComponent'
-import { Component } from 'core/pageStore'
+import { NavLink } from 'react-router-dom'
 
 import styles from './index.module.css'
 
@@ -29,17 +28,18 @@ const Menu = ({
 
   let redirectTo
 
-  const menuItems = items.map(item => {
+  const menuItems = items.map((item, i) => {
     const nodes = []
     let to
     if (!item.path) {
-      nodes.push({
-        type: 'div',
-        props: {
-          className: styles.link,
-        },
-        nodes: item.title,
-      })
+      nodes.push(
+        <div
+          key={`item_${i}`}
+          className={styles.link}
+        >
+          {item.children || item.title}
+        </div>,
+      )
     } else {
       to = getPathname(item.path, basePath, location)
 
@@ -47,44 +47,42 @@ const Menu = ({
         redirectTo = getPathname(item.redirectTo, basePath, location)
       }
 
-      nodes.push({
-        type: 'NavLink',
-        props: {
-          to,
-          className: styles.link,
-          activeClassName: styles.activeLink,
-          activeStyle: itemActiveStyle,
-          children: item.children,
-        },
-        nodes: [item.title || item.path],
-      })
+      nodes.push(
+        <NavLink
+          key={`link_${i}`}
+          to={to}
+          className={styles.link}
+          activeClassName={styles.activeLink}
+          activeStyle={itemActiveStyle}
+        >
+          {item.children || item.title || item.path}
+        </NavLink>,
+      )
     }
     if (item.items) {
-      nodes.push({
-        type: 'Menu',
-        props: {
-          className: styles.subMenu,
-          basePath: to,
-          type,
-          items: item.items,
-          itemActiveStyle,
-        },
-        nodes: [item.title || item.path],
-      })
+      nodes.push(
+        <Menu
+          key={`menu_${i}`}
+          basePath={to}
+          className={styles.subMenu}
+          type={type}
+          items={item.items}
+          itemActiveStyle={itemActiveStyle}
+        >
+          {item.children || item.title || item.path}
+        </Menu>,
+      )
     }
-    return {
-      type: 'div',
-      props: {
-        className: styles.menuItem,
-      },
-      nodes,
-    }
+    return (
+      <div key={i} className={styles.menuItem}>
+        {nodes}
+      </div>
+    )
   })
-  const menuItemsStore = Component.create({ nodes: menuItems })
 
   return (
     <div ref={innerRef} className={classNames(className, styles.root, styles[type])}>
-      <BaseComponent component={menuItemsStore} />
+      {menuItems}
       {redirectTo && (
         <Redirect to={redirectTo} />
       )}
