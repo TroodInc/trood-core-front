@@ -290,6 +290,10 @@ const getInnerExpression = (expr) => {
             }?${getInnerExpression(expr[key].true)}:${getInnerExpression(expr[key].false)})`
           case 'str':
             return `'${getInnerExpression(expr[key])}'`
+          case 'num':
+            return +getInnerExpression(expr[key])
+          case 'bool':
+            return !!getInnerExpression(expr[key])
           case 'abs':
           case 'acos':
           case 'acosh':
