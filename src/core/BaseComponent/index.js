@@ -207,11 +207,6 @@ parser.functions.arrayRemove = (arr = [], ...indexes) => {
   return arr.filter((_, i) => !indexes.includes(i))
 }
 
-parser.functions.setKeyValue = (key, value, init = {}) => ({
-  ...init,
-  [key]: value,
-})
-
 parser.functions.arrayReplace = (arr = [], ...data) => {
   const indexes = data.filter((_, i) => i % 2 === 0)
   return arr.map((item, i) => {
@@ -222,6 +217,11 @@ parser.functions.arrayReplace = (arr = [], ...data) => {
     return item
   })
 }
+
+parser.functions.setKeyValue = (key, value, init = {}) => ({
+  ...init,
+  [key]: value,
+})
 
 const getDataFunc = (expressionProp, $data) => (path) => {
   const dataProp = {
@@ -269,7 +269,7 @@ const getInnerExpression = (expr) => {
           case '>':
           case '<':
             return `(${getInnerExpression(expr[key].x)} ${operator} ${getInnerExpression(expr[key].y)})`
-          case '()':
+          case 'group':
             return `(${getInnerExpression(expr[key])})`
           case '!':
             return `(${getInnerExpression(expr[key])}!)`
@@ -314,7 +314,27 @@ const getInnerExpression = (expr) => {
           case 'trunc':
           case 'random':
           case 'fac':
+          case 'data':
             return `${operator}(${getInnerExpression(expr[key])})`
+          case 'min':
+          case 'max':
+          case 'hypot':
+          case 'pow':
+          case 'atan2':
+          case 'roundTo':
+          case 'map':
+          case 'filter':
+          case 'join':
+          case 'indexOf':
+          case 'arrayPush':
+          case 'arrayRemove':
+          case 'arrayReplace':
+            return `${operator}(${getInnerExpression(expr[key].x)},${getInnerExpression(expr[key].y)})`
+          case 'fold':
+          case 'if':
+          case 'setKeyValue':
+            return `${operator}(${
+              getInnerExpression(expr[key].x)},${getInnerExpression(expr[key].y)},${getInnerExpression(expr[key].z)})`
           default:
             return expr[key]
         }
@@ -339,7 +359,6 @@ const getExpression = (expressionProp, $data) => {
     }
   }, {})
   const innerExpr = getInnerExpression(transformedExpr)
-  console.log(innerExpr)
   return parser.evaluate(innerExpr)
 }
 
