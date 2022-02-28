@@ -243,6 +243,7 @@ const exprOperatorRegexp = /^\$\d*(\D+.*)$/
 const getExprOperator = exprKey => (exprKey.match(exprOperatorRegexp) || [])[1]
 
 const getInnerExpression = (expr) => {
+  if (expr === undefined) return null
   if (Array.isArray(expr)) {
     return expr.map(item => getInnerExpression(item))
   }
@@ -365,7 +366,7 @@ const getExpression = (expressionProp, $data) => {
     }
   }, {})
   const innerExpr = getInnerExpression(transformedExpr)
-  return parser.evaluate(innerExpr)
+  return parser.evaluate(innerExpr, { null: null })
 }
 
 const parseProp = (prop, $data) => {
