@@ -79,6 +79,12 @@ const realOperators = {
   'isNull': 'is_null',
 }
 
+export const encodeSearchValue = (str = '') => {
+  return str.replace(/[\x26\x28\x29\x2C\x2F\x3B\x3D\x3F\x40\x7C\\]/g, char => {
+    return `\\${char}`
+  })
+}
+
 const getInnerRql = rql => {
   return Object.keys(rql).reduce((memo, key) => {
     const match = key.match(/^\$([a-zA-Z]+)\d*$/) || []
@@ -111,13 +117,13 @@ const getInnerRql = rql => {
         if (isDefAndNotNull(v)) {
           switch (rqlOperator) {
             case 'like':
-              v = `*${v}*`
+              v = `*${encodeSearchValue(v)}*`
               break
             case 'endLike':
-              v = `*${v}`
+              v = `*${encodeSearchValue(v)}`
               break
             case 'startLike':
-              v = `${v}*`
+              v = `${encodeSearchValue(v)}*`
               break
             case 'in':
               if (Array.isArray(v) && v.length) {
