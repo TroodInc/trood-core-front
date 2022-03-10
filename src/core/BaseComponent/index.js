@@ -70,7 +70,7 @@ const getData = (dataProp, data) => {
       value = pathValue
     }
   }
-  return value
+  return value === null ? undefined : value
 }
 
 const realOperators = {
@@ -243,7 +243,7 @@ const exprOperatorRegexp = /^\$\d*(\D+.*)$/
 const getExprOperator = exprKey => (exprKey.match(exprOperatorRegexp) || [])[1]
 
 const getInnerExpression = (expr) => {
-  if (expr === undefined) return null
+  if (expr === undefined || expr === null) return null
   if (Array.isArray(expr)) {
     return expr.map(item => getInnerExpression(item))
   }
