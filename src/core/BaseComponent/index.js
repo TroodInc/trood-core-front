@@ -70,7 +70,7 @@ const getData = (dataProp, data) => {
       value = pathValue
     }
   }
-  return value
+  return value === null ? undefined : value
 }
 
 const realOperators = {
