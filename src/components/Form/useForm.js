@@ -49,7 +49,8 @@ export const useForm = ({
 
   if (!baseUrl) return null
 
-  let url = baseUrl
+  const queryHashPart = (baseUrl.match(/[?#].*$/) || [])[0] || ''
+  let url = baseUrl.replace(queryHashPart, '')
   if (pk) {
     if (baseUrl.lastIndexOf('/') === baseUrl.length - 1) {
       url += `${pk}/`
@@ -57,6 +58,7 @@ export const useForm = ({
       url += `/${pk}`
     }
   }
+  url += queryHashPart
 
   const values = !pk ? defaultValues : {
     ...defaultValues,
