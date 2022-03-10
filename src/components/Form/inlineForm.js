@@ -25,12 +25,12 @@ const InlineForm = ({
       .catch(onError),
     logout: () => logout(form.name, form.name)
       .catch(onError),
-    submit: () => form.submit({
+    submit: (clear = true) => form.submit({
       endpoint: form.name,
       method: pk ? 'PATCH' : 'POST',
     }, false)
       .then(res => {
-        form.clearForm()
+        if (clear) form.clearForm()
         return res
       })
       .catch(onError),
