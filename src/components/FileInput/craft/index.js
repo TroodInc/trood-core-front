@@ -13,8 +13,17 @@ const CraftFileInput = props => {
   } = useNode((node) => ({ props: node.data.props }))
   const { onlyRender, components } = props
 
+  if (onlyRender) {
+    return (
+      <div className={styles.root}>
+        {props?.labelComponent?.$component}
+        {props?.valueComponent?.$component}
+      </div>
+    )
+  }
+
   return (
-    <div className={styles.root} ref={onlyRender ? undefined : ref => connect(drag(ref))}>
+    <div className={styles.root} ref={ref => connect(drag(ref))}>
       <Element
         id="label"
         is={components.Container}

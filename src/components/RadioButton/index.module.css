@@ -1,7 +1,7 @@
 .root {
-  width: 16px;
-  height: 16px;
-  border: 1px solid var(--trood-border);
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--trood-blue);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -36,9 +36,6 @@
   width: calc(100% - 4px);
   height: calc(100% - 4px);
   border-radius: 50%;
-}
-
-.blue .innerRoot {
   background-color: var(--trood-blue);
 }
 

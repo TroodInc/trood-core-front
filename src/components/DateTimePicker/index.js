@@ -231,6 +231,7 @@ class DateTimePicker extends PureComponent {
       showTextErrors,
       dataAttributes,
       innerRef,
+      disabled,
     } = this.props
 
     const {
@@ -256,6 +257,7 @@ class DateTimePicker extends PureComponent {
           {
             showDate &&
             <DatePicker {...{
+              disabled,
               dataAttributes,
               calendarPosition,
               value: dateValue,
@@ -283,7 +285,7 @@ class DateTimePicker extends PureComponent {
               label: timeLabel || (type === PICKER_TYPES.time && label),
               errors: [...dateTimeErrors, ...timeErrors],
               className: style.time,
-              disabled: !dateValue && showDate,
+              disabled: disabled || (!dateValue && showDate),
               validate: {
                 checkOnBlur: validate.checkOnBlur,
                 required: validate.timeRequired,
