@@ -17,6 +17,7 @@ const CraftDateTimePicker = props => {
     <DateTimePicker {...{
       innerRef: onlyRender ? undefined : ref => connect(drag(ref)),
       ...rest,
+      disabled: onlyRender,
       onChange: () => {},
       onValid: () => {},
       onInvalid: () => {},

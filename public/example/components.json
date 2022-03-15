@@ -368,6 +368,7 @@
             "type": "RadioButton",
             "props": {
               "label": "Radio button",
+              "radioButtonValue": true,
               "value": true,
               "tooltip": "Radio button tooltip"
             }

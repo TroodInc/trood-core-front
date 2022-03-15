@@ -56,7 +56,7 @@ const CraftTable = (props) => {
                       <Checkbox/>
                     </th>
                   )}
-                  {rest.columnComponents.map(item => item.headerCell)}
+                  {rest?.headerCells?.$component}
                 </tr>
               </thead>
               <tbody>
@@ -67,7 +67,7 @@ const CraftTable = (props) => {
                       <Checkbox/>
                     </td>
                   )}
-                  {rest.columnComponents.map(item => item.bodyCell)}
+                  {rest?.bodyCells?.$component}
                 </tr>
                 <tr>
                   {checked && (
@@ -75,7 +75,7 @@ const CraftTable = (props) => {
                       <Checkbox/>
                     </td>
                   )}
-                  {rest.columnComponents.map((_, i) => <td key={i}>...</td>)}
+                  {(rest?.bodyCells?.$component || []).map((_, i) => <td key={i}>...</td>)}
                 </tr>
               </tbody>
             </table>

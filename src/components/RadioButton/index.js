@@ -2,8 +2,7 @@ import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 import classNames from 'classnames'
 
-import { INNER_INPUT_TYPES, LABEL_POSITION_TYPES } from '../internal/EnchancedSwitch/constants'
-import EnchancedSwitch from '../internal/EnchancedSwitch'
+import EnchancedSwitch, { INNER_INPUT_TYPES, LABEL_POSITION_TYPES } from '../internal/EnchancedSwitch'
 
 import { RADIO_COLORS, RADIO_SIZES } from './constants'
 

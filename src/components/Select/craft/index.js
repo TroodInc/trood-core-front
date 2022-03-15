@@ -1,5 +1,6 @@
 import React from 'react'
 import { Element, useNode } from '@craftjs/core'
+import memoizeOne from 'memoize-one'
 
 import Settings from './Settings'
 import SelectComponent, { getSelect } from '../index'
@@ -7,8 +8,8 @@ import SelectComponent, { getSelect } from '../index'
 import { COMPONENT_GROUPS } from '../../../constants'
 
 
-const Select = getSelect({
-  Node: (
+const getSelectRenderTmp = inner => getSelect({
+  Node: inner || (
     <Element
       id="itemView"
       is="div"
@@ -19,16 +20,21 @@ const Select = getSelect({
   ),
 })
 
+const getSelectRender = memoizeOne(getSelectRenderTmp)
+
 const CraftSelect = props => {
   const {
     connectors: { connect, drag },
   } = useNode((node) => ({ props: node.data.props }))
-  const { visualHelp, ...rest } = props
+  const { visualHelp, onlyRender, ...rest } = props
+
+  const Select = getSelectRender(onlyRender && rest?.labelNodes?.$component)
 
   return (
     <Select {...{
-      innerRef: ref => connect(drag(ref)),
+      innerRef: onlyRender ? undefined : ref => connect(drag(ref)),
       ...rest,
+      disabled: onlyRender,
       labelNodes: <div/>,
       items: [{ value: 1, label: 'Item' }],
       value: [],
@@ -52,7 +58,7 @@ CraftSelect.craft = {
     ...SelectComponent.defaultProps,
   },
   custom: {
-    ...Select.transformFunctions,
+    ...SelectComponent.transformFunctions,
     getStyleSettings: () => ({
       height: false,
       textAlign: false,

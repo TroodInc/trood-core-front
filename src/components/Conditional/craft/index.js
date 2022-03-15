@@ -13,8 +13,19 @@ const CraftConditional = (props) => {
   } = useNode()
   const { onlyRender, components } = props
 
+  if (onlyRender) {
+    return (
+      <div className={styles.root}>
+        <Label label="Display on value equal true" />
+        {props?.trueComponent?.$component}
+        <Label label="Display on value equal false" />
+        {props?.falseComponent?.$component}
+      </div>
+    )
+  }
+
   return (
-    <div className={styles.root} ref={onlyRender ? undefined : ref => connect(drag(ref))}>
+    <div className={styles.root} ref={ref => connect(drag(ref))}>
       <Label label="Display on value equal true" />
       <Element
         id="true"

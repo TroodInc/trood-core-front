@@ -8,7 +8,7 @@
   background-color: var(--trood-white);
 }
 
-.root:focus {
+.root:not(.disabled):focus {
   border-color: var(--trood-blue);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   outline: none;
@@ -38,7 +38,7 @@
   cursor: pointer;
 }
 
-.root .disabled .header {
+.root.disabled .header {
   cursor: default;
   color: var(--trood-text-gray);
 }

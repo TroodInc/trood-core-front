@@ -13,7 +13,7 @@
   border-radius: var(--trood-border-radius);
 }
 
-.root:focus {
+.root:not(.disabled):focus {
   border-color: var(--trood-blue);
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   outline: none;
@@ -25,6 +25,10 @@
 
 .root.error {
   border-color: var(--trood-red);
+}
+
+.root.disabled {
+  cursor: default;
 }
 
 .content {

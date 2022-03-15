@@ -45,7 +45,7 @@ const CraftList = (props) => {
     >
       {/* TODO <Context> after dataSelector */}
       {() => {
-        if (onlyRender) return rest.nodes
+        if (onlyRender) return rest?.nodes?.$component
         return (
           <Element
             id="listRow"
