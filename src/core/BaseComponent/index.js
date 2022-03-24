@@ -196,7 +196,7 @@ const getAction = (actionProp, $data) => {
         result = result.catch($resultError => execAction(action.catch, actionProp, { ...$data, $event, $resultError }))
       }
       if (action.finally) {
-        result = result.catch($result => execAction(action.catch, actionProp, { ...$data, $event, $result }))
+        result = result.finally($result => execAction(action.finally, actionProp, { ...$data, $event, $result }))
       }
       return result
     }, Promise.resolve())
