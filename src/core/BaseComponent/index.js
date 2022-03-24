@@ -138,7 +138,7 @@ const getInnerRql = rql => {
         }
         break
       case 'isNull':
-        return [memo, `${operator}(${rql[key]},1)`].filter(Boolean).join(',')
+        return [memo, `is_null(${rql[key]},true)`].filter(Boolean).join(',')
       case 'limit':
         v = rql[key]
         if (typeof v.from !== 'number' || typeof v.step !== 'number') {
