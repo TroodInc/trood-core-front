@@ -193,10 +193,14 @@ const getAction = (actionProp, $data) => {
     actions.reduce((promise, action) => {
       let result = promise.then($result => execAction(action.action, actionProp, { ...$data, $event, $result }))
       if (action.catch) {
-        result = result.catch($resultError => execAction(action.catch, actionProp, { ...$data, $event, $resultError }))
+        result = result.catch($resultError =>
+          getAction({ ...actionProp, $action: action.catch }, { ...$data, $resultError })($event),
+        )
       }
       if (action.finally) {
-        result = result.finally($result => execAction(action.finally, actionProp, { ...$data, $event, $result }))
+        result = result.finally($result =>
+          getAction({ ...actionProp, $action: action.finally }, { ...$data, $result })($event),
+        )
       }
       return result
     }, Promise.resolve())
