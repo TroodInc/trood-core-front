@@ -246,10 +246,11 @@ const getExprIndex = exprKey => +((exprKey.match(exprIndexRegexp) || [])[1] || 0
 const exprOperatorRegexp = /^\$\d*(\D+.*)$/
 const getExprOperator = exprKey => (exprKey.match(exprOperatorRegexp) || [])[1]
 
-const getInnerExpression = (expr) => {
+const getInnerExpression = (expr, evaluate) => {
   if (expr === undefined || expr === null) return null
+  const innerGetInnerExpr = e => getInnerExpression(e, evaluate)
   if (Array.isArray(expr)) {
-    return expr.map(item => getInnerExpression(item))
+    return expr.map(item => innerGetInnerExpr(item))
   }
   if (typeof expr === 'object') {
     return Object.keys(expr)
@@ -264,7 +265,7 @@ const getInnerExpression = (expr) => {
           case 'parsed':
             return expr[key]
           case '=':
-            return `${expr[key].name}=${getInnerExpression(expr[key].value)};`
+            return `${expr[key].name}=${innerGetInnerExpr(expr[key].value)};`
           case '+':
           case '-':
           case '*':
@@ -279,25 +280,25 @@ const getInnerExpression = (expr) => {
           case '<=':
           case '>':
           case '<':
-            return `(${getInnerExpression(expr[key].x)} ${operator} ${getInnerExpression(expr[key].y)})`
+            return `(${innerGetInnerExpr(expr[key].x)} ${operator} ${innerGetInnerExpr(expr[key].y)})`
           case 'group':
-            return `(${getInnerExpression(expr[key])})`
+            return `(${innerGetInnerExpr(expr[key])})`
           case '!':
-            return `(${getInnerExpression(expr[key])}!)`
+            return `(${innerGetInnerExpr(expr[key])}!)`
           case 'concat':
-            return `(${getInnerExpression(expr[key].x)} || ${getInnerExpression(expr[key].y)})`
+            return `(${innerGetInnerExpr(expr[key].x)} || ${innerGetInnerExpr(expr[key].y)})`
           case 'in':
-            return `(${getInnerExpression(expr[key].x)} ${operator} [${getInnerExpression(expr[key].y)}])`
+            return `(${innerGetInnerExpr(expr[key].x)} ${operator} [${innerGetInnerExpr(expr[key].y)}])`
           case 'ternary':
             return `(${
-              getInnerExpression(expr[key].value)
-            }?${getInnerExpression(expr[key].true)}:${getInnerExpression(expr[key].false)})`
+              innerGetInnerExpr(expr[key].value)
+            }?${innerGetInnerExpr(expr[key].true)}:${innerGetInnerExpr(expr[key].false)})`
           case 'str':
-            return `'${getInnerExpression(expr[key])}'`
+            return `'${evaluate(innerGetInnerExpr(expr[key]))}'`
           case 'num':
-            return +getInnerExpression(expr[key])
+            return +evaluate(innerGetInnerExpr(expr[key]))
           case 'bool':
-            return !!getInnerExpression(expr[key])
+            return !!evaluate(innerGetInnerExpr(expr[key]))
           case 'abs':
           case 'acos':
           case 'acosh':
@@ -330,7 +331,7 @@ const getInnerExpression = (expr) => {
           case 'random':
           case 'fac':
           case 'data':
-            return `${operator}(${getInnerExpression(expr[key])})`
+            return `${operator}(${innerGetInnerExpr(expr[key])})`
           case 'min':
           case 'max':
           case 'hypot':
@@ -343,13 +344,13 @@ const getInnerExpression = (expr) => {
           case 'indexOf':
           case 'arrayPush':
           case 'arrayRemove':
-          case 'arrayReplace':
-            return `${operator}(${getInnerExpression(expr[key].x)},${getInnerExpression(expr[key].y)})`
+            return `${operator}(${innerGetInnerExpr(expr[key].x)},${innerGetInnerExpr(expr[key].y)})`
           case 'fold':
           case 'if':
+          case 'arrayReplace':
           case 'setKeyValue':
             return `${operator}(${
-              getInnerExpression(expr[key].x)},${getInnerExpression(expr[key].y)},${getInnerExpression(expr[key].z)})`
+              innerGetInnerExpr(expr[key].x)},${innerGetInnerExpr(expr[key].y)},${innerGetInnerExpr(expr[key].z)})`
           default:
             return expr[key]
         }
@@ -362,9 +363,11 @@ const getInnerExpression = (expr) => {
 const getExpression = (expressionProp, $data) => {
   parser.functions.data = getDataFunc(expressionProp, $data)
 
+  const evaluate = e => parser.evaluate(e, { null: null, undefined: null })
+
   const expr = expressionProp.$expression
   if (typeof expr === 'string') {
-    return parser.evaluate(expr)
+    return evaluate(expr, { null: null })
   }
 
   const transformedExpr = Object.keys(expr).reduce((memo, key) => {
@@ -373,8 +376,8 @@ const getExpression = (expressionProp, $data) => {
       [key]: parseProp(expr[key], $data),
     }
   }, {})
-  const innerExpr = getInnerExpression(transformedExpr)
-  return parser.evaluate(innerExpr, { null: null })
+  const innerExpr = getInnerExpression(transformedExpr, evaluate)
+  return evaluate(innerExpr, { null: null })
 }
 
 const parseProp = (prop, $data) => {
