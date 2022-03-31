@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react'
-import { Link, NavLink, Switch } from 'react-router-dom'
+import { NavLink, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 
 import ErrorWrapper from './internal/ErrorWrapper'
@@ -38,6 +38,7 @@ import Fragment from './Fragment'
 import Form from './Form'
 import FileInput from './FileInput'
 import Currency from './Currency'
+import Link from './Link'
 
 const components = {
   Context,

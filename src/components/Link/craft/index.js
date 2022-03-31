@@ -1,8 +1,8 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { useNode } from '@craftjs/core'
 import classNames from 'classnames'
 
+import Link from '../index'
 import Settings from './Settings'
 
 import { COMPONENT_GROUPS } from '../../../constants'
@@ -19,7 +19,7 @@ const CraftLink = props => {
   return (
     <Link
       {...rest}
-      ref={onlyRender ? undefined : ref => connect(drag(ref))}
+      innerRef={onlyRender ? undefined : ref => connect(drag(ref))}
       className={classNames({ className, [styles.visualHelp]: visualHelp })}
       onClick={e => e.preventDefault()}
     >
