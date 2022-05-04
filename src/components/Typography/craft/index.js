@@ -4,6 +4,8 @@ import classNames from 'classnames'
 
 import { fontDict } from 'fonts'
 
+import { stringifyValue } from '../../helpers'
+
 import Settings from './Settings'
 import Typography from '../index'
 
@@ -45,7 +47,7 @@ const CraftTypography = props => {
     return (
       <Typography
         { ...rest }
-        value={isValueFromDataSelector ? value.$data : value}
+        value={isValueFromDataSelector ? stringifyValue(value) : value}
         innerRef={onlyRender ? undefined : ref => connect(drag(ref))}
       />
     )
