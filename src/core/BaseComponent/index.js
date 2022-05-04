@@ -294,6 +294,7 @@ const getInnerExpression = (expr, evaluate) => {
               innerGetInnerExpr(expr[key].value)
             }?${innerGetInnerExpr(expr[key].true)}:${innerGetInnerExpr(expr[key].false)})`
           case 'str':
+            console.log(evaluate(innerGetInnerExpr(expr[key])))
             return `'${evaluate(innerGetInnerExpr(expr[key]))}'`
           case 'num':
             return +evaluate(innerGetInnerExpr(expr[key]))
@@ -363,7 +364,13 @@ const getInnerExpression = (expr, evaluate) => {
 const getExpression = (expressionProp, $data) => {
   parser.functions.data = getDataFunc(expressionProp, $data)
 
-  const evaluate = e => parser.evaluate(e, { null: null, undefined: null })
+  const evaluate = e => {
+    try {
+      return parser.evaluate(e, { null: null, undefined: null })
+    } catch {
+      return e
+    }
+  }
 
   const expr = expressionProp.$expression
   if (typeof expr === 'string') {
