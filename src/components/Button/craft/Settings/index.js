@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-onchange */
-import React from 'react'
+import React, { useState } from 'react'
 import { useNode, useEditor } from '@craftjs/core'
-import { TCheckbox, TSelect, TInput, TButton } from '$trood/components'
+import { TCheckbox, TSelect, TInput, TButton, TLabel } from '$trood/components'
 
 import { BUTTON_TYPES, BUTTON_SPECIAL_TYPES, BUTTON_COLORS } from '../../constants'
 
@@ -9,13 +9,18 @@ import { getIsNodeInNode } from '../../../helpers'
 
 import { ACTIONS_TYPE, AFTER_ACTIONS } from '../../../Form/constants'
 
+import styles from './index.module.css'
+
 
 const getIsFormComponent = (id, helper) => getIsNodeInNode(id, helper, ['Form'])
 const getIsFileInputComponent = (id, helper) => getIsNodeInNode(id, helper, ['FileInput'])
 
-const Settings = ({ openEventConstructor }) => {
+const Settings = ({ openDataSelector, openEventConstructor }) => {
   const { id, actions: { setProp }, props } = useNode((node) => ({ props: node.data.props }))
   const { query: { node: helper } } = useEditor()
+
+  const defaultType = typeof props.label === 'object' ? 'data' : 'static'
+  const [type, setType] = useState(defaultType)
 
   const isFormComponent = getIsFormComponent(id, helper)
   const isFileInputComponent = getIsFileInputComponent(id, helper)
@@ -102,12 +107,55 @@ const Settings = ({ openEventConstructor }) => {
           })}
         />
       )}
-      <TInput.default {...{
-        ...inputProps({
-          label: 'Label',
-          key: 'label',
-        }),
-      }} />
+      <div>
+        <TLabel.default label="Label" />
+        <div className={styles.tabs}>
+          <div
+            className={type === 'static' ? styles.activeTab : styles.tab}
+            onClick={() => {
+              setProp((props) => props.label = undefined)
+              setType('static')
+            }}
+          >
+            Static
+          </div>
+          <div
+            className={type === 'data' ? styles.activeTab : styles.tab}
+            onClick={() => {
+              setProp((props) => props.label = {
+                $data: props.label,
+              })
+              setType('data')
+            }}
+          >
+            From Data
+          </div>
+        </div>
+        {type === 'static' && (
+          <TInput.default {...{
+            ...inputProps({
+              label: '',
+              key: 'label',
+            }),
+          }} />
+        )}
+        {type === 'data' && (
+          <TButton.default
+            type={TButton.BUTTON_TYPES.text}
+            specialType={TButton.BUTTON_SPECIAL_TYPES.data}
+            label="Select Label"
+            onClick={() => openDataSelector(id, {
+              id: props.label?.$data,
+              values: props.label,
+              onSubmit: value => {
+                setProp((props) => {
+                  props.label = value
+                })
+              },
+            })}
+          />
+        )}
+      </div>
       <TSelect.default {...{
         ...selectProps({
           label: 'Type',

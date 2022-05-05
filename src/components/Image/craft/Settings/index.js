@@ -6,7 +6,6 @@ import { TSelect, TInput, TButton } from '$trood/components'
 import styles from './index.module.css'
 
 import { IMAGE_FIT } from '../../constants'
-import { cssMeasurementUnits } from '../../../../constants'
 
 
 const Settings = ({ openDataSelector }) => {

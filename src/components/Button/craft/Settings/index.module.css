@@ -1,0 +1,38 @@
+.fieldContainer {
+  display: flex;
+  align-items: flex-end;
+}
+
+.fieldContainer > div:first-child {
+  flex: 1;
+}
+
+.fieldContainer > div:last-child {
+  display: flex;
+  align-items: flex-end;
+  flex: 1;
+  margin-left: 10px;
+  min-height: 40px;
+}
+
+.tabs {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.tab {
+  color: var(--trood-text-gray);
+  cursor: pointer;
+}
+
+.activeTab {
+  color: var(--trood-blue);
+  text-decoration: underline;
+  pointer-events: none;
+}
+
+.tab,
+.activeTab {
+  font-weight: 500;
+  padding: 5px 10px;
+}
