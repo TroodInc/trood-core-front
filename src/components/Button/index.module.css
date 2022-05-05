@@ -14,7 +14,6 @@
   line-height: 1.33;
   overflow: hidden;
   cursor: pointer;
-  text-transform: uppercase;
   user-select: none;
   border-radius: var(--trood-border-radius);
 }
