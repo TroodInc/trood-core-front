@@ -11,7 +11,7 @@ import { useHistory, useLocation, useParams } from 'react-router-dom'
 import { Parser } from 'expr-eval'
 
 import LoadingIndicator from 'components/LoadingIndicator'
-import { isDefAndNotNull } from 'helpers/def'
+import { isDefAndNotNull, isDefNotNullNotEmpty } from 'helpers/def'
 
 import loadable from '@loadable/component'
 
@@ -114,7 +114,7 @@ const getInnerRql = rql => {
 
         v = rql[key][k]
         if (typeof v === 'boolean') v = +v
-        if (isDefAndNotNull(v)) {
+        if (isDefNotNullNotEmpty(v)) {
           switch (rqlOperator) {
             case 'like':
               v = `*${encodeSearchValue(v)}*`
@@ -134,7 +134,7 @@ const getInnerRql = rql => {
               break
             default:
           }
-          if (isDefAndNotNull(v)) return [memo, `${operator}(${k},${v})`].filter(Boolean).join(',')
+          if (isDefNotNullNotEmpty(v)) return [memo, `${operator}(${k},${v})`].filter(Boolean).join(',')
         }
         break
       case 'isNull':
@@ -294,7 +294,6 @@ const getInnerExpression = (expr, evaluate) => {
               innerGetInnerExpr(expr[key].value)
             }?${innerGetInnerExpr(expr[key].true)}:${innerGetInnerExpr(expr[key].false)})`
           case 'str':
-            console.log(evaluate(innerGetInnerExpr(expr[key])))
             return `'${evaluate(innerGetInnerExpr(expr[key]))}'`
           case 'num':
             return +evaluate(innerGetInnerExpr(expr[key]))
