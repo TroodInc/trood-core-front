@@ -451,7 +451,28 @@ const BaseComponent = Wrapper(({ component, coreComponents }) => {
 
   const $data = {
     $store,
-    $route: { history, params, location, searchParams },
+    $route: {
+      history: {
+        ...history,
+        push: (...args) => {
+          if (typeof args[0] === 'string' && /^(https?:)?\/\//.test(args[0])) {
+            window.open(args[0], '_self')
+          } else {
+            history.push(...args)
+          }
+        },
+        replace: (...args) => {
+          if (typeof args[0] === 'string' && /^(https?:)?\/\//.test(args[0])) {
+            window.open(args[0], '_self')
+          } else {
+            history.replace(...args)
+          }
+        },
+      },
+      params,
+      location,
+      searchParams,
+    },
     $context,
     $form,
     $page,
