@@ -1,0 +1,24 @@
+.image-gallery {
+  min-width: 300px;
+}
+
+.image-gallery-content .image-gallery-slide .image-gallery-image {
+  min-height: 200px;
+}
+
+.image-gallery-fullscreen-button,
+.image-gallery-play-button {
+  padding: 12px;
+}
+
+.image-gallery-left-nav,
+.image-gallery-right-nav {
+  padding: 12px;
+  height: 100%;
+}
+
+.image-gallery-left-nav .image-gallery-svg,
+.image-gallery-right-nav .image-gallery-svg {
+  width: 40px;
+  height: 80px;
+}
