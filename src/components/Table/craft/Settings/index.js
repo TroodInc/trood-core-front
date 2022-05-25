@@ -3,7 +3,7 @@ import React from 'react'
 import { useNode, useEditor } from '@craftjs/core'
 import { TSelect, TInput, TButton, TCheckbox } from '$trood/components'
 
-import { getIsNodeInNode } from '../../../helpers'
+import { getIsNodeInNode, stringifyValue } from '../../../helpers'
 
 import { PAGINATION_TYPES } from '../../../internal/Paginator'
 
@@ -55,7 +55,8 @@ const Settings = ({ openDataSelector, openEventConstructor }) => {
         specialType={TButton.BUTTON_SPECIAL_TYPES.data}
         label="Select Data"
         onClick={() => openDataSelector(id, {
-          id: props.entity?.$data,
+          id: stringifyValue(props.entity),
+          title: 'Items property',
           values: props.entity,
           onSubmit: value => {
             setProp((props) => {
@@ -105,6 +106,7 @@ const Settings = ({ openDataSelector, openEventConstructor }) => {
                 specialType={TButton.BUTTON_SPECIAL_TYPES.action}
                 label="On Check"
                 onClick={() => openEventConstructor(id, {
+                  title: 'On Check Event',
                   values: props.onCheck,
                   onSubmit: value => {
                     setProp((props) => {
@@ -118,7 +120,8 @@ const Settings = ({ openDataSelector, openEventConstructor }) => {
                 specialType={TButton.BUTTON_SPECIAL_TYPES.data}
                 label="Checked Values"
                 onClick={() => openDataSelector(id, {
-                  id: props.checkedValues?.$data,
+                  id: stringifyValue(props.checkedValues),
+                  title: 'Checked Values property',
                   values: props.checkedValues,
                   onSubmit: value => {
                     setProp((props) => {

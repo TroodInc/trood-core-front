@@ -3,6 +3,8 @@ import React, { useState } from 'react'
 import { useNode } from '@craftjs/core'
 import { TCheckbox, TInput, TButton } from '$trood/components'
 
+import { stringifyValue } from '../../../helpers'
+
 import styles from './index.module.css'
 
 
@@ -52,7 +54,8 @@ const Settings = ({ openDataSelector }) => {
             specialType={TButton.BUTTON_SPECIAL_TYPES.data}
             label="Select Data"
             onClick={() => openDataSelector(id, {
-              id: props.to?.$data,
+              id: stringifyValue(props.to),
+              title: 'Link To property',
               values: props.to,
               onSubmit: value => {
                 setProp((props) => {

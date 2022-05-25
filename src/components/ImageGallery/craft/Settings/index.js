@@ -5,6 +5,8 @@ import { TCheckbox, JsonEditor, TInput, TButton, TSelect } from '$trood/componen
 import styles from './index.module.css'
 import ImageGallery from '../../index'
 
+import { stringifyValue } from '../../../helpers'
+
 
 const Settings = ({ openDataSelector }) => {
   const {
@@ -54,8 +56,8 @@ const Settings = ({ openDataSelector }) => {
             specialType={TButton.BUTTON_SPECIAL_TYPES.data}
             label="Select Items"
             onClick={() => openDataSelector(id, {
-              id: props.images?.$data,
-              title: 'Images',
+              id: stringifyValue(props.images),
+              title: 'Images property',
               values: props.images,
               onSubmit: value => {
                 setProp((props) => {

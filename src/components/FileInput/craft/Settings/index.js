@@ -115,6 +115,7 @@ const Settings = ({ openEventConstructor }) => {
           specialType={TButton.BUTTON_SPECIAL_TYPES.action}
           label="On Upload"
           onClick={() => openEventConstructor(id, {
+            title: 'On File Upload Event',
             values: props.onUpload,
             onSubmit: value => {
               setProp((props) => {

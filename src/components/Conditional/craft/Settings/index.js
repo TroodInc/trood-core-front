@@ -4,6 +4,8 @@ import { useNode } from '@craftjs/core'
 import { TButton } from '$trood/components'
 import styles from './index.module.css'
 
+import { stringifyValue } from '../../../helpers'
+
 
 const Settings = ({ openDataSelector }) => {
   const {
@@ -24,7 +26,8 @@ const Settings = ({ openDataSelector }) => {
         specialType={TButton.BUTTON_SPECIAL_TYPES.data}
         label="Select Value"
         onClick={() => openDataSelector(id, {
-          id: props.value?.$data,
+          id: stringifyValue(props.value),
+          title: 'Value property',
           values: props.value,
           onSubmit: value => {
             setProp((props) => {

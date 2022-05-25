@@ -3,6 +3,8 @@ import React from 'react'
 import { useNode } from '@craftjs/core'
 import { TButton } from '$trood/components'
 
+import { stringifyValue } from '../../../helpers'
+
 
 const Settings = ({ openDataSelector }) => {
   const { id, actions: { setProp }, props } = useNode((node) => ({ props: node.data.props }))
@@ -13,7 +15,8 @@ const Settings = ({ openDataSelector }) => {
       specialType={TButton.BUTTON_SPECIAL_TYPES.data}
       label="Select Data"
       onClick={() => openDataSelector(id, {
-        id: props.context?.$data,
+        id: stringifyValue(props.context),
+        title: 'Context property',
         values: props.context,
         onSubmit: value => {
           setProp((props) => {
