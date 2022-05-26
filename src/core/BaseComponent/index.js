@@ -65,7 +65,7 @@ const getData = (dataProp, data) => {
     )
 
     if (isTemplate) {
-      value = value.replace(pathTemplate, pathValue)
+      value = value.replace(pathTemplate, isDefAndNotNull(pathValue) ? pathValue : '')
     } else {
       value = pathValue
     }
