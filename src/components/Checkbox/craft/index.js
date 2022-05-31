@@ -17,6 +17,7 @@ const CraftCheckbox = props => {
     <Checkbox {...{
       innerRef: onlyRender ? undefined : ref => connect(drag(ref)),
       ...rest,
+      errors: undefined,
       value: true,
       onChange: () => {},
       onValid: () => {},
