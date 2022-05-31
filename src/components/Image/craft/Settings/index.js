@@ -7,6 +7,8 @@ import styles from './index.module.css'
 
 import { IMAGE_FIT } from '../../constants'
 
+import { stringifyValue } from '../../../helpers'
+
 
 const Settings = ({ openDataSelector }) => {
   const {
@@ -71,7 +73,8 @@ const Settings = ({ openDataSelector }) => {
             specialType={TButton.BUTTON_SPECIAL_TYPES.data}
             label="Select Data"
             onClick={() => openDataSelector(id, {
-              id: props.imageUrl?.$data,
+              id: stringifyValue(props.imageUrl),
+              title: 'Image URL property',
               values: props.imageUrl,
               onSubmit: value => {
                 setProp((props) => {

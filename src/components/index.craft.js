@@ -24,6 +24,7 @@ import Button from './Button/craft'
 import Typography from './Typography/craft'
 import Currency from './Currency/craft'
 import Image from './Image/craft'
+import ImageGallery from './ImageGallery/craft'
 import Select from './Select/craft'
 
 import Table from './Table/craft'
@@ -56,6 +57,7 @@ const components = {
   Typography,
   Currency,
   Image,
+  ImageGallery,
   Table,
   List,
   Input,

@@ -7,7 +7,7 @@ import { TCheckbox, TSelect, TInput, TButton } from '$trood/components'
 import { RADIO_SIZES, RADIO_COLORS } from '../../constants'
 import { LABEL_POSITION_TYPES } from '../../../internal/EnchancedSwitch'
 
-import { getIsNodeInNode } from '../../../helpers'
+import { getIsNodeInNode, stringifyValue } from '../../../helpers'
 
 
 const getIsFormComponent = (id, helper) => getIsNodeInNode(id, helper, ['Form'])
@@ -90,6 +90,7 @@ const Settings = ({ openEventConstructor, openDataSelector }) => {
             specialType={TButton.BUTTON_SPECIAL_TYPES.action}
             label="On Change"
             onClick={() => openEventConstructor(id, {
+              title: 'On Change Event',
               values: props.onChange,
               onSubmit: value => {
                 setProp((props) => {
@@ -103,7 +104,8 @@ const Settings = ({ openEventConstructor, openDataSelector }) => {
             specialType={TButton.BUTTON_SPECIAL_TYPES.data}
             label="Select Value"
             onClick={() => openDataSelector(id, {
-              id: props.value?.$data,
+              id: stringifyValue(props.value),
+              title: 'Value property',
               values: props.value,
               onSubmit: value => {
                 setProp((props) => {

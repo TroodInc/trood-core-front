@@ -1,7 +1,9 @@
 /* eslint-disable jsx-a11y/no-onchange */
 import React from 'react'
 import { useNode } from '@craftjs/core'
-import { TLabel, JsonEditor, TSelect, TInput, TButton } from '$trood/components'
+import { TSelect, TInput, TButton } from '$trood/components'
+
+import { stringifyValue } from '../../../helpers'
 
 import { PAGINATION_TYPES, FLEX_DIRECTION, ALIGN_ITEMS, JUSTIFY_CONTENT } from '../../../internal/Paginator'
 
@@ -16,8 +18,6 @@ const Settings = ({ openDataSelector }) => {
   }))
 
   const {
-    entity,
-    queryOptions,
     pagination: {
       paginationType,
       defaultPageSize,
@@ -39,7 +39,8 @@ const Settings = ({ openDataSelector }) => {
         specialType={TButton.BUTTON_SPECIAL_TYPES.data}
         label="Select Data"
         onClick={() => openDataSelector(id, {
-          id: props.entity?.$data,
+          id: stringifyValue(props.entity),
+          title: 'Items property',
           values: props.entity,
           onSubmit: value => {
             setProp((props) => {

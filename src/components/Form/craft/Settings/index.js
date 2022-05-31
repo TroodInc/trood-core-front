@@ -7,6 +7,8 @@ import { FORM_TYPES } from '../../constants'
 import { MODAL_TYPES } from '../../../Modal/constants'
 import { cssMeasurementUnits } from '../../../../constants'
 
+import { stringifyValue } from '../../../helpers'
+
 import styles from './index.module.css'
 
 
@@ -84,7 +86,8 @@ const Settings = ({ openDataSelector }) => {
               specialType={TButton.BUTTON_SPECIAL_TYPES.data}
               label="Select PK"
               onClick={() => openDataSelector(id, {
-                id: props.pk?.$data,
+                id: stringifyValue(props.pk),
+                title: 'Primary Key property',
                 values: props.pk,
                 onSubmit: value => {
                   setProp((props) => {
@@ -102,7 +105,8 @@ const Settings = ({ openDataSelector }) => {
           specialType={TButton.BUTTON_SPECIAL_TYPES.data}
           label="Select Edit Values"
           onClick={() => openDataSelector(id, {
-            id: props.editValues?.$data,
+            id: stringifyValue(props.editValues),
+            title: 'Edit Value property',
             values: props.editValues,
             onSubmit: value => {
               setProp((props) => {

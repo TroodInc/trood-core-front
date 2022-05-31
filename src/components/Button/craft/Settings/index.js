@@ -5,7 +5,7 @@ import { TCheckbox, TSelect, TInput, TButton, TLabel } from '$trood/components'
 
 import { BUTTON_TYPES, BUTTON_SPECIAL_TYPES, BUTTON_COLORS } from '../../constants'
 
-import { getIsNodeInNode } from '../../../helpers'
+import { getIsNodeInNode, stringifyValue } from '../../../helpers'
 
 import { ACTIONS_TYPE, AFTER_ACTIONS } from '../../../Form/constants'
 
@@ -98,6 +98,7 @@ const Settings = ({ openDataSelector, openEventConstructor }) => {
           specialType={TButton.BUTTON_SPECIAL_TYPES.action}
           label="On Click"
           onClick={() => openEventConstructor(id, {
+            title: 'On Click Event',
             values: props.onClick,
             onSubmit: value => {
               setProp((props) => {
@@ -145,7 +146,8 @@ const Settings = ({ openDataSelector, openEventConstructor }) => {
             specialType={TButton.BUTTON_SPECIAL_TYPES.data}
             label="Select Label"
             onClick={() => openDataSelector(id, {
-              id: props.label?.$data,
+              id: stringifyValue(props.label),
+              title: 'Label property',
               values: props.label,
               onSubmit: value => {
                 setProp((props) => {

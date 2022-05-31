@@ -34,6 +34,7 @@ import Select from './Select'
 import Table from './Table'
 import Typography from './Typography'
 import Image from './Image'
+import ImageGallery from './ImageGallery'
 import Fragment from './Fragment'
 import Form from './Form'
 import FileInput from './FileInput'
@@ -71,6 +72,7 @@ const components = {
   Table,
   Typography,
   Image,
+  ImageGallery,
   Fragment,
   Form,
   FileInput,

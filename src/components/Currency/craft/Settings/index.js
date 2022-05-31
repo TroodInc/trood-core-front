@@ -6,6 +6,8 @@ import { TCheckbox, TSelect, TButton, TInput } from '$trood/components'
 
 import { fontList } from 'fonts'
 
+import { stringifyValue } from '../../../helpers'
+
 
 const setStyle = (field, value) => props => {
   let val = value
@@ -35,7 +37,8 @@ const Settings = ({ openDataSelector }) => {
         specialType={TButton.BUTTON_SPECIAL_TYPES.data}
         label="Select Data"
         onClick={() => openDataSelector(id, {
-          id: props.value?.$data,
+          id: stringifyValue(props.value),
+          title: 'Value property',
           values: props.value,
           onSubmit: value => {
             setProp((props) => {

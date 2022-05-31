@@ -23,7 +23,7 @@ const Settings = () => {
         value: other,
         mode: JsonEditor.MODES.code,
         onChange: vals => setProp((props) => {
-          Object.keys(vals).forEach(key => {
+          [...Object.keys(vals), ...Object.keys(props)].forEach(key => {
             if (key !== 'tag') {
               props[key] = vals[key]
             }
