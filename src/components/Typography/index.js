@@ -34,6 +34,13 @@ const Typography = ({
 }) => {
   const fontObj = fontDict[font]
 
+  let data = children || value
+
+  if (type !== 'html' && typeof data === 'string') {
+    const parser = new DOMParser()
+    data = parser.parseFromString(data, 'text/html').body.textContent
+  }
+
   useEffect(() => {
     if (fontObj) {
       const fontStyleLink = fontObj.link
@@ -59,7 +66,7 @@ const Typography = ({
     },
     [typeof component === 'string' ? 'ref' : 'innerRef']: innerRef,
     className: classNames(className, styles[type], bold && styles.bold),
-    children: children || value,
+    children: data,
   })
 }
 
