@@ -11,6 +11,7 @@ import Switch from './Switch/craft'
 import Route from './Route/craft'
 import Link from './Link/craft'
 import NavLink from './NavLink/craft'
+import Redirect from './Redirect/craft'
 
 import Context from './Context/craft'
 import Container from './Container/craft'
@@ -45,6 +46,7 @@ import FileInput from './FileInput/craft'
 const components = {
   Switch,
   Route,
+  Redirect,
   Link,
   NavLink,
   Context,

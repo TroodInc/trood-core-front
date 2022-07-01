@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react'
-import { NavLink, Switch } from 'react-router-dom'
+import { NavLink, Switch, Redirect } from 'react-router-dom'
 import styled from 'styled-components'
 
 import ErrorWrapper from './internal/ErrorWrapper'
@@ -67,6 +67,7 @@ const components = {
   Range,
   Remote,
   Route,
+  Redirect,
   Select,
   Spacer,
   Table,
