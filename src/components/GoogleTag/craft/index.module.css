@@ -1,0 +1,5 @@
+.visualHelp {
+  display: inline-flex;
+  background-color: rgba(99, 99, 99, 0.2);
+  padding: 10px;
+}
