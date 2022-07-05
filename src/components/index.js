@@ -40,6 +40,7 @@ import Form from './Form'
 import FileInput from './FileInput'
 import Currency from './Currency'
 import Link from './Link'
+import GoogleTag from './GoogleTag'
 
 const components = {
   Context,
@@ -78,6 +79,7 @@ const components = {
   Form,
   FileInput,
   Currency,
+  GoogleTag,
 }
 
 export default Object.keys(components).reduce((memo, key) => {

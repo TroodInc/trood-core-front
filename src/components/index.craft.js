@@ -41,6 +41,7 @@ import Form from './Form/craft'
 import Remote from './Remote/craft'
 import Conditional from './Conditional/craft'
 import FileInput from './FileInput/craft'
+import GoogleTag from './GoogleTag/craft'
 
 
 const components = {
@@ -72,6 +73,7 @@ const components = {
   Remote,
   Conditional,
   FileInput,
+  GoogleTag,
 }
 
 export default Object.keys(components).reduce((memo, key) => {
