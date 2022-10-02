@@ -177,7 +177,7 @@ const execAction = (actionPath, actionProp, $data) => {
             )
           })
           const f = memo[key.replace(/\[([^\]]*)]/g, '')]
-          return f(...argsArray)
+          return f.bind(memo)(...argsArray)
         }
       }
       return memo[key]
