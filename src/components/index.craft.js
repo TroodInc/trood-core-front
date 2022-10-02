@@ -42,6 +42,7 @@ import Remote from './Remote/craft'
 import Conditional from './Conditional/craft'
 import FileInput from './FileInput/craft'
 import GoogleTag from './GoogleTag/craft'
+import VerifyToken from './VerifyToken/craft'
 
 
 const components = {
@@ -74,6 +75,7 @@ const components = {
   Conditional,
   FileInput,
   GoogleTag,
+  VerifyToken,
 }
 
 export default Object.keys(components).reduce((memo, key) => {
