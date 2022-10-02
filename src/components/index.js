@@ -41,6 +41,7 @@ import FileInput from './FileInput'
 import Currency from './Currency'
 import Link from './Link'
 import GoogleTag from './GoogleTag'
+import VerifyToken from './VerifyToken'
 
 const components = {
   Context,
@@ -80,6 +81,7 @@ const components = {
   FileInput,
   Currency,
   GoogleTag,
+  VerifyToken,
 }
 
 export default Object.keys(components).reduce((memo, key) => {

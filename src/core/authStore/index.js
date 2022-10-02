@@ -44,6 +44,11 @@ export const getAuthStore = apiStore => {
               self.setAuthData(res, tokenPrefix, true)
               return res
             })
+            .catch(res => {
+              if (res.status === 401) {
+                self.clearAuthData()
+              }
+            })
         }
       },
       logout(endpoint, formName) {
