@@ -5,6 +5,7 @@ module.exports = {
     'deep-equal': require('deep-equal'),
     'draft-js': require('draft-js'),
     'draftjs-to-html': require('draftjs-to-html'),
+    'expr-eval': require('expr-eval'),
     lodash: require('lodash'),
     'memoize-one': require('memoize-one'),
     moment: require('moment'),
