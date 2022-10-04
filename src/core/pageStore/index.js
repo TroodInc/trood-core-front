@@ -10,6 +10,7 @@ const normalizeApiPath = (path) => {
 }
 
 const convertObject = (cur, data, skipTransform) => {
+  if (cur.hidden) return null
   let { type } = cur
   if (!type || (typeof type === 'object' && !components[type.resolvedName])) {
     const error = !type || (typeof type === 'object' && !type.resolvedName) ?
