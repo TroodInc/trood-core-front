@@ -39,14 +39,19 @@ const getData = (dataProp, data) => {
   }
   let value = dataProp.$data
   if (typeof value === 'object') {
-    return Object.keys(value).reduce((memo, key) => ({
-      ...memo,
-      [key]: parseProp(value[key], $data),
-    }), {})
+    const keys = Object.keys(value)
+    if (keys.includes('$data')) {
+      value = parseProp(value, $data)
+    } else {
+      return keys.reduce((memo, key) => ({
+        ...memo,
+        [key]: parseProp(value[key], $data),
+      }), {})
+    }
   }
-  const pathMatch = dataProp.$data.match(/{{(\$[^}]*)}}/g) || []
-  const isTemplate = pathMatch.length > 1 || pathMatch[0] !== dataProp.$data.trim()
-  const pathMatches = dataProp.$data.matchAll(/{{(\$[^}]*)}}/g)
+  const pathMatch = value.match(/{{(\$[^}]*)}}/g) || []
+  const isTemplate = pathMatch.length > 1 || pathMatch[0] !== value.trim()
+  const pathMatches = value.matchAll(/{{(\$[^}]*)}}/g)
   for (const [pathTemplate, path] of pathMatches) {
     const pathValue = path.split('.').reduce(
       (memo, key) => {
@@ -70,7 +75,9 @@ const getData = (dataProp, data) => {
       value = pathValue
     }
   }
-  return value === null ? undefined : value
+  value = value === null ? undefined : value
+  value = typeof value === 'string' ? value.replace(/\\([{}])/g,'$1') : value
+  return value
 }
 
 const realOperators = {
