@@ -146,7 +146,11 @@ const getInnerRql = rql => {
         }
         return [memo, `${operator}(${v.from},${v.step})`].filter(Boolean).join(',')
       case 'sort':
-        return [memo, `${operator}(${rql[key]})`].filter(Boolean).join(',')
+        if (Array.isArray(rql[key]) && rql[key].length) {
+          return [memo, `${operator}(${rql[key]})`].filter(Boolean).join(',')
+        } else {
+          return memo
+        }
       default:
         return memo
     }
